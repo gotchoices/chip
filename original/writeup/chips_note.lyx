@@ -1,0 +1,1743 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{url}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Estimating the value of a CHIP.
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+This note was prepared by a Ph.D.
+ Economist, whose identity is not disclosed in order to comply with the
+ terms of their present full-time employment.
+ The author thanks Kyle Bateman, David Spencer, Christian Vom Lehn, and
+ the anonymous reviewer for their helpful comments.
+ All remaining errors are the author's own.
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Date
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+today
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This note presents a conceptual framework to quantify the baseline value
+ of the CHIP currency tied to the global average of one hour of unskilled
+ work.
+ Econometric estimates using panel data from 89 world countries over the
+ period 1992-2019 suggest the CHIP value of $2.53 per hour.
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+The contemporary post-Bretton-Woods monetary system is increasingly criticized
+ for its excessive reliance on several large central banks, which often
+ pursue opaque and discretionary policies, poor handling of inflation, and
+ inability to embrace modern technologies, such as cryptographic currencies.
+ Responding to these challenges, Bateman (2022) proposes a novel money system
+ anchoring means of payment to the value of time and using complementary
+ currency nicknamed CHIP.
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+This acronym originally came from “Credit Hour In Pool.”
+\end_layout
+
+\end_inset
+
+ Bateman argues that this novel system will offer a number of important
+ improvements, including 
+\end_layout
+
+\begin_layout Enumerate
+maintaining a consistent value over time, 
+\end_layout
+
+\begin_layout Enumerate
+offering better value and convenience to consumers, 
+\end_layout
+
+\begin_layout Enumerate
+exhibiting greater resistance to theft and unethical manipulation by business
+ or government, and 
+\end_layout
+
+\begin_layout Enumerate
+being compatible with sound and sustainable economic principles, including
+ free will and choice.
+ 
+\end_layout
+
+\begin_layout Standard
+For purposes of standardization, Bateman suggests indexing (or linking)
+ the value of a CHIP to one hour of basic or unskilled work.
+ The purpose of this research note is to quantify the baseline value of
+ the CHIP.
+ The first section of the note uses the theory of economic growth to conceptuali
+ze the CHIP value as a distortion-free value of unskilled labor compensation
+ at the global scale.
+ The second section outlines the empirical approach to apply this definition
+ to the panel data of 89 world countries over the period 1992-2019, collected
+ from different public sources.
+ The third section describes econometric estimates, including the main result
+ of pinning the CHIP value to $2.53 per hour.
+ Finally, the last section concludes and suggests several venues for future
+ work.
+ 
+\end_layout
+
+\begin_layout Section
+Theory
+\end_layout
+
+\begin_layout Standard
+This section presents a simple economic framework whose core assumptions
+ are based on a Solow-Swan growth modeling framework (Solow 1956, Swan,
+ 1956, Acemoglu 2009).
+ The model deviates from this framework by allowing for labor skill and
+ human capital differentiation (Hanushek and Kimko, 2000).
+ We assume that each country is an open economy (i.e., there are no barriers
+ to labor and capital migration inside and outside the country), producing
+ and consuming a unique final good.
+ The economy is in the steady state equilibrium, so all decisions are solutions
+ to the static problem.
+\end_layout
+
+\begin_layout Subsection
+Households (Labor Supply)
+\end_layout
+
+\begin_layout Standard
+The economy is inhabited by a large number of households (or economic agents),
+ which supply labor hours, 
+\begin_inset Formula $L$
+\end_inset
+
+, inelastically; there is no leisure.
+ Within each country, agents have different labor skills, ranking from unskilled
+ to highly skilled labor.
+ Let 
+\begin_inset Formula $a_{i}$
+\end_inset
+
+ be the labor skill level of a household type 
+\begin_inset Formula $i$
+\end_inset
+
+ with 
+\begin_inset Formula $a_{1}=1$
+\end_inset
+
+ be the skill level of the highest skilled labor category.
+ Countries also differ in terms of average level of households' human capital
+ (e.g., average educational attainment), which we denote by 
+\begin_inset Formula $h$
+\end_inset
+
+.
+ Under this assumption, the total value of the efficient (i.e., skill- and
+ human capital- adjusted) labor in a country 
+\begin_inset Formula $j$
+\end_inset
+
+ is given by:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+L_{s,j}=h_{j}\sum_{i}^{N}a_{i}L_{i,j},
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $N$
+\end_inset
+
+ is the number of household types according to their skill levels.
+ 
+\end_layout
+
+\begin_layout Subsection
+Firms (Labor Demand)
+\end_layout
+
+\begin_layout Standard
+We assume that all firms in the economy are small, operate in a perfectly
+ competitive environment, and have access to the same production function
+ for the final good.
+ The supply side of the economy can then be described by a representative
+ firm and a production function.
+ We assume that economy's production function is the Cobb-Douglas function
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+The Cobb-Douglas production function is the most common example of a production
+ function used in macroeconomics (see, e.g., Acemoglu 2009).
+ 
+\end_layout
+
+\end_inset
+
+: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+Y_{j}=K_{j}^{\alpha_{j}}L_{s,j}^{1-\alpha_{j}},
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where, 
+\begin_inset Formula $Y$
+\end_inset
+
+ is the output of the good in the economy, 
+\begin_inset Formula $K$
+\end_inset
+
+ is the aggregate capital endowment in the country owned by households,
+ and 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ is the capital compensation share in the economy.
+ Let 
+\begin_inset Formula $y=Y/L_{s}$
+\end_inset
+
+ and 
+\begin_inset Formula $k=K/L_{s}$
+\end_inset
+
+ be the amount of output and capital per unit of efficient labor.
+ Then the economy's production function per unit of efficient labor becomes
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+y_{j}=k_{j}^{\alpha_{j}}.
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Labor Market Equilibrium 
+\end_layout
+
+\begin_layout Standard
+Because the economy's labor supply is inelastic, the labor market equilibrium
+ is determined by the labor demand side resulting from firms' profit maximizatio
+n problem:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\pi_{j}=K_{j}^{\alpha_{j}}L_{s,j}^{1-\alpha_{j}}-w_{s,j}L_{s,j},
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\pi$
+\end_inset
+
+ is the firm's profit and 
+\begin_inset Formula $w$
+\end_inset
+
+ is the unit cost of efficient labor (or the wage rate per unit of efficient
+ labor).
+ A firm's profit maximization requires
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial\pi_{j}}{\partial L_{s,j}}=0\Longrightarrow\left(1-\alpha_{j}\right)K_{j}^{\alpha_{j}}L_{s,j}^{-\alpha_{j}}=\left(1-\alpha_{j}\right)k_{j}^{\alpha_{j}}=w_{s,j}=\bar{w_{s}}.
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Equation (5) is the standard result from the economic theory, which implies
+ that labor compensation should equal the value of the marginal product
+ of efficient labor.
+ In the open economy equilibrium, wages are equalized across countries (Samuelso
+n, 1948), so all wages equal the global marginal product of efficient labor,
+ 
+\begin_inset Formula $\bar{w_{s}}.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+The value of CHIPS for labor compensation
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:The-value-of"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Let us define the distortion factor, 
+\begin_inset Formula $\theta_{j}\equiv\frac{\left(1-\alpha_{j}\right)k_{j}^{\alpha_{j}}}{w_{s,j}}$
+\end_inset
+
+, as the ratio of the marginal product of efficient labor to efficient (i.e.,
+ skill-weighted) labor compensation in the economyUnder the model assumptions,
+ the distortion factor should be equal to one.
+ In the real world, model assumptions will unlikely hold given barriers
+ to labor and capital flows, regulatory distortions (e.g., minimum wage),
+ and other market failures (such as, e.g., market power).
+ This implies that the distortion factor will also differ from one.
+ In practical terms, the distortion factor implies how much each economy's
+ labor should be compensated (or taxed) to restore the labor market equilibrium
+ defined by equation (5).
+ We can then define the distortion-free value of labor compensation as the
+ product of the distortion factor and the observed efficient labor compensation
+ in the economy:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+w_{s,j}^{e}=\theta_{j}w_{s,j}.
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Combining equation (6) with the definition of a CHIP (Bateman, 2022), we
+ define the value of the CHIP as the distortion-free value of unskilled
+ labor compensation.
+\end_layout
+
+\begin_layout Section
+Estimation Approach 
+\end_layout
+
+\begin_layout Subsection
+Method
+\end_layout
+
+\begin_layout Standard
+We estimate the economies' production function using the following empirical
+ specification:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\ln y_{j,t}=\alpha_{j}\ln k_{j,t}+\epsilon_{j,t},
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\alpha_{j}$
+\end_inset
+
+ is the vector of coefficients (or country fixed effects) to be estimated.
+ Equation (7) is estimated by the ordinary least squares (OLS) with fixed
+ effects estimation method and is implemented in R statistical software
+ using 
+\emph on
+fixest
+\emph default
+ package, 
+\emph on
+feols
+\emph default
+ function.
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+see 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+url{https://www.rdocumentation.org/packages/fixest/versions/0.8.4/topics/feols}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Subsection
+Data
+\end_layout
+
+\begin_layout Standard
+We rely on three open data sources to estimate the CHIPS value of labor.
+ The data on the labor input (measured as total weekly hours by employed
+ population in a country) and labor compensation (in USD) come from the
+ ILOSTAT 
+\emph on
+Labour Force Statistics 
+\emph default
+and 
+\emph on
+Wages and Working Time Statistics 
+\emph default
+databases.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+see 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+url{https://ilostat.ilo.org/data/}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ The ILOSTAT data differentiates labor input across nine International Standard
+ Classification of Occupations 2008 (ISCO-08) categories
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+see 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+url{www.ilo.org/public/english/bureau/stat/isco/}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+: (i) managers, (ii) professionals, (iii) technicians and associate professional
+s, (iv) clerical support workers, (v) service and sales workers, (vi) skilled
+ agricultural, forestry, and fishery workers, (vii) craft and related trades
+ workers, (viii) plant and machine operators, and assemblers, and (ix) elementar
+y occupations.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+We exclude the armed forces and occupations not elsewhere classified.
+ Some countries use older ISCO classifications (e.g., ISCO-68 and ISCO-88),
+ which are converted into ISCO-08 using the correspondence tables provided
+ by ISCO.
+\end_layout
+
+\end_inset
+
+ To construct the efficient labor input, we assume that managers are the
+ highest skill category.
+ We calculate the skill-level of in each remaining category as the ratio
+ of wages in this category relative to the managers.
+ Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:skill"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shows the average skill levels of each labor category across our data sample.
+ We calculate the average wage in each country as an average of wages across
+ different types of labor weighted by the total number of labor hours in
+ each labor category.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Average skill level by labor skill category
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:skill"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename skill.png
+	lyxscale 10
+	scale 7
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The data on output, capital input, and human capital index come from the
+ Penn World Tables (PWT) 10.0 database (Feenstra and Timmer, 2015).
+ For measures of output, we use (i) real GDP at constant national prices
+ (in a million of 2017 USD, variable
+\emph on
+ rgdpna
+\emph default
+) and (ii) output-side real GDP at current purchasing power parities (PPPs,
+ in a million 2017 USD, variable
+\emph on
+ cgdpo
+\emph default
+).
+ For measures of capital input, we use (i) capital stock at constant national
+ prices (in a million of 2017 USD, variable
+\emph on
+ rnna
+\emph default
+) and (ii) capital stock at current PPPs (in a million 2017 USD, variable
+\emph on
+ cn
+\emph default
+).
+ For a measure of human capital, we use the PWT human capital index (variable
+ 
+\emph on
+hc
+\emph default
+), based on years of schooling and returns to education.
+ We distinguish between output and capital stock estimates using market
+ exchange rates and PPPs because there is no consensus in the economics
+ literature about which measure more adequately represents the supply side
+ of the economy, especially in the poor countries.
+ While PPPs better approximate values of tradable homogenous goods, they
+ are also biased due to their poor ability to measure differences in quality
+ across goods and services.
+ This may result in a mechanical overvaluation of consumption bundles because
+ the relative prices used for valuing the bundles differ from the transacted
+ prices (Dowrick and Akmal, 2005).
+ As physical capital input is poorly tradable on the secondary market due
+ to significant sunk costs and its quality is difficult to measure, our
+ preferred specification is using measures in constant national prices in
+ millions of 2017 USD.
+\end_layout
+
+\begin_layout Standard
+Finally, we use the US GDP implicit price deflator data from the St.
+ Louis FRED database
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+see 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+url{https://fred.stlouisfed.org/series/USAGDPDEFAISMEI}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ to convert nominal U.S.
+ dollar-denominated wages to their real values.
+ After removing extreme outliers and observations with obvious measurement
+ errors, the final dataset for estimating the marginal product of labor
+ is an unbalanced panel comprising 2165 observations and covering 98 world
+ countries from 1970 to 2019.
+ Combining the marginal product of labor estimates' data with the wage data
+ yields the final 451 observations covering 89 countries from 1992-2019.
+ 
+\end_layout
+
+\begin_layout Section
+Results
+\end_layout
+
+\begin_layout Standard
+Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:mpl_w"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ plots the estimated average marginal product of efficient labor versus
+ real wage across countries in our sample.
+ The solid line in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:mpl_w"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ s a 45-degree line along which local labor markets show no distortions,
+ and the country's marginal product of efficient labor equals its real wage.
+ If the data point lies above the 45-degree line, the country's marginal
+ product of efficient labor is less than the real wage.
+ That is, workers in these countries are overpaid relative to market equilibrium.
+ Conversely, if the data point lies below the 45-degree line, the country's
+ marginal product of efficient labor exceeds real wage, and workers in these
+ countries are underpaid relative to market equilibrium.
+ We see that in most world countries, data points lie close to the 45-degree
+ line, which indicates their labor markets are relatively undistorted.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Several countries (Brunei, Italy, Luxembourg) are outliers with unexpectedly
+ large labor productivities, which are likely due to measurement errors.
+\end_layout
+
+\end_inset
+
+ However, we also see that real wage greatly exceeds the marginal product
+ of efficient labor in most OECD economies.
+ This could be due to market distortions from minimum wage regulations,
+ greater bargaining power of labor unions, or labor market segmentation
+ leading to certain skill shortages and excessive wages.
+ This could also be due to unobserved technological differences that could
+ affect the marginal product of labor estimates, such as the productivity
+ of capital in the information and communication services sector, which
+ accounts for most of the productivity improvements in developed economies
+ (Jorgenson, Ho, and Stiroh, 2008).
+ Finally, estimates can be biased in developing countries with a large informal
+ sector, where many small, unregistered establishments are missing from
+ the ILO sample frame.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+url{https://ilostat.ilo.org/resources/concepts-and-definitions/description-wages-a
+nd-working-time-statistics/}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Estimated marginal product of efficient labor vs.
+ real wage
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:mpl_w"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename mpl_wage_scatter.png
+	lyxscale 25
+	scale 10
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "table:chipsf"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shows summary statistics for calculated distortion factors (DF) based on
+ the formula in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:The-value-of"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ using the following definitions: 
+\end_layout
+
+\begin_layout Itemize
+DF I (preferred specification): the ratio of estimated marginal product
+ of labor to real wage where labor is measured in total effective hours
+ worked, using measures of output and capital in constant national prices
+ in millions of 2017 USD.
+ 
+\end_layout
+
+\begin_layout Itemize
+DF II (assuming 
+\begin_inset Formula $\alpha_{j}=0$
+\end_inset
+
+ or marginal product of labor is simply efficient labor): the ratio of the
+ country's ‘efficient’ wage (i.e., the wage weighted by productivity of each
+ worker category, where the productivity is measured by the relative wage
+ of a given worker category to managers) to its average wage in a given
+ year.
+ 
+\end_layout
+
+\begin_layout Itemize
+DF III (assuming 
+\begin_inset Formula $a_{i}=1$
+\end_inset
+
+ or skill productivities are similar across all labor categories): the ratio
+ of estimated marginal product of labor to real wage where labor is measured
+ in total hours worked (i.e., a simple summation of labor hours across all
+ labor categories), using measures of output and capital in constant national
+ prices in millions of 2017 USD.
+ 
+\end_layout
+
+\begin_layout Itemize
+DF IV (assuming PPP conversion): the ratio of estimated marginal product
+ of labor to real wage where labor is measured in total effective hours
+ worked, using measures of output and capital in current PPPs in millions
+ of 2017 USD.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement !htbp
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand*{
+\backslash
+arraystretch}{1.1}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Summary Statistics for CHIPS conversion factors
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "table:chipsf"
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+resizebox{
+\backslash
+textwidth}{!}{
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="8">
+<features tabularvalignment="middle">
+<column alignment="left" valignment="top">
+<column alignment="right" valignment="top">
+<column alignment="right" valignment="top">
+<column alignment="right" valignment="top">
+<column alignment="right" valignment="top">
+<column alignment="right" valignment="top">
+<column alignment="right" valignment="top">
+<column alignment="right" valignment="top">
+<row>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Distortion Factor
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+N
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Mean
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Std.
+ Dev.
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Min
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Pctl.
+ 25
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Pctl.
+ 75
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Max
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+DF I
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+451
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.05
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.17
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.05
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.61
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+18.57
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+DF II
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+451
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.24
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.18
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.94
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.13
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.32
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.84
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+DF III
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+446
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.52
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.63
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.03
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.26
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.62
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10.35
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+DF IV
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+451
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.08
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.09
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.05
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.61
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.24
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+15.89
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We see that, consistent with the evidence in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:mpl_w"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, the average distortion factor using preferred specification is close to
+ 1, which indicates that labor markets are globally efficient.
+ However, there is a significant dispersion across countries, with the distribut
+ion of the DF I factor exhibiting a long right tail (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:chipshist"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, left panel).
+ The average distortion factor assuming PPP conversion (DF IV) is very similar
+ to our preferred specification, which indicates that using PPP rather than
+ nominal exchange rate conversion has a small impact on the estimated DF
+ factor value.
+ Alternative definitions using more restrictive assumptions result in biased
+ estimates of the distortion factor.
+ The DF II factor is, on average, greater than one and has a much smaller
+ dispersion than other measures.
+ Assuming away capital in a country's production thus 
+\emph on
+overestimates
+\emph default
+ the value of the marginal product of labor.
+ The DF III factor is, on average, less than one and twice smaller than
+ our preferred estimate of the DF factor.
+ Assuming that skill productivities are similar across all labor categories
+ thus 
+\emph on
+underestimates
+\emph default
+ the value of the marginal product of labor.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Distribution of DF I factor and adjusted wages across countries
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:chipshist"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename hist_chips
+	lyxscale 25
+	scale 6
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename hist_chips_wage
+	lyxscale 25
+	scale 6
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We are now ready to answer the main question of this research note: how
+ large countries' unskilled labor (elementary occupations) wages would be
+ if market distortions were eliminated? Our preferred measure, DF I, offers
+ the average local value of labor compensation of $2.5 per hour for unskilled
+ labor (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:chipshist"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, right panel), whose values range between $0.047 (Rwanda) to $8.06 (Italy).
+ Finally, we need to obtain the global value of labor compensation (i.e.,
+ when labor mobility barriers are eliminated).
+ To do so, we calculate the average value of labor compensation, weighted
+ by each country's contribution to global GDP.
+ This gives us the final value of unskilled labor compensation that underpins
+ the CHIP index: $2.53 per hour.
+\end_layout
+
+\begin_layout Section
+Conclusions and Directions for Future Work
+\end_layout
+
+\begin_layout Standard
+This note sets an important milestone in quantifying the value of a novel
+ currency, the CHIP.
+ Using a conceptual framework engrained in the theory of economic growth,
+ we define the baseline CHIP value as a distortion-free value of unskilled
+ labor compensation at the global scale.
+ Applying this framework to the panel data of 89 world countries from 1992-2019,
+ collected from different public sources, yields econometric estimates of
+ the CHIP value at $2.53 per hour.
+ While this number may seem low in the context of developed economies (estimated
+ value is roughly eight times smaller than unskilled labor compensation
+ in the United States), it is not surprising if put into the context of
+ the global unskilled labor force, dominated by low and middle-income countries.
+ While reasonably accurate, estimates in this note are only the first attempt
+ to tackle the complex problem of calculating the base value of the CHIP.
+ As with all new concept developments, several improvements can be made
+ to obtain better estimates, especially for developed economies where larger
+ discrepancies between actual unskilled wages and theoretical predictions
+ have been found.
+ They include, but are not limited to (i) endogenizing labor supply decisions
+ in the context of labor-leisure choice across time (see, e.g., Turnovsky,
+ 2000), (ii) explicitly incorporating technological differences, especially
+ the value of information and communication technology capital across countries
+ (Jorgenson, 2005), and addressing measurement errors affecting the quality
+ of labor productivity and earnings data related to regional disparities
+ and prevalence of informal economy.
+\end_layout
+
+\begin_layout Section*
+References
+\end_layout
+
+\begin_layout Standard
+Acemoglu, Daron.
+ (2009).
+ 
+\emph on
+Introduction to Modern Economic Growth.
+
+\emph default
+ Princeton University Press, Princeton New Jersey.
+\end_layout
+
+\begin_layout Standard
+Bateman Kyle.
+ (2022).
+ 
+\emph on
+Got Choices.
+ 
+\emph default
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+url{https://gotchoices.org/book/epub/gotchoices.epub}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Dowrick, Steve and Muhammad Akmal.
+ (2005).
+ Contradictory Trends in Global Income Inequality: A Tale of Two Biases.
+ 
+\emph on
+Review of Income and Wealth
+\emph default
+ 51(2): 201-229.
+\end_layout
+
+\begin_layout Standard
+Feenstra, Robert C., Inklaar, Robert, and Timmer, Marcel P.
+ (2015).
+ The Next Generation of the Penn World Table.
+ 
+\emph on
+American Economic Review
+\emph default
+, 105(10): 3150-3182, available for download at 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+url{www.ggdc.net/pwt}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Hanushek, Eric A., and Kimko, Dennis D.
+ (2000).
+ Schooling, Labor-force Quality, and the Growth of Nations.
+ 
+\emph on
+American Economic Review
+\emph default
+, 90(5): 1184-1208.
+\end_layout
+
+\begin_layout Standard
+Jorgenson, Dale W., Mun S.
+ Ho, and Kevin J.
+ Stiroh.
+ (2008).
+ A Retrospective Look at the US Productivity Growth Resurgence.
+ 
+\emph on
+Journal of Economic Perspectives
+\emph default
+ 22(1): 3-24.
+\end_layout
+
+\begin_layout Standard
+Jorgenson, Dale W.
+ (2005).
+ Accounting for Growth in the Information Age.
+ Chapter 10 in 
+\emph on
+Handbook of Economic Growth
+\emph default
+, 1, 743-815, Elsevier.
+ 
+\end_layout
+
+\begin_layout Standard
+Samuelson, Paul A.
+ (1948).
+ International Trade and the Equalisation of Factor Prices.
+ 
+\emph on
+Economic Journal
+\emph default
+, 58(230): 163-184.
+\end_layout
+
+\begin_layout Standard
+Solow, Robert.
+ M.
+ (1956).
+ A Contribution to the Theory of Economic Growth.
+ 
+\emph on
+The Quarterly Journal of Economics
+\emph default
+, 70(1): 65-94.
+\end_layout
+
+\begin_layout Standard
+Swan, Trevor W.
+ (1956).
+ Economic Growth and Capital Accumulation.
+ 
+\emph on
+Economic Record
+\emph default
+, 32(2): 334-361.
+\end_layout
+
+\begin_layout Standard
+Turnovsky, Stephen J.
+ (2000).
+ Fiscal Policy, Elastic Labor Supply, and Endogenous Growth.
+ 
+\emph on
+Journal of Monetary Economics
+\emph default
+, 45(1), 185-210.
+\end_layout
+
+\end_body
+\end_document

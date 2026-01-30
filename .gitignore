@@ -1,0 +1,16 @@
+# Secrets and credentials
+.env
+secrets.toml
+
+# Build artifacts
+target/
+
+# IDE
+.idea/
+*.swp
+.DS_Store
+
+# R artifacts
+.Rhistory
+.RData
+.Rproj.user/
