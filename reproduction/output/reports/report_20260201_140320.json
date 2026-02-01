@@ -1,0 +1,60 @@
+{
+  "pipeline": "CHIP Reproduction",
+  "start_time": "2026-02-01T14:03:20.165771",
+  "end_time": "2026-02-01T14:03:28.695151",
+  "duration_seconds": 8.52938,
+  "steps": [
+    {
+      "name": "Fetch data from sources",
+      "start_time": "2026-02-01 14:03:20.166433",
+      "end_time": "2026-02-01 14:03:28.155669",
+      "status": "completed"
+    },
+    {
+      "name": "Clean and merge data",
+      "start_time": "2026-02-01 14:03:28.155686",
+      "end_time": "2026-02-01 14:03:28.540145",
+      "status": "completed"
+    },
+    {
+      "name": "Estimate Cobb-Douglas production function",
+      "start_time": "2026-02-01 14:03:28.540157",
+      "end_time": "2026-02-01 14:03:28.632146",
+      "status": "completed"
+    },
+    {
+      "name": "Calculate distortion factors",
+      "start_time": "2026-02-01 14:03:28.632155",
+      "end_time": "2026-02-01 14:03:28.641668",
+      "status": "completed"
+    },
+    {
+      "name": "Aggregate to global CHIP value",
+      "start_time": "2026-02-01 14:03:28.641676",
+      "end_time": "2026-02-01 14:03:28.655796",
+      "status": "completed"
+    },
+    {
+      "name": "Save outputs",
+      "start_time": "2026-02-01 14:03:28.655806",
+      "end_time": "2026-02-01 14:03:28.695136",
+      "status": "completed"
+    }
+  ],
+  "warnings": [
+    "Excluded 249 observations per config"
+  ],
+  "errors": [],
+  "status": "success",
+  "results": {
+    "chip_gdp": 2.555171876384749,
+    "chip_labor": 1.493069445680365,
+    "chip_unweighted": 1.8832157239991703,
+    "n_countries": 90,
+    "n_observations": 531,
+    "chip_min": 0.02208986334902075,
+    "chip_max": 6.74962035898784,
+    "chip_median": 1.3379870359564745
+  },
+  "run_id": "20260201_140320"
+}

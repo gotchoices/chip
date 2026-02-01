@@ -10,6 +10,7 @@ __pycache__/
 # Outputs (keep reports, ignore the rest)
 output/logs/
 output/intermediate/
+output/cache/
 
 # Build artifacts
 *.egg-info/

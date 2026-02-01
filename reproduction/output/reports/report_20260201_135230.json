@@ -1,0 +1,52 @@
+{
+  "pipeline": "CHIP Reproduction",
+  "start_time": "2026-02-01T13:52:30.007363",
+  "end_time": null,
+  "duration_seconds": null,
+  "steps": [
+    {
+      "name": "Fetch data from sources",
+      "start_time": "2026-02-01 13:52:30.008194",
+      "end_time": "2026-02-01 13:52:30.009759",
+      "status": "completed"
+    },
+    {
+      "name": "Clean and merge data",
+      "start_time": "2026-02-01 13:52:30.009776",
+      "end_time": "2026-02-01 13:52:30.011264",
+      "status": "completed"
+    },
+    {
+      "name": "Estimate Cobb-Douglas production function",
+      "start_time": "2026-02-01 13:52:30.011276",
+      "end_time": "2026-02-01 13:52:30.012965",
+      "status": "completed"
+    },
+    {
+      "name": "Calculate distortion factors",
+      "start_time": "2026-02-01 13:52:30.012973",
+      "end_time": "2026-02-01 13:52:30.014608",
+      "status": "completed"
+    },
+    {
+      "name": "Aggregate to global CHIP value",
+      "start_time": "2026-02-01 13:52:30.014616",
+      "end_time": "2026-02-01 13:52:30.016130",
+      "status": "completed"
+    },
+    {
+      "name": "Save outputs",
+      "start_time": "2026-02-01 13:52:30.016138",
+      "end_time": "2026-02-01 13:52:30.016832",
+      "status": "completed"
+    }
+  ],
+  "warnings": [],
+  "errors": [],
+  "status": "success",
+  "results": {
+    "chip_gdp": 0.0,
+    "dry_run": true
+  },
+  "run_id": "20260201_135230"
+}

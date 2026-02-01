@@ -51,17 +51,29 @@ def save_report(report: dict, output_dir: Path, run_id: str) -> Path:
     with open(md_path, "w") as f:
         f.write(f"# CHIP Reproduction Report\n\n")
         f.write(f"**Run ID:** {run_id}\n\n")
-        f.write(f"**Status:** {report['status'].upper()}\n\n")
-        f.write(f"**Duration:** {report['duration_seconds']:.1f} seconds\n\n")
+        f.write(f"**Status:** {report.get('status', 'unknown').upper()}\n\n")
+        
+        duration = report.get('duration_seconds')
+        if duration is not None:
+            f.write(f"**Duration:** {duration:.1f} seconds\n\n")
         
         f.write("## Results\n\n")
-        if "results" in report:
+        if "results" in report and report["results"]:
             results = report["results"]
-            f.write(f"**CHIP Value (GDP-weighted):** ${results.get('chip_gdp', 'N/A'):.2f}/hour\n\n")
-            if "chip_labor" in results:
-                f.write(f"**CHIP Value (Labor-weighted):** ${results['chip_labor']:.2f}/hour\n\n")
-            f.write(f"**Countries included:** {results.get('n_countries', 'N/A')}\n\n")
-            f.write(f"**Observations:** {results.get('n_observations', 'N/A')}\n\n")
+            chip_gdp = results.get('chip_gdp')
+            if chip_gdp is not None:
+                f.write(f"**CHIP Value (GDP-weighted):** ${chip_gdp:.2f}/hour\n\n")
+            chip_labor = results.get('chip_labor')
+            if chip_labor is not None:
+                f.write(f"**CHIP Value (Labor-weighted):** ${chip_labor:.2f}/hour\n\n")
+            n_countries = results.get('n_countries')
+            if n_countries is not None:
+                f.write(f"**Countries included:** {n_countries}\n\n")
+            n_obs = results.get('n_observations')
+            if n_obs is not None:
+                f.write(f"**Observations:** {n_obs}\n\n")
+            if results.get('dry_run'):
+                f.write("*This was a dry run - no actual data was processed.*\n\n")
         
         if report["warnings"]:
             f.write("## Warnings\n\n")
@@ -170,17 +182,17 @@ def run_pipeline(config: dict, output_dir: Path, dry_run: bool = False) -> dict:
                 intermediate_dir.mkdir(parents=True, exist_ok=True)
                 clean_data.to_csv(intermediate_dir / f"clean_data_{run_id}.csv", index=False)
                 mpl_data.to_csv(intermediate_dir / f"mpl_data_{run_id}.csv", index=False)
-        
-        # Add results to report
-        ctx_report = ctx.generate_report()
-        ctx_report["results"] = results
-        ctx_report["run_id"] = run_id
-        
-        # Save report
-        report_path = save_report(ctx_report, output_dir, run_id)
-        logger.info(f"Report saved to: {report_path}")
-        
-        return ctx_report
+    
+    # Generate report after context manager exits (so end_time is set)
+    ctx_report = ctx.generate_report()
+    ctx_report["results"] = results
+    ctx_report["run_id"] = run_id
+    
+    # Save report
+    report_path = save_report(ctx_report, output_dir, run_id)
+    logger.info(f"Report saved to: {report_path}")
+    
+    return ctx_report
 
 
 def main():
@@ -192,13 +204,13 @@ def main():
     parser.add_argument(
         "--config",
         type=Path,
-        default=Path(__file__).parent / "config.yaml",
+        default=Path(__file__).parent.parent / "config.yaml",
         help="Path to configuration file",
     )
     parser.add_argument(
         "--output",
         type=Path,
-        default=Path(__file__).parent / "output",
+        default=Path(__file__).parent.parent / "output",
         help="Output directory",
     )
     parser.add_argument(

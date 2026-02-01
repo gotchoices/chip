@@ -354,11 +354,14 @@ class DataCleaner:
     ) -> pd.DataFrame:
         """Calculate effective labor (skill-weighted hours)."""
         
-        # Merge wage ratios
-        df = df.merge(wage_ratios, on=["country", "occupation"], how="left", suffixes=("", "_avg"))
+        # Rename wage_ratio to wage_ratio_avg before merging
+        wage_ratios = wage_ratios.rename(columns={"wage_ratio": "wage_ratio_avg"})
         
-        # Use average wage ratio if available, otherwise use observation-level
-        df["skill_weight"] = df["wage_ratio_avg"].fillna(df["wage_ratio"])
+        # Merge wage ratios
+        df = df.merge(wage_ratios, on=["country", "occupation"], how="left")
+        
+        # Use average wage ratio as skill weight (default to 1.0 if missing)
+        df["skill_weight"] = df["wage_ratio_avg"].fillna(1.0)
         
         # Calculate effective labor hours
         df["effective_labor"] = df["labor_hours"] * df["skill_weight"]

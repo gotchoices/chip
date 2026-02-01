@@ -110,19 +110,22 @@ class DataFetcher:
             logger.warning(f"ILOSTAT API failed: {e}")
             logger.info("Falling back to local data files...")
             
+            # Path to project root (chip/)
+            project_root = Path(__file__).parent.parent.parent.parent
+            
             # Fallback to local files from original study
             local_files = {
-                "employment": "original/Data/employment.csv",
-                "wages": "original/Data/wages.csv",
-                "hours": "original/Data/hoursworked.csv",
+                "employment": project_root / "original/Data/employment.csv",
+                "wages": project_root / "original/Data/wages.csv",
+                "hours": project_root / "original/Data/hoursworked.csv",
             }
             
-            local_path = Path(local_files.get(name, ""))
-            if local_path.exists():
+            local_path = local_files.get(name)
+            if local_path and local_path.exists():
                 logger.info(f"Loading from local file: {local_path}")
                 df = pd.read_csv(local_path)
             else:
-                raise RuntimeError(f"Could not fetch {name} data and no local fallback found")
+                raise RuntimeError(f"Could not fetch {name} data and no local fallback found at {local_path}")
         
         # Cache the result
         if cache_file:
@@ -161,9 +164,15 @@ class DataFetcher:
             logger.warning(f"PWT download failed: {e}")
             logger.info("Falling back to local data...")
             
-            # The original study used the pwt10 R package
-            # We'd need to have a local copy
-            raise RuntimeError("PWT download failed and no local fallback available")
+            # Try local Excel file
+            project_root = Path(__file__).parent.parent.parent.parent
+            local_path = project_root / "original/Data/time_series.xlsx"
+            
+            if local_path.exists():
+                logger.info(f"Loading PWT from local file: {local_path}")
+                df = pd.read_excel(local_path)
+            else:
+                raise RuntimeError(f"PWT download failed and no local fallback at {local_path}")
         
         # Select required variables
         required_vars = ["country", "isocode", "year"]
@@ -227,8 +236,9 @@ class DataFetcher:
             logger.warning(f"FRED API failed: {e}")
             logger.info("Falling back to local file...")
             
-            # Path relative to reproduction/ folder
-            local_path = Path(__file__).parent.parent.parent / "original/Data/GDPDEF.csv"
+            # Path to project root
+            project_root = Path(__file__).parent.parent.parent.parent
+            local_path = project_root / "original/Data/GDPDEF.csv"
             if local_path.exists():
                 df = pd.read_csv(local_path)
                 df.columns = ["date", "deflator"]
@@ -244,7 +254,8 @@ class DataFetcher:
     
     def _load_fred_api_key(self) -> str | None:
         """Load FRED API key from secrets.toml if present."""
-        secrets_path = Path(__file__).parent.parent.parent / "secrets.toml"
+        project_root = Path(__file__).parent.parent.parent.parent
+        secrets_path = project_root / "secrets.toml"
         
         if not secrets_path.exists():
             return None
