@@ -63,7 +63,7 @@ Document and evaluate all data sources:
 | **OECD.Stat** | ICT capital, productivity | Used in ICT extension |
 
 ### 4. Methodology Review
-Produce a formal review document (`docs/methodology-review.md`) covering:
+Produce a formal review document (`docs/original-review.md`) covering:
 - Strengths and limitations of the original approach
 - **Definition alignment**: How well does the methodology match the canonical CHIP definition?
   - "Nominal unskilled labor" vs. ISCO-08 "elementary occupations"
