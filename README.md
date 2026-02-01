@@ -4,64 +4,98 @@ Estimating the global value of one hour of unskilled labor to serve as the basis
 
 ## Background
 
-The CHIP (Credit Hour In Pool) is a proposed currency anchored to the value of human time. This project aims to quantify that value using global labor market data and economic theory.
+The **CHIP** (Credit Hour In Pool) is a proposed currency anchored to the value of human time. From the [formal definition](https://gotchoices.org/mychips/definition.html):
+
+> Credit for the *value* produced by one continuously applied hour of adult human work; in such circumstance where there is neither a shortage nor a surplus of such willing labor available; and where the job can be reasonably understood with only minimal training and orientation; and without considering the added productivity due to the use of labor-saving capital equipment; and where the person performing the work has a normal, or average, functioning mind and body...
+
+In essence: **What would one hour of nominal unskilled labor be worth in a hypothetical worldwide, free, and balanced market with no borders, tariffs, or other distortions?**
+
+The term "nominal unskilled" (from the canonical definition) is important: it does **not** mean "no skills." A CHIP-rate worker can read, write, communicate, and do basic arithmetic—they simply lack *specialized* training. One CHIP equals one hour of this baseline labor. Skilled labor is valued as multiples of CHIPs based on training, expertise, and productivity.
+
+This project aims to quantify that base value using global labor market data and economic theory.
 
 ## Project Structure
 
 ```
 chip/
-├── original/     # Original human-authored studies (R-based)
-└── [new study]   # AI-assisted replication and extension (planned)
+├── original/          # Read-only reference: original R-based studies
+├── reproduction/      # Python reproduction of original methodology
+├── estimates/         # Production estimates using validated methods
+│   └── YYYY-MM/       # Dated estimate runs
+├── experiments/       # Alternative models, exploratory analysis
+├── docs/              # Methodology reviews, papers, formal analysis
+├── lib/               # Shared Python modules (data fetching, utilities)
+└── data/              # Downloaded/cached data (gitignored)
 ```
 
 ### `original/`
 
-Contains the original CHIP valuation research:
+The original CHIP valuation research (R-based, read-only reference):
 - **Initial study**: Estimated CHIP value at **$2.53/hour** using Solow-Swan growth model
 - **ICT extension**: Explored whether ICT capital explains developed/developing wage gaps
 - See [`original/README.md`](original/README.md) for details
 
-## New Study Goals
+## Objectives
 
-This project will develop an AI-assisted approach to CHIP valuation, addressing:
+### 1. Reproduce Original Study in Python
+Validate understanding by reproducing the $2.53 result using:
+- The original source data (ILOSTAT, PWT, FRED)
+- The same Cobb-Douglas / distortion-factor methodology
+- Python instead of R
 
-### 1. Platform Selection
-Is Rust the optimal platform for CHIP calculations?
-- Performance requirements for periodic updates
-- Data pipeline complexity
-- Ecosystem maturity for econometrics
-- Alternatives: Python, Julia, R
+Success = matching the original result within reasonable tolerance.
 
-### 2. Economic Model Review
-Is there a better model than Cobb-Douglas with country fixed effects?
-- CES production functions
-- Stochastic frontier analysis
-- Machine learning approaches
-- Panel cointegration methods
+### 2. Platform & Tooling
+**Decision: Python** (not Rust) for this project.
+- Mature data science ecosystem (pandas, statsmodels, linearmodels)
+- Excellent API clients for data sources
+- Faster iteration than compiled languages
+- Sufficient performance for periodic batch updates
 
-### 3. Definition Alignment
-Does the current methodology match the CHIP definition?
-- "One hour of basic work" vs. ISCO-08 "elementary occupations"
-- Global weighting scheme (GDP-weighted vs. labor-weighted vs. equal)
-- Treatment of informal economy
-- Purchasing power considerations
+### 3. Data Sources
+Document and evaluate all data sources:
+| Source | Data | Notes |
+|--------|------|-------|
+| **ILOSTAT** | Employment, wages, hours by occupation | Primary labor data |
+| **Penn World Tables** | GDP, capital stock, human capital index | Primary macro data |
+| **FRED** | US GDP deflator | Inflation adjustment only |
+| **World Bank API** | Alternative/supplementary | To evaluate |
+| **OECD.Stat** | ICT capital, productivity | Used in ICT extension |
 
-### 4. Automation
-Can we create a sustainable update process?
-- Automated data fetching from ILOSTAT, PWT, FRED APIs
+### 4. Methodology Review
+Produce a formal review document (`docs/methodology-review.md`) covering:
+- Strengths and limitations of the original approach
+- **Definition alignment**: How well does the methodology match the canonical CHIP definition?
+  - "Nominal unskilled labor" vs. ISCO-08 "elementary occupations"
+  - Distortion factor as proxy for "free market" equilibrium
+  - Capital separation via Cobb-Douglas
+- Alternative models worth exploring (CES, stochastic frontier, etc.)
+- Weighting scheme implications (GDP vs. labor-force weighted)
+- Informal economy and data coverage issues
+
+### 5. Alternative Models
+Can different economic models be evaluated via the same pipeline?
+- Fetch data → Clean → Apply model → Summarize
+- Models as swappable modules
+- Compare results across approaches
+
+### 6. Automation
+Create a sustainable, periodic update process:
+- Automated data fetching from APIs
 - Anomaly detection for data quality issues
 - Reproducible pipeline with version control
 - AI-assisted review of results and outliers
-- Target: Quarterly or annual updates with minimal manual intervention
+- Target: Annual updates with minimal manual intervention
 
 ## Current Status
 
 - [x] Original study analyzed and documented
-- [ ] Platform evaluation
-- [ ] Model comparison framework
+- [x] Platform decision: Python
+- [ ] Reproduce original study in Python
+- [ ] Methodology review document
 - [ ] Automated data pipeline
-- [ ] New valuation methodology
-- [ ] Validation against original results
+- [ ] Alternative model experiments
+- [ ] Production estimation workflow
 
 ## Setup
 

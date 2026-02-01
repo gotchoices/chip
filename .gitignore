@@ -2,8 +2,18 @@
 .env
 secrets.toml
 
+# Downloaded/cached data (reproducible from APIs)
+data/
+
 # Build artifacts
 target/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
 
 # IDE
 .idea/
