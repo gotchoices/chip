@@ -91,10 +91,18 @@ class DataCleaner:
         # Standardize to: country, year, sex, skill, value
         
         # Identify columns
+        # Note: Local CSV files have ".label" suffix with human-readable values
+        # API returns raw codes without ".label" suffix
         col_map = {}
         for col in df.columns:
             col_lower = col.lower()
-            if "ref_area" in col_lower or col_lower == "country":
+            if "ref_area" in col_lower:
+                # ".label" means country names, plain "ref_area" means ISO codes
+                if ".label" in col_lower:
+                    col_map[col] = "country"  # Local CSV: country names
+                else:
+                    col_map[col] = "isocode"  # API: ISO codes
+            elif col_lower == "country":
                 col_map[col] = "country"
             elif "time" in col_lower or "year" in col_lower:
                 col_map[col] = "year"
@@ -268,26 +276,42 @@ class DataCleaner:
     ) -> pd.DataFrame:
         """Merge employment, wages, and hours data."""
         
+        # Determine key column (isocode for API data, country for local CSV)
+        key_col = "isocode" if "isocode" in employment.columns else "country"
+        
         # Prepare each dataset
-        emp = employment[["country", "year", "occupation", "employed"]].copy()
+        emp_cols = [key_col, "year", "occupation", "employed"]
+        emp = employment[[c for c in emp_cols if c in employment.columns]].copy()
         
-        # Wages may have currency dimension - filter to USD
+        # Wages may have currency dimension - filter to USD only (per original study)
         if "currency" in wages.columns:
-            wages = wages[wages["currency"].str.contains("USD|U.S. dollars", case=False, na=False)]
-        wage = wages[["country", "year", "occupation", "wage"]].copy()
+            # Original R code uses: filter(Currency == "CUR_TYPE_USD")
+            # Local CSV has: "Currency: U.S. dollars"
+            # API has: "CUR_TYPE_USD"
+            wages = wages[wages["currency"].str.contains("USD|U\\.S\\. dollars", case=False, na=False, regex=True)]
+            # Exclude PPP to avoid duplicates
+            wages = wages[~wages["currency"].str.contains("PPP", case=False, na=False)]
+        wage_cols = [key_col, "year", "occupation", "wage"]
+        wage = wages[[c for c in wage_cols if c in wages.columns]].copy()
         
-        hrs = hours[["country", "year", "occupation", "hours"]].copy()
+        hrs_cols = [key_col, "year", "occupation", "hours"]
+        hrs = hours[[c for c in hrs_cols if c in hours.columns]].copy()
         
         # Merge
+        merge_keys = [key_col, "year", "occupation"]
         merged = emp.merge(
             wage, 
-            on=["country", "year", "occupation"], 
+            on=merge_keys, 
             how="left"
         ).merge(
             hrs,
-            on=["country", "year", "occupation"],
+            on=merge_keys,
             how="left"
         )
+        
+        # Rename isocode to country for downstream compatibility
+        if key_col == "isocode":
+            merged = merged.rename(columns={"isocode": "country"})
         
         # Default hours to 40 if missing (per original study)
         merged["hours"] = merged["hours"].fillna(40)
@@ -371,6 +395,9 @@ class DataCleaner:
     def _merge_with_pwt(self, labor_data: pd.DataFrame, pwt: pd.DataFrame) -> pd.DataFrame:
         """Merge labor data with Penn World Tables."""
         
+        # labor_data["country"] is actually ISO codes when from API
+        # PWT has both "country" (name) and "isocode" (code)
+        
         # Aggregate labor data to country-year level
         agg_labor = labor_data.groupby(["country", "year"]).agg({
             "labor_hours": "sum",
@@ -385,7 +412,19 @@ class DataCleaner:
         
         agg_labor = agg_labor.merge(elementary_wage, on=["country", "year"], how="left")
         
-        # Merge with PWT
-        merged = agg_labor.merge(pwt, on=["country", "year"], how="inner")
+        # Determine if we're using ISO codes or country names
+        # If agg_labor["country"] values are 3-letter codes, use isocode matching
+        sample_country = agg_labor["country"].iloc[0] if len(agg_labor) > 0 else ""
+        use_isocode = len(str(sample_country)) == 3 and str(sample_country).isupper()
+        
+        if use_isocode and "isocode" in pwt.columns:
+            # Match on ISO codes
+            agg_labor = agg_labor.rename(columns={"country": "isocode"})
+            merged = agg_labor.merge(pwt, on=["isocode", "year"], how="inner")
+        else:
+            # Match on country names
+            merged = agg_labor.merge(pwt, on=["country", "year"], how="inner")
+        
+        logger.debug(f"PWT merge: {len(agg_labor)} labor obs -> {len(merged)} merged obs")
         
         return merged

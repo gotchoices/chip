@@ -57,8 +57,11 @@ Detailed tracking of completed and pending work items.
 - [x] Implement global aggregation (`pipeline/aggregate.py`)
 - [x] Create main runner with logging (`main.py`)
 - [x] Create Makefile for easy execution
-- [ ] Install dependencies and run pipeline
-- [ ] Validate: reproduce $2.53 result within tolerance
+- [x] Fix ILOSTAT API (switched to rplumber endpoint)
+- [x] Add data_source config option (original/api/cache)
+- [x] Add time_weighting config option (all_years/recent_only/rolling/exponential)
+- [x] Validate: reproduce $2.56 result with `data_source: "original"`
+- [ ] Refactor: Create explicit data normalization layer for ILOSTAT formats
 - [ ] Generate weighting comparison data for `weighting-analysis.md`
 
 ---
@@ -128,17 +131,16 @@ Detailed tracking of completed and pending work items.
 
 ## Immediate Next Steps
 
-1. **Run the reproduction pipeline**
-   ```bash
-   cd /Users/kyle/share/devel/chip/reproduction
-   make setup
-   source .venv/bin/activate
-   cp ../secrets.example.toml ../secrets.toml
-   # Edit ../secrets.toml to add FRED API key
-   make run
-   ```
-2. **Validate reproduction** — confirm result is within 5% of $2.53
+1. **Refactor data normalization layer** — create explicit `ILOSTATNormalizer` class
+2. **Test with API data** — verify fresh API data produces reasonable results
 3. **Complete weighting-analysis.md Section 4** — use reproduction data for empirical comparison
+
+## Recent Accomplishments
+
+- ✅ Reproduction validated: $2.56/hour with `data_source: "original"` (vs $2.53 target)
+- ✅ ILOSTAT API fixed (switched from broken SDMX to working rplumber endpoint)
+- ✅ Added configuration knobs: `data_source`, `time_weighting`, date ranges
+- ✅ Country summary CSV output added to reports
 
 ---
 

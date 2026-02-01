@@ -176,6 +176,15 @@ def run_pipeline(config: dict, output_dir: Path, dry_run: bool = False) -> dict:
         
         # Step 6: Save outputs
         with ctx.step("Save outputs"):
+            reports_dir = output_dir / "reports"
+            reports_dir.mkdir(parents=True, exist_ok=True)
+            
+            if not dry_run:
+                # Always save country summary
+                country_summary = aggregator.get_country_contributions(mpl_data)
+                country_summary.to_csv(reports_dir / f"country_summary_{run_id}.csv", index=False)
+                logger.info(f"Country summary saved: {len(country_summary)} countries")
+            
             if config.get("output", {}).get("save_intermediate", False) and not dry_run:
                 # Save intermediate datasets
                 intermediate_dir = output_dir / "intermediate"

@@ -57,6 +57,9 @@ clean:
 	find . -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true
 	find . -type f -name "*.pyc" -delete
 
+realclean: clean
+	rm -rf output/reports/*
+
 test:
 	@if [ -f .venv/bin/pytest ]; then .venv/bin/pytest; else pytest; fi
 

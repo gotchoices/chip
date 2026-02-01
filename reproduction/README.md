@@ -74,11 +74,103 @@ reproduction/
 
 ## Configuration
 
-See `config.yaml` for all parameters including:
-- Date range (1992-2019 for original study)
-- Country exclusions
-- Outlier treatment
-- Weighting scheme
+All parameters are in `config.yaml`. Here are the key "knobs":
+
+### Data Source (`data_source`)
+
+Controls where data comes from:
+
+| Value | Behavior |
+|-------|----------|
+| `"original"` | Use local files from original study (for strict reproduction) |
+| `"api"` | Always fetch fresh data from APIs (ignore cache) |
+| `"cache"` | Use cache if available, otherwise fetch (default) |
+
+```yaml
+data_source: "original"  # For reproduction: $2.56
+data_source: "api"       # For fresh estimates
+```
+
+### Date Range (`dates`)
+
+```yaml
+dates:
+  start_year: 1992    # First year to include
+  end_year: 2019      # Last year to include (extend to 2025 for recent data)
+  deflator_base_year: 2017  # Base year for real wage calculation
+```
+
+### Time Weighting (`aggregation.time_weighting`)
+
+How to aggregate multi-year data to country averages:
+
+| Value | Behavior |
+|-------|----------|
+| `"all_years"` | Simple average (original methodology) |
+| `"recent_only"` | Use only the most recent year per country |
+| `"rolling"` | Use only last N years (see `rolling_window_years`) |
+| `"exponential"` | Weight by recency with decay (see `half_life_years`) |
+
+```yaml
+aggregation:
+  time_weighting: "all_years"     # Original methodology
+  rolling_window_years: 5         # For "rolling" mode
+  half_life_years: 3              # For "exponential" mode
+```
+
+### Global Weighting (`aggregation.primary_weight`)
+
+How to aggregate countries to global CHIP:
+
+| Value | Behavior |
+|-------|----------|
+| `"gdp"` | Weight by GDP (original methodology) |
+| `"labor"` | Weight by labor force size |
+| `"unweighted"` | Equal weight per country |
+
+### Country Exclusions (`exclusions`)
+
+```yaml
+exclusions:
+  countries:           # Exclude entire countries
+    - "Cambodia"
+  country_years:       # Exclude specific observations
+    - country: "Albania"
+      year: 2012
+```
+
+### Output Options (`output`)
+
+```yaml
+output:
+  log_level: "INFO"          # DEBUG, INFO, WARNING, ERROR
+  save_intermediate: true    # Save CSV files for inspection
+```
+
+## Example Configurations
+
+**Strict reproduction of original study:**
+```yaml
+data_source: "original"
+dates:
+  start_year: 1992
+  end_year: 2019
+aggregation:
+  time_weighting: "all_years"
+  primary_weight: "gdp"
+```
+
+**Fresh estimate with recent data:**
+```yaml
+data_source: "api"
+dates:
+  start_year: 2015
+  end_year: 2025
+aggregation:
+  time_weighting: "rolling"
+  rolling_window_years: 5
+  primary_weight: "gdp"
+```
 
 ## Logging
 
@@ -87,13 +179,30 @@ All pipeline steps are logged to `output/logs/`. Summary report generated at `ou
 ## Output
 
 After a successful run:
-- `output/reports/report_YYYYMMDD_HHMMSS.md` - Human-readable summary
-- `output/reports/report_YYYYMMDD_HHMMSS.json` - Machine-readable results
-- `output/logs/chip_YYYYMMDD_HHMMSS.log` - Full log file
 
-If `save_intermediate: true` in config:
-- `output/intermediate/clean_data_*.csv` - Merged and cleaned dataset
-- `output/intermediate/mpl_data_*.csv` - MPL and distortion factors
+| File | Contents |
+|------|----------|
+| `output/reports/report_*.md` | Human-readable summary |
+| `output/reports/report_*.json` | Machine-readable results |
+| `output/reports/country_summary_*.csv` | Per-country CHIP values |
+| `output/logs/chip_*.log` | Full pipeline log |
+
+If `save_intermediate: true`:
+
+| File | Contents |
+|------|----------|
+| `output/intermediate/clean_data_*.csv` | Merged and cleaned dataset |
+| `output/intermediate/mpl_data_*.csv` | MPL, distortion factors, adjusted wages |
+
+## Expected Results
+
+| Configuration | CHIP Value | Notes |
+|---------------|------------|-------|
+| `data_source: "original"` | ~$2.56 | Matches original study |
+| `data_source: "api"` (current) | ~$1.19 | Fresh data, different coverage |
+
+The difference is expected — statistical agencies revise historical data, so "Italy 2010" 
+downloaded in 2022 ≠ "Italy 2010" downloaded in 2026.
 
 ## Data Flow
 

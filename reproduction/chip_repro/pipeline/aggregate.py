@@ -85,22 +85,30 @@ class Aggregator:
     def _aggregate_to_country(self, data: pd.DataFrame) -> pd.DataFrame:
         """Aggregate time series data to country-level means."""
         
-        # Group by country and calculate means
-        agg_funcs = {
-            "adjusted_wage": "mean",
-            "elementary_wage": "mean",
-            "distortion_factor": "mean",
-            "mpl": "mean",
-            "labor_hours": "mean",
-            "effective_labor": "mean",
-        }
+        # Apply time weighting filter/weights
+        data = self._apply_time_weighting(data)
         
-        # Add GDP/output columns if present
-        for col in ["rgdpna", "cgdpo"]:
-            if col in data.columns:
-                agg_funcs[col] = "mean"
-        
-        country_data = data.groupby("country").agg(agg_funcs).reset_index()
+        # Group by country and calculate (weighted) means
+        if "time_weight" in data.columns:
+            # Weighted aggregation
+            country_data = self._weighted_country_agg(data)
+        else:
+            # Simple mean aggregation
+            agg_funcs = {
+                "adjusted_wage": "mean",
+                "elementary_wage": "mean",
+                "distortion_factor": "mean",
+                "mpl": "mean",
+                "labor_hours": "mean",
+                "effective_labor": "mean",
+            }
+            
+            # Add GDP/output columns if present
+            for col in ["rgdpna", "cgdpo"]:
+                if col in data.columns:
+                    agg_funcs[col] = "mean"
+            
+            country_data = data.groupby("country").agg(agg_funcs).reset_index()
         
         # Keep ISO codes if available
         if "isocode" in data.columns:
@@ -112,6 +120,59 @@ class Aggregator:
             )
         
         return country_data
+    
+    def _apply_time_weighting(self, data: pd.DataFrame) -> pd.DataFrame:
+        """Apply time weighting strategy to filter or weight observations."""
+        method = self.agg_config.get("time_weighting", "all_years")
+        
+        if method == "all_years":
+            # Original methodology: use all years equally
+            return data
+        
+        elif method == "recent_only":
+            # Use only the most recent year per country
+            idx = data.groupby("country")["year"].idxmax()
+            return data.loc[idx].copy()
+        
+        elif method == "rolling":
+            # Use only last N years
+            window = self.agg_config.get("rolling_window_years", 5)
+            max_year = data["year"].max()
+            min_year = max_year - window + 1
+            logger.info(f"Using rolling window: {min_year}-{max_year}")
+            return data[data["year"] >= min_year].copy()
+        
+        elif method == "exponential":
+            # Exponential decay weighting
+            half_life = self.agg_config.get("half_life_years", 3)
+            max_year = data["year"].max()
+            data = data.copy()
+            # Weight = 0.5^((max_year - year) / half_life)
+            data["time_weight"] = np.power(0.5, (max_year - data["year"]) / half_life)
+            logger.info(f"Applied exponential weighting (half-life: {half_life} years)")
+            return data
+        
+        else:
+            logger.warning(f"Unknown time_weighting method: {method}, using all_years")
+            return data
+    
+    def _weighted_country_agg(self, data: pd.DataFrame) -> pd.DataFrame:
+        """Aggregate to country level using time weights."""
+        result_rows = []
+        
+        for country, group in data.groupby("country"):
+            weights = group["time_weight"]
+            weight_sum = weights.sum()
+            
+            row = {"country": country}
+            for col in ["adjusted_wage", "elementary_wage", "distortion_factor", 
+                        "mpl", "labor_hours", "effective_labor", "rgdpna", "cgdpo"]:
+                if col in group.columns:
+                    row[col] = (group[col] * weights).sum() / weight_sum
+            
+            result_rows.append(row)
+        
+        return pd.DataFrame(result_rows)
     
     def _calculate_weights(self, data: pd.DataFrame) -> pd.DataFrame:
         """Calculate weighting factors for each country."""
@@ -171,21 +232,41 @@ class Aggregator:
         
         Useful for understanding which countries drive the result.
         """
+        # Count years per country
+        year_counts = data.groupby("country")["year"].agg(["min", "max", "count"])
+        year_counts.columns = ["year_min", "year_max", "n_years"]
+        year_counts = year_counts.reset_index()
+        
         country_data = self._aggregate_to_country(data)
         country_data = self._calculate_weights(country_data)
         
-        # Calculate contribution
+        # Add year info
+        country_data = country_data.merge(year_counts, on="country", how="left")
+        
+        # Calculate contribution to global CHIP
         country_data["contribution_gdp"] = (
             country_data["adjusted_wage"] * country_data["weight_gdp"]
         )
         
-        # Sort by contribution
-        country_data = country_data.sort_values("contribution_gdp", ascending=False)
+        # Sort by CHIP value (adjusted_wage)
+        country_data = country_data.sort_values("adjusted_wage", ascending=False)
         
-        return country_data[[
-            "country", 
-            "isocode" if "isocode" in country_data.columns else "country",
-            "adjusted_wage", 
-            "weight_gdp", 
-            "contribution_gdp"
-        ]]
+        # Select and rename columns for clarity
+        output_cols = ["country"]
+        if "isocode" in country_data.columns:
+            output_cols.append("isocode")
+        output_cols.extend([
+            "adjusted_wage",      # CHIP value for this country
+            "elementary_wage",    # Raw unskilled wage
+            "distortion_factor",  # MPL/wage correction
+            "weight_gdp",         # GDP weight in global average
+            "contribution_gdp",   # This country's contribution to global CHIP
+            "n_years",            # Number of years of data
+            "year_min",           # Earliest year
+            "year_max",           # Latest year
+        ])
+        
+        # Only include columns that exist
+        output_cols = [c for c in output_cols if c in country_data.columns]
+        
+        return country_data[output_cols]

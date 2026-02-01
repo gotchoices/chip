@@ -6,6 +6,13 @@ study:
   description: "Reproduction of original CHIP valuation study"
   version: "1.0.0"
 
+# Data source preference
+# Options:
+#   "original" - Use local files from original study (for strict reproduction)
+#   "api"      - Fetch fresh data from APIs (for new estimates)
+#   "cache"    - Use cached data if available, otherwise fetch (default)
+data_source: "original"
+
 # Date range for analysis
 dates:
   start_year: 1992
@@ -57,7 +64,7 @@ exclusions:
 
 # ISCO occupation mapping
 occupations:
-  # Map ISCO codes to standardized names
+  # Map ISCO-08 codes to standardized names
   isco08:
     "OCU_ISCO08_1": "Managers"
     "OCU_ISCO08_2": "Professionals"
@@ -68,6 +75,18 @@ occupations:
     "OCU_ISCO08_7": "Craftsmen"
     "OCU_ISCO08_8": "Operators"
     "OCU_ISCO08_9": "Elementary"
+  
+  # Map ISCO-88 codes (used by some countries)
+  isco88:
+    "OCU_ISCO88_1": "Managers"
+    "OCU_ISCO88_2": "Professionals"
+    "OCU_ISCO88_3": "Technicians"
+    "OCU_ISCO88_4": "Clerks"
+    "OCU_ISCO88_5": "Salesmen"
+    "OCU_ISCO88_6": "Agforestry"
+    "OCU_ISCO88_7": "Craftsmen"
+    "OCU_ISCO88_8": "Operators"
+    "OCU_ISCO88_9": "Elementary"
   
   # Reference category for skill weights
   reference_category: "Managers"
@@ -97,6 +116,16 @@ aggregation:
   alternative_weights:
     - "labor"
     - "unweighted"
+  
+  # Time weighting for multi-year data
+  # Options:
+  #   "all_years"    - Simple average across all years (original methodology)
+  #   "recent_only"  - Use only most recent year per country
+  #   "rolling"      - Use only last N years (see rolling_window_years)
+  #   "exponential"  - Exponential decay weighting (see half_life_years)
+  time_weighting: "all_years"
+  rolling_window_years: 5
+  half_life_years: 3
 
 # Output settings
 output:

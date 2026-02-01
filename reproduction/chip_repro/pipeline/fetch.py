@@ -36,6 +36,10 @@ class DataFetcher:
         
         self.dates = config.get("dates", {})
         self.sources = config.get("sources", {})
+        
+        # Data source preference: "original", "api", or "cache"
+        self.data_source = config.get("data_source", "cache")
+        logger.info(f"Data source preference: {self.data_source}")
     
     def fetch_all(self) -> dict[str, pd.DataFrame]:
         """
@@ -78,28 +82,44 @@ class DataFetcher:
         """
         Fetch data from ILOSTAT API.
         
-        The ILOSTAT API provides data in SDMX format.
-        See: https://ilostat.ilo.org/resources/sdmx-tools/
+        Uses the rplumber API which provides data in CSV format.
+        See: https://ilostat.ilo.org/data/
+        
+        Respects data_source config:
+        - "original": Always use local files from original study
+        - "api": Always fetch fresh from API (skip cache)
+        - "cache": Use cache if available, otherwise fetch
         """
+        project_root = Path(__file__).parent.parent.parent.parent
+        local_files = {
+            "employment": project_root / "original/Data/employment.csv",
+            "wages": project_root / "original/Data/wages.csv",
+            "hours": project_root / "original/Data/hoursworked.csv",
+        }
+        
+        # If data_source is "original", use local files directly
+        if self.data_source == "original":
+            local_path = local_files.get(name)
+            if local_path and local_path.exists():
+                logger.info(f"Using original study data: {local_path}")
+                return pd.read_csv(local_path)
+            else:
+                raise RuntimeError(f"Original data file not found: {local_path}")
+        
         cache_file = self._get_cache_path(f"ilostat_{name}.parquet")
         
-        if cache_file and cache_file.exists():
+        # Check cache (unless data_source is "api" which forces fresh fetch)
+        if self.data_source != "api" and cache_file and cache_file.exists():
             logger.debug(f"Loading {name} from cache: {cache_file}")
             return pd.read_parquet(cache_file)
         
-        # ILOSTAT bulk download URL
-        # For large datasets, we use the bulk download facility
-        url = f"https://ilostat.ilo.org/sdmx/rest/data/ILO,DF_{dataset_id}"
+        # Fetch from API
+        url = f"https://rplumber.ilo.org/data/indicator/?id={dataset_id}&format=csv"
         
         logger.info(f"Fetching ILOSTAT dataset: {dataset_id}")
         
         try:
-            # Try the SDMX API first
-            response = requests.get(
-                url,
-                headers={"Accept": "application/vnd.sdmx.data+csv;version=1.0.0"},
-                timeout=120,
-            )
+            response = requests.get(url, timeout=300)  # Large dataset, longer timeout
             response.raise_for_status()
             
             # Parse CSV response
@@ -109,16 +129,6 @@ class DataFetcher:
         except requests.RequestException as e:
             logger.warning(f"ILOSTAT API failed: {e}")
             logger.info("Falling back to local data files...")
-            
-            # Path to project root (chip/)
-            project_root = Path(__file__).parent.parent.parent.parent
-            
-            # Fallback to local files from original study
-            local_files = {
-                "employment": project_root / "original/Data/employment.csv",
-                "wages": project_root / "original/Data/wages.csv",
-                "hours": project_root / "original/Data/hoursworked.csv",
-            }
             
             local_path = local_files.get(name)
             if local_path and local_path.exists():
@@ -173,6 +183,11 @@ class DataFetcher:
                 df = pd.read_excel(local_path)
             else:
                 raise RuntimeError(f"PWT download failed and no local fallback at {local_path}")
+        
+        # Standardize column names
+        df.columns = df.columns.str.lower()
+        if "countrycode" in df.columns:
+            df = df.rename(columns={"countrycode": "isocode"})
         
         # Select required variables
         required_vars = ["country", "isocode", "year"]
