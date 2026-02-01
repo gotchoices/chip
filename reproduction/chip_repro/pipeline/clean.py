@@ -15,6 +15,8 @@ from typing import Any
 import pandas as pd
 import numpy as np
 
+from .normalize import ILOSTATNormalizer, PWTNormalizer
+
 logger = logging.getLogger("chip.clean")
 
 
@@ -34,6 +36,13 @@ class DataCleaner:
         self.dates = config.get("dates", {})
         
         self._exclusion_count = 0
+        
+        # Initialize normalizers
+        occupation_mapping = {}
+        for isco_version in ["isco08", "isco88", "isco68"]:
+            occupation_mapping.update(self.occupations.get(isco_version, {}))
+        self._ilostat_normalizer = ILOSTATNormalizer(occupation_mapping)
+        self._pwt_normalizer = PWTNormalizer()
     
     def process(self, raw_data: dict[str, pd.DataFrame]) -> pd.DataFrame:
         """
@@ -84,87 +93,50 @@ class DataCleaner:
         return self._exclusion_count
     
     def _clean_ilostat(self, df: pd.DataFrame, data_type: str) -> pd.DataFrame:
-        """Clean ILOSTAT data to standard format."""
-        df = df.copy()
+        """
+        Clean ILOSTAT data to standard format.
         
-        # The ILOSTAT data has various column naming conventions
-        # Standardize to: country, year, sex, skill, value
-        
-        # Identify columns
-        # Note: Local CSV files have ".label" suffix with human-readable values
-        # API returns raw codes without ".label" suffix
-        col_map = {}
-        for col in df.columns:
-            col_lower = col.lower()
-            if "ref_area" in col_lower:
-                # ".label" means country names, plain "ref_area" means ISO codes
-                if ".label" in col_lower:
-                    col_map[col] = "country"  # Local CSV: country names
-                else:
-                    col_map[col] = "isocode"  # API: ISO codes
-            elif col_lower == "country":
-                col_map[col] = "country"
-            elif "time" in col_lower or "year" in col_lower:
-                col_map[col] = "year"
-            elif "sex" in col_lower:
-                col_map[col] = "sex"
-            elif "classif1" in col_lower or "ocu" in col_lower or "skill" in col_lower:
-                col_map[col] = "skill"
-            elif "obs_value" in col_lower or "value" in col_lower:
-                col_map[col] = "value"
-            elif "classif2" in col_lower and data_type == "wages":
-                col_map[col] = "currency"
-        
-        df = df.rename(columns=col_map)
-        
-        # Filter to total sex (not male/female breakdown)
-        if "sex" in df.columns:
-            sex_filter = df["sex"].str.contains("Total|SEX_T", case=False, na=False)
-            df = df[sex_filter]
-        
-        # Ensure year is numeric
-        if "year" in df.columns:
-            df["year"] = pd.to_numeric(df["year"], errors="coerce")
+        Uses normalizer for column renaming only. Occupation filtering
+        is done in _standardize_occupations to match original methodology.
+        """
+        # Use normalizer for column name standardization only
+        normalized = self._ilostat_normalizer.normalize(df, data_type)
         
         # Apply date range filter
         start_year = self.dates.get("start_year", 1970)
         end_year = self.dates.get("end_year", 2025)
-        if "year" in df.columns:
-            df = df[(df["year"] >= start_year) & (df["year"] <= end_year)]
+        if "year" in normalized.columns:
+            normalized = normalized[
+                (normalized["year"] >= start_year) & (normalized["year"] <= end_year)
+            ]
         
-        # Rename value column based on data type
-        value_name = {"employment": "employed", "wages": "wage", "hours": "hours"}
-        if "value" in df.columns:
-            df = df.rename(columns={"value": value_name.get(data_type, "value")})
+        logger.debug(
+            f"Cleaned {data_type}: {len(normalized)} rows, "
+            f"format: {self._ilostat_normalizer.detect_format(df)}"
+        )
         
-        return df
+        return normalized
     
     def _clean_pwt(self, df: pd.DataFrame) -> pd.DataFrame:
-        """Clean Penn World Tables data."""
-        df = df.copy()
-        
-        # Standardize column names
-        df.columns = df.columns.str.lower()
-        
-        # Rename for consistency
-        rename_map = {
-            "countrycode": "isocode",
-            "country": "country",
-        }
-        df = df.rename(columns=rename_map)
+        """Clean Penn World Tables data using normalizer."""
+        # Use normalizer for column standardization
+        normalized = self._pwt_normalizer.normalize(df)
         
         # Filter to required years
         start_year = self.dates.get("start_year", 1970)
         end_year = self.dates.get("end_year", 2025)
-        df = df[(df["year"] >= start_year) & (df["year"] <= end_year)]
+        normalized = normalized[
+            (normalized["year"] >= start_year) & (normalized["year"] <= end_year)
+        ]
         
         # Harmonize country names to match ILOSTAT
-        df = self._harmonize_country_names(df)
+        normalized = self._harmonize_country_names(normalized)
         
         # Drop rows where capital and GDP are both missing
-        df = df.dropna(subset=["cn", "rnna"], how="all")
+        if "cn" in normalized.columns and "rnna" in normalized.columns:
+            normalized = normalized.dropna(subset=["cn", "rnna"], how="all")
         
-        return df
+        return normalized
     
     def _clean_deflator(self, df: pd.DataFrame) -> pd.DataFrame:
         """Clean GDP deflator data."""
@@ -183,19 +155,27 @@ class DataCleaner:
         return df[["year", "deflator", "deflator_index"]]
     
     def _standardize_occupations(self, df: pd.DataFrame) -> pd.DataFrame:
-        """Map ISCO occupation codes to standardized names."""
+        """
+        Map ISCO occupation codes/text to standardized names.
+        
+        This method uses the EXACT same text patterns as the original
+        reproduction code to ensure we match the same occupations.
+        """
         if "skill" not in df.columns:
+            logger.warning("No skill column found for occupation mapping")
             return df
         
         df = df.copy()
         
-        # Build mapping from config
+        # Build mapping from config (for API data with codes like OCU_ISCO08_1)
         isco_map = {}
         for isco_version in ["isco08", "isco88", "isco68"]:
             version_map = self.occupations.get(isco_version, {})
             isco_map.update(version_map)
         
-        # Also handle text descriptions
+        # Text patterns for local CSV data (bulk downloads have text labels)
+        # These are the EXACT patterns from the original reproduction code
+        # that produced $2.56 — do not modify for reproduction fidelity
         text_map = {
             "1. Managers": "Managers",
             "Legislators, senior officials and managers": "Managers",
@@ -210,18 +190,18 @@ class DataCleaner:
             "9. Elementary occupations": "Elementary",
         }
         
-        # Apply mapping
+        # Apply mapping using substring matching (matches original behavior)
         def map_occupation(skill_str):
             if pd.isna(skill_str):
                 return None
             
             skill_str = str(skill_str)
             
-            # Try direct code match
+            # Try direct code match first (for API data)
             if skill_str in isco_map:
                 return isco_map[skill_str]
             
-            # Try text match
+            # Try text pattern match (for local CSV data)
             for pattern, name in text_map.items():
                 if pattern.lower() in skill_str.lower():
                     return name
@@ -276,8 +256,16 @@ class DataCleaner:
     ) -> pd.DataFrame:
         """Merge employment, wages, and hours data."""
         
-        # Determine key column (isocode for API data, country for local CSV)
-        key_col = "isocode" if "isocode" in employment.columns else "country"
+        # Determine key column based on which has valid values
+        # Normalizer sets "country" for bulk CSV, "isocode" for API
+        if "country" in employment.columns and employment["country"].notna().any():
+            key_col = "country"
+        elif "isocode" in employment.columns and employment["isocode"].notna().any():
+            key_col = "isocode"
+        else:
+            raise ValueError("No valid country or isocode column found in employment data")
+        
+        logger.debug(f"Using '{key_col}' as merge key")
         
         # Prepare each dataset
         emp_cols = [key_col, "year", "occupation", "employed"]
@@ -285,12 +273,15 @@ class DataCleaner:
         
         # Wages may have currency dimension - filter to USD only (per original study)
         if "currency" in wages.columns:
-            # Original R code uses: filter(Currency == "CUR_TYPE_USD")
-            # Local CSV has: "Currency: U.S. dollars"
-            # API has: "CUR_TYPE_USD"
-            wages = wages[wages["currency"].str.contains("USD|U\\.S\\. dollars", case=False, na=False, regex=True)]
-            # Exclude PPP to avoid duplicates
-            wages = wages[~wages["currency"].str.contains("PPP", case=False, na=False)]
+            # Original R code uses: filter(classif2 == "CUR_TYPE_USD")
+            # Filter to USD and exclude PPP to avoid duplicates
+            usd_mask = wages["currency"].str.contains(
+                "USD|U\\.S\\. dollars", case=False, na=False, regex=True
+            )
+            ppp_mask = wages["currency"].str.contains("PPP", case=False, na=False)
+            wages = wages[usd_mask & ~ppp_mask]
+            logger.debug(f"Filtered to {len(wages)} USD wage observations")
+        
         wage_cols = [key_col, "year", "occupation", "wage"]
         wage = wages[[c for c in wage_cols if c in wages.columns]].copy()
         

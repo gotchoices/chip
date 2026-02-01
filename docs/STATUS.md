@@ -61,7 +61,8 @@ Detailed tracking of completed and pending work items.
 - [x] Add data_source config option (original/api/cache)
 - [x] Add time_weighting config option (all_years/recent_only/rolling/exponential)
 - [x] Validate: reproduce $2.56 result with `data_source: "original"`
-- [ ] Refactor: Create explicit data normalization layer for ILOSTAT formats
+- [x] Refactor: Create explicit data normalization layer (`pipeline/normalize.py`)
+- [ ] Test: Verify API data source produces reasonable results
 - [ ] Generate weighting comparison data for `weighting-analysis.md`
 
 ---
@@ -131,12 +132,13 @@ Detailed tracking of completed and pending work items.
 
 ## Immediate Next Steps
 
-1. **Refactor data normalization layer** — create explicit `ILOSTATNormalizer` class
-2. **Test with API data** — verify fresh API data produces reasonable results
-3. **Complete weighting-analysis.md Section 4** — use reproduction data for empirical comparison
+1. **Test with API data** — verify fresh API data produces reasonable results
+2. **Complete weighting-analysis.md Section 4** — use reproduction data for empirical comparison
+3. **Extend time series** — test with more recent data years
 
 ## Recent Accomplishments
 
+- ✅ Created explicit `ILOSTATNormalizer` and `PWTNormalizer` classes (`pipeline/normalize.py`)
 - ✅ Reproduction validated: $2.56/hour with `data_source: "original"` (vs $2.53 target)
 - ✅ ILOSTAT API fixed (switched from broken SDMX to working rplumber endpoint)
 - ✅ Added configuration knobs: `data_source`, `time_weighting`, date ranges
