@@ -35,25 +35,48 @@ The original CHIP valuation research (R-based, read-only reference):
 - **ICT extension**: Explored whether ICT capital explains developed/developing wage gaps
 - See [`original/README.md`](original/README.md) for details
 
-## Objectives
+## Project Phases
 
-### 1. Reproduce Original Study in Python
-Validate understanding by reproducing the $2.53 result using:
-- The original source data (ILOSTAT, PWT, FRED)
-- The same Cobb-Douglas / distortion-factor methodology
-- Python instead of R
+### Phase 1: Foundation (Current)
+Understand, document, and validate the original study.
 
-Success = matching the original result within reasonable tolerance.
+- **Critical review** of original methodology ([`docs/original-review.md`](docs/original-review.md))
+- **Weighting analysis** — explore GDP vs. labor-force weighting implications ([`docs/weighting-analysis.md`](docs/weighting-analysis.md))
+- **Python reproduction** — replicate $2.53 result using same data/methodology
 
-### 2. Platform & Tooling
-**Decision: Python** (not Rust) for this project.
+### Phase 2: Validation & Sensitivity
+Test robustness of the original approach.
+
+- Sensitivity analysis across weighting schemes
+- Informal economy adjustments (where data permits)
+- Temporal stability analysis
+
+### Phase 3: Alternative Models
+Explore whether different economic models yield materially different results.
+
+- CES production functions
+- Stochastic frontier analysis
+- Direct wage comparison methods
+- Model comparison framework ([`docs/alternative-models.md`](docs/alternative-models.md))
+
+### Phase 4: Automation
+Create a sustainable, periodic update process.
+
+- Automated data fetching from ILOSTAT, PWT, FRED APIs
+- Anomaly detection for data quality issues
+- Reproducible pipeline with version control
+- Target: Annual updates with minimal manual intervention
+
+## Platform & Tooling
+
+**Decision: Python** for all new work.
 - Mature data science ecosystem (pandas, statsmodels, linearmodels)
-- Excellent API clients for data sources
+- Excellent API clients for data sources (ilostat, pandas-datareader)
 - Faster iteration than compiled languages
 - Sufficient performance for periodic batch updates
 
-### 3. Data Sources
-Document and evaluate all data sources:
+## Data Sources
+
 | Source | Data | Notes |
 |--------|------|-------|
 | **ILOSTAT** | Employment, wages, hours by occupation | Primary labor data |
@@ -62,40 +85,9 @@ Document and evaluate all data sources:
 | **World Bank API** | Alternative/supplementary | To evaluate |
 | **OECD.Stat** | ICT capital, productivity | Used in ICT extension |
 
-### 4. Methodology Review
-Produce a formal review document (`docs/original-review.md`) covering:
-- Strengths and limitations of the original approach
-- **Definition alignment**: How well does the methodology match the canonical CHIP definition?
-  - "Nominal unskilled labor" vs. ISCO-08 "elementary occupations"
-  - Distortion factor as proxy for "free market" equilibrium
-  - Capital separation via Cobb-Douglas
-- Alternative models worth exploring (CES, stochastic frontier, etc.)
-- Weighting scheme implications (GDP vs. labor-force weighted)
-- Informal economy and data coverage issues
-
-### 5. Alternative Models
-Can different economic models be evaluated via the same pipeline?
-- Fetch data → Clean → Apply model → Summarize
-- Models as swappable modules
-- Compare results across approaches
-
-### 6. Automation
-Create a sustainable, periodic update process:
-- Automated data fetching from APIs
-- Anomaly detection for data quality issues
-- Reproducible pipeline with version control
-- AI-assisted review of results and outliers
-- Target: Annual updates with minimal manual intervention
-
 ## Current Status
 
-- [x] Original study analyzed and documented
-- [x] Platform decision: Python
-- [ ] Reproduce original study in Python
-- [ ] Methodology review document
-- [ ] Automated data pipeline
-- [ ] Alternative model experiments
-- [ ] Production estimation workflow
+**Phase 1 in progress.** See [`docs/STATUS.md`](docs/STATUS.md) for detailed tracking.
 
 ## Setup
 
