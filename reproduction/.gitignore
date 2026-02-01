@@ -11,7 +11,7 @@ __pycache__/
 output/logs/
 output/intermediate/
 output/cache/
-output/reports/
+#output/reports/
 
 # Build artifacts
 *.egg-info/

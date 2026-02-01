@@ -1,43 +1,43 @@
 {
   "pipeline": "CHIP Reproduction",
-  "start_time": "2026-02-01T14:14:46.884935",
-  "end_time": "2026-02-01T14:14:47.738034",
-  "duration_seconds": 0.853099,
+  "start_time": "2026-02-01T16:03:39.195320",
+  "end_time": "2026-02-01T16:04:39.363352",
+  "duration_seconds": 60.168032,
   "steps": [
     {
       "name": "Fetch data from sources",
-      "start_time": "2026-02-01 14:14:46.885941",
-      "end_time": "2026-02-01 14:14:47.154409",
+      "start_time": "2026-02-01 16:03:39.196216",
+      "end_time": "2026-02-01 16:04:38.767489",
       "status": "completed"
     },
     {
       "name": "Clean and merge data",
-      "start_time": "2026-02-01 14:14:47.154424",
-      "end_time": "2026-02-01 14:14:47.557813",
+      "start_time": "2026-02-01 16:04:38.767507",
+      "end_time": "2026-02-01 16:04:39.169389",
       "status": "completed"
     },
     {
       "name": "Estimate Cobb-Douglas production function",
-      "start_time": "2026-02-01 14:14:47.557826",
-      "end_time": "2026-02-01 14:14:47.662979",
+      "start_time": "2026-02-01 16:04:39.169400",
+      "end_time": "2026-02-01 16:04:39.271950",
       "status": "completed"
     },
     {
       "name": "Calculate distortion factors",
-      "start_time": "2026-02-01 14:14:47.662994",
-      "end_time": "2026-02-01 14:14:47.674529",
+      "start_time": "2026-02-01 16:04:39.271959",
+      "end_time": "2026-02-01 16:04:39.282078",
       "status": "completed"
     },
     {
       "name": "Aggregate to global CHIP value",
-      "start_time": "2026-02-01 14:14:47.674550",
-      "end_time": "2026-02-01 14:14:47.691779",
+      "start_time": "2026-02-01 16:04:39.282087",
+      "end_time": "2026-02-01 16:04:39.300694",
       "status": "completed"
     },
     {
       "name": "Save outputs",
-      "start_time": "2026-02-01 14:14:47.691789",
-      "end_time": "2026-02-01 14:14:47.738019",
+      "start_time": "2026-02-01 16:04:39.300704",
+      "end_time": "2026-02-01 16:04:39.363335",
       "status": "completed"
     }
   ],
@@ -56,5 +56,5 @@
     "chip_max": 6.74962035898784,
     "chip_median": 1.3379870359564745
   },
-  "run_id": "20260201_141446"
+  "run_id": "20260201_160339"
 }

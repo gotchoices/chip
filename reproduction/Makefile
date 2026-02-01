@@ -3,7 +3,7 @@
 # Use python3 by default (macOS), override with: make PYTHON=python ...
 PYTHON ?= python3
 
-.PHONY: help setup install run dry-run clean test lint format
+.PHONY: help setup install run dry-run clean realclean test lint format
 
 help:
 	@echo "CHIP Reproduction Pipeline"
@@ -12,7 +12,8 @@ help:
 	@echo "  make setup      Create venv and install dependencies (run first)"
 	@echo "  make run        Run the full reproduction pipeline"
 	@echo "  make dry-run    Validate config without fetching data"
-	@echo "  make clean      Remove generated files"
+	@echo "  make clean      Remove logs and intermediate files"
+	@echo "  make realclean  Remove all output including cache (forces re-download)"
 	@echo "  make test       Run tests"
 	@echo "  make lint       Run linting"
 	@echo ""
@@ -59,6 +60,7 @@ clean:
 
 realclean: clean
 	rm -rf output/reports/*
+	rm -rf output/cache/*
 
 test:
 	@if [ -f .venv/bin/pytest ]; then .venv/bin/pytest; else pytest; fi
