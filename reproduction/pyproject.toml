@@ -1,0 +1,51 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "chip-reproduction"
+version = "0.1.0"
+description = "Python reproduction of the original CHIP valuation study"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pandas>=2.0",
+    "numpy>=1.24",
+    "statsmodels>=0.14",
+    "linearmodels>=5.0",
+    "pyyaml>=6.0",
+    "requests>=2.28",
+    "pandas-datareader>=0.10",
+    "openpyxl>=3.1",        # For Excel file support
+    "xlrd>=2.0",            # For older Excel files
+    "tqdm>=4.65",           # Progress bars
+    "rich>=13.0",           # Nice logging output
+    "tomli>=2.0",           # For reading secrets.toml (Python <3.11)
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "black>=23.0",
+    "ruff>=0.1",
+    "ipython>=8.0",
+]
+
+[project.scripts]
+chip-reproduce = "chip_repro.main:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["chip_repro"]
+
+[tool.black]
+line-length = 100
+target-version = ["py310"]
+
+[tool.ruff]
+line-length = 100
+select = ["E", "F", "I", "UP"]
+ignore = ["E501"]  # Line length handled by black
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

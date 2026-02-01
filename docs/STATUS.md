@@ -49,12 +49,15 @@ Detailed tracking of completed and pending work items.
 - [ ] Content development — **DEFERRED to Phase 3**
 
 ### 1.6 Python Reproduction
-- [ ] Set up Python environment (requirements.txt / pyproject.toml)
-- [ ] Implement data fetching module (ILOSTAT, PWT, FRED)
-- [ ] Implement data cleaning pipeline
-- [ ] Implement Cobb-Douglas estimation
-- [ ] Implement distortion factor calculation
-- [ ] Implement global aggregation (multiple weighting schemes)
+- [x] Set up Python environment (`pyproject.toml`)
+- [x] Create config.yaml with study parameters
+- [x] Implement data fetching module (`pipeline/fetch.py`)
+- [x] Implement data cleaning pipeline (`pipeline/clean.py`)
+- [x] Implement Cobb-Douglas estimation (`pipeline/estimate.py`)
+- [x] Implement global aggregation (`pipeline/aggregate.py`)
+- [x] Create main runner with logging (`main.py`)
+- [x] Create Makefile for easy execution
+- [ ] Install dependencies and run pipeline
 - [ ] Validate: reproduce $2.53 result within tolerance
 - [ ] Generate weighting comparison data for `weighting-analysis.md`
 
@@ -125,9 +128,17 @@ Detailed tracking of completed and pending work items.
 
 ## Immediate Next Steps
 
-1. **Draft weighting-analysis.md** (Sections 1-3, 5) — theoretical content that doesn't require reproduction data
-2. **Set up Python environment** and begin reproduction work
-3. **Complete weighting-analysis.md Section 4** after reproduction generates comparison data
+1. **Run the reproduction pipeline**
+   ```bash
+   cd /Users/kyle/share/devel/chip/reproduction
+   make setup
+   source .venv/bin/activate
+   cp ../secrets.example.toml ../secrets.toml
+   # Edit ../secrets.toml to add FRED API key
+   make run
+   ```
+2. **Validate reproduction** — confirm result is within 5% of $2.53
+3. **Complete weighting-analysis.md Section 4** — use reproduction data for empirical comparison
 
 ---
 
