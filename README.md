@@ -22,10 +22,10 @@ chip/
 ├── reproduction/      # Python reproduction of original methodology
 ├── workbench/         # Exploratory analysis environment (active)
 │   ├── lib/           # Modular Python library
-│   └── scripts/       # Analysis scripts
+│   ├── scripts/       # Analysis scripts
+│   └── data/          # Cached data (gitignored, self-healing)
 ├── estimates/         # Production estimates (to be created)
-├── docs/              # Methodology reviews, papers, formal analysis
-└── data/              # Downloaded/cached data (gitignored)
+└── docs/              # Methodology reviews, papers, formal analysis
 ```
 
 ### `original/`

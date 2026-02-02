@@ -61,6 +61,24 @@ For Scenario B to emerge in a free market:
 - Or, workers must provide something AI cannot
 - Or, new forms of value exchange emerge that we cannot yet predict
 
+### 3.4 Cross-Country Evidence Today
+
+We need not speculate entirely—we can observe the reservation wage effect across countries *today*:
+
+**The US case**: American workers command higher wages than workers in developing countries doing equivalent tasks. Why? Not solely because of productivity differences. A significant factor is that American workers have *alternatives*:
+- Higher baseline standard of living
+- More leisure options and social safety nets
+- Greater opportunity cost of working
+
+**The implication**: In a country where abundance already exists (relative to global baseline), labor costs more. Workers with comfortable alternatives require more compensation to give up their time.
+
+**Extrapolating to AI-driven abundance**: If automation raises global living standards toward what wealthy countries enjoy today, we would expect:
+- Reservation wages to rise globally
+- The "floor" of acceptable compensation to increase
+- Human time to become more precious, not less
+
+This is not a guarantee—it depends on whether abundance is distributed or concentrated. But it demonstrates that the "labor becomes more valuable" scenario is not merely theoretical; it has empirical precedent.
+
 ---
 
 ## 4. The Bifurcation Hypothesis
