@@ -77,10 +77,63 @@ from lib.logging_config import setup_logging, ScriptContext, get_logger
 from lib import fetcher
 from lib import normalize
 from lib import clean
+from lib import impute
 from lib import aggregate as agg
 from lib.config import load_config
 
 logger = get_logger(__name__)
+
+
+# =============================================================================
+# CONFIGURATION OPTIONS
+# =============================================================================
+# 
+# These can be set via config.yaml or modified here for testing.
+
+# Countries from the reproduction run (90 countries)
+# These are the countries that passed all quality filters in the original study
+# Both ISO codes (for API data) and country names (for local data) are included
+REPRODUCTION_ISOCODES = [
+    "ALB", "ARG", "ARM", "AUT", "BEL", "BGD", "BGR", "BLZ", "BRA", "BRN", 
+    "BWA", "CHE", "CHL", "COL", "CRI", "CYP", "CZE", "DEU", "DNK", "DOM", 
+    "ECU", "EGY", "ESP", "EST", "ETH", "FIN", "FRA", "GBR", "GHA", "GRC", 
+    "HND", "HRV", "HUN", "IDN", "IND", "IRL", "ISL", "ISR", "ITA", "JAM", 
+    "JOR", "KEN", "KOR", "LKA", "LSO", "LTU", "LUX", "LVA", "MDG", "MDV", 
+    "MEX", "MLI", "MLT", "MMR", "MNG", "MUS", "MYS", "NAM", "NGA", "NIC", 
+    "NLD", "NOR", "NPL", "PAK", "PAN", "PER", "PHL", "POL", "PRT", "PRY", 
+    "ROU", "RUS", "RWA", "SEN", "SLV", "SRB", "SVK", "SVN", "SWE", "THA", 
+    "TJK", "TUR", "TZA", "UGA", "UKR", "USA", "VNM", "YEM", "ZAF", "ZMB"
+]
+
+REPRODUCTION_COUNTRIES = [
+    "Albania", "Argentina", "Armenia", "Austria", "Bangladesh", "Belgium",
+    "Belize", "Botswana", "Brazil", "Brunei Darussalam", "Bulgaria", "Chile",
+    "Colombia", "Costa Rica", "Croatia", "Cyprus", "Czechia", "Denmark",
+    "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Estonia",
+    "Ethiopia", "Finland", "France", "Germany", "Ghana", "Greece", "Honduras",
+    "Hungary", "Iceland", "India", "Indonesia", "Ireland", "Israel", "Italy",
+    "Jamaica", "Jordan", "Kenya", "Korea, Republic of", "Latvia", "Lesotho",
+    "Lithuania", "Luxembourg", "Madagascar", "Malaysia", "Maldives", "Mali",
+    "Malta", "Mauritius", "Mexico", "Mongolia", "Myanmar", "Namibia", "Nepal",
+    "Netherlands", "Nicaragua", "Nigeria", "Norway", "Pakistan", "Panama",
+    "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Romania",
+    "Russian Federation", "Rwanda", "Senegal", "Serbia", "Slovakia", "Slovenia",
+    "South Africa", "Spain", "Sri Lanka", "Sweden", "Switzerland", "Tajikistan",
+    "Tanzania, United Republic of", "Thailand", "Türkiye", "Uganda", "Ukraine",
+    "United Kingdom", "United States", "Viet Nam", "Yemen", "Zambia",
+]
+
+# Set to a list of country names/codes to restrict analysis to specific countries.
+# Options:
+#   None                    - Use all available countries
+#   REPRODUCTION_ISOCODES   - Match original study's 90 countries (use with API data)
+#   REPRODUCTION_COUNTRIES  - Match original study's 90 countries (use with local data)
+#   ["USA", "DEU", ...]     - Custom list
+INCLUDE_COUNTRIES = None  # Try REPRODUCTION_ISOCODES to match original
+
+# Enable MICE-style imputation for missing wage ratios and alphas
+# This matches the original R study's use of mice::mice with norm.predict
+ENABLE_IMPUTATION = True
 
 
 # =============================================================================
@@ -502,6 +555,27 @@ def run_baseline():
     logger.info(f"Merged labor data: {len(labor):,} observations")
     
     # =========================================================================
+    # STEP 5.5: OPTIONAL COUNTRY FILTERING
+    # =========================================================================
+    # If INCLUDE_COUNTRIES is set, filter to only those countries.
+    # This is useful for:
+    # - Matching the exact country set from the original study
+    # - Regional analysis (e.g., EU only)
+    # - Sensitivity testing
+    
+    if INCLUDE_COUNTRIES is not None and len(INCLUDE_COUNTRIES) > 0:
+        logger.info("=" * 70)
+        logger.info("STEP 5.5: Filtering to specified countries")
+        logger.info("=" * 70)
+        
+        before = labor["country"].nunique()
+        labor = clean.include_countries(labor, INCLUDE_COUNTRIES, country_col="country")
+        after = labor["country"].nunique()
+        
+        if after == 0:
+            raise ValueError(f"No matching countries found! Check INCLUDE_COUNTRIES: {INCLUDE_COUNTRIES[:5]}...")
+    
+    # =========================================================================
     # STEP 6: APPLY EXCLUSIONS
     # =========================================================================
     logger.info("=" * 70)
@@ -541,6 +615,46 @@ def run_baseline():
     logger.info("=" * 70)
     
     wage_ratios = calculate_wage_ratios(labor, reference="Managers")
+    
+    # -------------------------------------------------------------------------
+    # MICE IMPUTATION FOR WAGE RATIOS
+    # -------------------------------------------------------------------------
+    # The original R code uses:
+    #   imp <- mice::mice(wageratdata, method = "norm.predict", m = 1)
+    #   wageratdata_imp <- complete(imp)
+    # 
+    # This imputes missing wage ratios using linear regression prediction.
+    # Countries may be missing certain occupation wages (e.g., no Agforestry data)
+    # but we need complete wage ratios to calculate effective labor correctly.
+    
+    if ENABLE_IMPUTATION:
+        # Pivot to wide format for imputation (country × occupation)
+        wage_pivot = wage_ratios.pivot(
+            index="country", 
+            columns="occupation", 
+            values="wage_ratio"
+        ).reset_index()
+        
+        n_missing_before = wage_pivot.isna().sum().sum()
+        
+        # Get occupation columns (all except country)
+        occ_cols = [c for c in wage_pivot.columns if c != "country"]
+        
+        # Apply MICE-style imputation
+        wage_pivot_imputed = impute.norm_predict(wage_pivot, target_cols=occ_cols)
+        
+        n_missing_after = wage_pivot_imputed.isna().sum().sum()
+        
+        if n_missing_before > 0:
+            logger.info(f"  Imputed wage ratios: {n_missing_before} → {n_missing_after} missing values")
+        
+        # Melt back to long format
+        wage_ratios = wage_pivot_imputed.melt(
+            id_vars=["country"],
+            value_vars=occ_cols,
+            var_name="occupation",
+            value_name="wage_ratio"
+        )
     
     # Log sample ratios
     sample = wage_ratios.groupby("occupation")["wage_ratio"].mean()
@@ -649,6 +763,35 @@ def run_baseline():
     logger.info("=" * 70)
     
     alphas, mean_alpha = estimate_alphas(est_data)
+    
+    # -------------------------------------------------------------------------
+    # MICE IMPUTATION FOR ALPHAS
+    # -------------------------------------------------------------------------
+    # The original R code uses:
+    #   imp1 <- mice::mice(LH_alphas, method = "norm.predict", m = 1)
+    #   LH_alphas_imp <- complete(imp1)
+    #
+    # Countries without valid alpha estimates (outside 0-1 range or too few obs)
+    # get imputed values based on other countries' alphas.
+    
+    if ENABLE_IMPUTATION:
+        # Get list of all countries in est_data
+        all_countries = est_data["country"].unique()
+        countries_with_alpha = set(alphas["country"].tolist())
+        countries_missing = set(all_countries) - countries_with_alpha
+        
+        if countries_missing:
+            logger.info(f"  {len(countries_missing)} countries need alpha imputation")
+            
+            # For countries without alpha, use mean imputation
+            # (In a more sophisticated version, we could use country characteristics)
+            for country in countries_missing:
+                alphas = pd.concat([alphas, pd.DataFrame({
+                    "country": [country],
+                    "alpha": [mean_alpha]
+                })], ignore_index=True)
+            
+            logger.info(f"  Imputed missing alphas with mean α = {mean_alpha:.3f}")
     
     # =========================================================================
     # STEP 13: CALCULATE MPL AND DISTORTION FACTOR

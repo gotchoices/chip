@@ -107,6 +107,70 @@ def exclude_countries(df: pd.DataFrame,
     return df
 
 
+def include_countries(df: pd.DataFrame,
+                      countries: list,
+                      country_col: str = "country") -> pd.DataFrame:
+    """
+    Filter to only include specified countries.
+    
+    This is useful for:
+    - Matching the exact country set from the original study
+    - Running analysis on a specific region
+    - Testing sensitivity to country composition
+    
+    Args:
+        df: DataFrame with country column
+        countries: List of country names/codes to INCLUDE (others removed)
+        country_col: Name of country column
+        
+    Returns:
+        DataFrame filtered to only specified countries
+    
+    Example:
+        # Match original study countries
+        df = include_countries(df, ORIGINAL_STUDY_COUNTRIES)
+        
+        # EU only analysis
+        df = include_countries(df, EU_COUNTRIES)
+    """
+    if not countries:
+        logger.warning("include_countries called with empty list - returning unchanged")
+        return df
+    
+    df = df.copy()
+    if country_col in df.columns:
+        before = len(df)
+        # Handle both country names and ISO codes
+        mask = df[country_col].isin(countries)
+        df = df[mask]
+        after = len(df)
+        
+        matched = df[country_col].nunique()
+        logger.info(f"Filtered to {matched} of {len(countries)} specified countries "
+                   f"({after}/{before} observations)")
+    
+    return df
+
+
+def get_available_countries(df: pd.DataFrame,
+                           country_col: str = "country") -> list:
+    """
+    Get list of unique countries in a dataset.
+    
+    Useful for discovering what countries are available before filtering.
+    
+    Args:
+        df: DataFrame with country column
+        country_col: Name of country column
+        
+    Returns:
+        Sorted list of unique country names/codes
+    """
+    if country_col not in df.columns:
+        return []
+    return sorted(df[country_col].dropna().unique().tolist())
+
+
 def get_country_coverage(df: pd.DataFrame,
                          country_col: str = "country",
                          year_col: str = "year") -> pd.DataFrame:

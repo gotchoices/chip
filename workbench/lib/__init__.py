@@ -8,6 +8,7 @@ Modules:
     cache          - Cache management and data versioning
     normalize      - Column and format standardization across data sources
     clean          - Data cleaning, filtering, and preprocessing
+    impute         - MICE-style imputation for missing values
     models         - Estimation models (Cobb-Douglas, CES, direct wage, etc.)
     aggregate      - Global aggregation with various weighting schemes
     output         - Report generation, tables, and visualization
@@ -15,7 +16,7 @@ Modules:
     logging_config - Structured logging with file output
 
 Usage:
-    from workbench.lib import fetcher, clean, models, aggregate
+    from workbench.lib import fetcher, clean, models, aggregate, impute
     
     data = fetcher.get_all()
     cleaned = clean.prepare(data)
@@ -27,6 +28,7 @@ from . import fetcher
 from . import cache
 from . import normalize
 from . import clean
+from . import impute
 from . import models
 from . import aggregate
 from . import output
