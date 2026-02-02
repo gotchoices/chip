@@ -2,7 +2,7 @@
 
 Detailed tracking of completed and pending work items.
 
-**Last updated:** 2026-02-01
+**Last updated:** 2026-02-02
 
 ---
 
@@ -48,7 +48,22 @@ Detailed tracking of completed and pending work items.
 - [x] Create outline for `docs/alternative-models.md`
 - [ ] Content development — **DEFERRED to Phase 3**
 
-### 1.6 Python Reproduction
+### 1.6 Documentation — Inflation Tracking
+- [x] Create outline for `docs/inflation-tracking.md`
+- [x] Analyze deflator's role and appropriateness for MyCHIPs
+- [x] Propose windowed averaging alternatives
+- [x] Run preliminary empirical tests (different year windows)
+- [x] Formulate testable hypotheses (H1-H4)
+- [x] Add epistemological discussion (can we know if labor value truly changes?)
+- [x] Write full paper from outline
+
+### 1.7 Documentation — Future Labor Value
+- [x] Create outline for `docs/labor-value-future.md`
+- Explores: Will AI/automation make labor more or less valuable?
+- Market-based analysis only (no UBI/redistribution assumptions)
+- [ ] Write full paper from outline
+
+### 1.8 Python Reproduction
 - [x] Set up Python environment (`pyproject.toml`)
 - [x] Create config.yaml with study parameters
 - [x] Implement data fetching module (`pipeline/fetch.py`)
@@ -132,17 +147,23 @@ Detailed tracking of completed and pending work items.
 
 ## Immediate Next Steps
 
-1. **Test with API data** — verify fresh API data produces reasonable results
-2. **Complete weighting-analysis.md Section 4** — use reproduction data for empirical comparison
-3. **Extend time series** — test with more recent data years
+1. **Create `estimates/` project** — implement nominal CHIP methodology with trailing windows
+2. **Test hypotheses from inflation-tracking paper** — validate H1-H4
+3. **Write labor-value-future.md full paper** — convert outline to prose
 
 ## Recent Accomplishments
 
-- ✅ Created explicit `ILOSTATNormalizer` and `PWTNormalizer` classes (`pipeline/normalize.py`)
-- ✅ Reproduction validated: $2.56/hour with `data_source: "original"` (vs $2.53 target)
-- ✅ ILOSTAT API fixed (switched from broken SDMX to working rplumber endpoint)
-- ✅ Added configuration knobs: `data_source`, `time_weighting`, date ranges
-- ✅ Country summary CSV output added to reports
+- ✅ **Inflation-tracking paper complete** (`docs/inflation-tracking.md`)
+  - Analyzed deflator appropriateness for MyCHIPs use case
+  - Proposed windowed averaging methodology
+  - Ran empirical tests showing composition sensitivity
+  - Formulated testable hypotheses
+- ✅ **Labor-value-future outline created** (`docs/labor-value-future.md`)
+  - Explores AI/automation impact on labor value
+  - Market-based analysis (no redistribution assumptions)
+- ✅ Reproduction validated: $2.56/hour with `data_source: "original"`
+- ✅ Created explicit normalization layer (`pipeline/normalize.py`)
+- ✅ ILOSTAT API fixed (switched to rplumber endpoint)
 
 ---
 

@@ -35,37 +35,91 @@ The original CHIP valuation research (R-based, read-only reference):
 - **ICT extension**: Explored whether ICT capital explains developed/developing wage gaps
 - See [`original/README.md`](original/README.md) for details
 
-## Project Phases
+## Research Journey
 
-### Phase 1: Foundation (Current)
-Understand, document, and validate the original study.
+This project follows a deliberate progression from understanding existing work to developing improved methodologies.
 
-- **Critical review** of original methodology ([`docs/original-review.md`](docs/original-review.md))
-- **Weighting analysis** — explore GDP vs. labor-force weighting implications ([`docs/weighting-analysis.md`](docs/weighting-analysis.md))
-- **Python reproduction** — replicate $2.53 result using same data/methodology
+### Step 1: Original Study ✅
+**Folder**: [`original/`](original/)
 
-### Phase 2: Validation & Sensitivity
-Test robustness of the original approach.
+Started with an R-based academic study that estimated CHIP at **$2.53/hour** using:
+- Solow-Swan growth model with Cobb-Douglas production function
+- ILOSTAT labor data + Penn World Tables macro data
+- GDP-weighted global aggregation
+- GDP deflation to 2017 constant dollars
 
-- Sensitivity analysis across weighting schemes
-- Informal economy adjustments (where data permits)
-- Temporal stability analysis
+### Step 2: Critical Analysis ✅
+**Paper**: [`docs/original-review.md`](docs/original-review.md)
 
-### Phase 3: Alternative Models
-Explore whether different economic models yield materially different results.
+Analyzed the original methodology:
+- Evaluated theoretical framework and assumptions
+- Assessed alignment with canonical CHIP definition
+- Identified strengths (rigorous, data-driven) and limitations (composition effects, deflation)
+- Explored weighting alternatives: [`docs/weighting-analysis.md`](docs/weighting-analysis.md)
 
+### Step 3: Python Reproduction ✅
+**Folder**: [`reproduction/`](reproduction/)
+
+Replicated the original study in Python:
+- Achieved **$2.56/hour** (within 1% of original)
+- Created configurable pipeline with logging
+- Validated data handling and methodology
+- Established baseline for further experimentation
+
+### Step 4: Stress Testing & Hypothesis Formation ✅
+**Paper**: [`docs/inflation-tracking.md`](docs/inflation-tracking.md)
+
+Subjected the reproduction to sensitivity analysis:
+- Tested different year windows (2006-2008, 2010-2012, 2014-2016, 2017-2019)
+- Discovered significant sensitivity to country composition
+- Identified mismatch between academic methodology and practical MyCHIPs needs
+- **Key finding**: The GDP deflator, while academically appropriate, conflicts with CHIP's purpose as a nominal labor-value index
+
+Formulated testable hypotheses:
+- H1: Nominal CHIP should track inflation
+- H2: Deflated CHIP is stable when country sample is held constant
+- H3: Windowed averaging produces coherent time series
+- H4: Recent-year nominal CHIP is more actionable for users
+
+### Step 4b: Future Labor Value Analysis ✅
+**Paper**: [`docs/labor-value-future.md`](docs/labor-value-future.md)
+
+Explored the long-term question: Will AI/automation make human labor more or less valuable?
+- Standard narrative: Supply/demand says less valuable
+- Contrarian view: Reservation wage argument says more valuable (leisure becomes the alternative)
+- Bifurcation hypothesis: Commoditized tasks → worthless; human-presence tasks → premium
+- Implications for CHIP's long-term viability
+- Market-based analysis only (no redistribution schemes)
+
+### Step 5: Production Estimates (Next)
+**Folder**: `estimates/` (to be created)
+
+Will implement and test the hypotheses:
+- Build pipeline with nominal (non-deflated) output option
+- Implement trailing window methodology
+- Produce time series of annual CHIP values
+- Validate against official inflation benchmarks
+- Establish annual update process for MyCHIPs
+
+### Future: Alternative Models
+**Paper outline**: [`docs/alternative-models.md`](docs/alternative-models.md)
+
+Explore whether different economic models yield materially different results:
 - CES production functions
 - Stochastic frontier analysis
 - Direct wage comparison methods
-- Model comparison framework ([`docs/alternative-models.md`](docs/alternative-models.md))
 
-### Phase 4: Automation
-Create a sustainable, periodic update process.
+---
 
-- Automated data fetching from ILOSTAT, PWT, FRED APIs
-- Anomaly detection for data quality issues
-- Reproducible pipeline with version control
-- Target: Annual updates with minimal manual intervention
+## Project Phases (Summary)
+
+| Phase | Focus | Status |
+|-------|-------|--------|
+| **1. Foundation** | Understand & validate original study | ✅ Complete |
+| **2. Analysis** | Stress test, form hypotheses | ✅ Complete |
+| **3. Production** | Implement improved methodology | 🔜 Next |
+| **4. Alternatives** | Explore other models | Planned |
+| **5. Automation** | Annual update pipeline | Planned |
 
 ## Platform & Tooling
 
@@ -87,7 +141,14 @@ Create a sustainable, periodic update process.
 
 ## Current Status
 
-**Phase 1 in progress.** See [`docs/STATUS.md`](docs/STATUS.md) for detailed tracking.
+**Phases 1-2 complete. Phase 3 (Production Estimates) is next.**
+
+Recent milestones:
+- ✅ Reproduction validated at $2.56/hour
+- ✅ Inflation-tracking analysis complete with testable hypotheses
+- 🔜 Next: Create `estimates/` project to implement nominal CHIP methodology
+
+See [`docs/STATUS.md`](docs/STATUS.md) for detailed tracking.
 
 ## Setup
 
