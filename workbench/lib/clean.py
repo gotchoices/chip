@@ -327,6 +327,86 @@ def filter_years(df: pd.DataFrame,
 
 
 # =============================================================================
+# Aggregation Utilities
+# =============================================================================
+
+def pivot_to_ratios(df: pd.DataFrame,
+                    index_cols: list,
+                    pivot_col: str,
+                    value_col: str,
+                    reference_value: str) -> pd.DataFrame:
+    """
+    Pivot data and calculate ratios relative to a reference category.
+    
+    Example: Calculate wage ratios relative to Managers
+        pivot_to_ratios(wages, ["country", "year"], "occupation", "wage", "Managers")
+    
+    Args:
+        df: DataFrame with long-format data
+        index_cols: Columns to use as index (e.g., ["country", "year"])
+        pivot_col: Column to pivot (e.g., "occupation")
+        value_col: Column with values to ratio (e.g., "wage")
+        reference_value: Value in pivot_col to use as denominator (e.g., "Managers")
+    
+    Returns:
+        DataFrame with columns for each category as ratio to reference
+    """
+    # Pivot to wide format
+    pivoted = df.pivot_table(
+        index=index_cols,
+        columns=pivot_col,
+        values=value_col,
+        aggfunc="mean"
+    ).reset_index()
+    
+    if reference_value not in pivoted.columns:
+        logger.warning(f"Reference '{reference_value}' not found in {pivot_col}")
+        return pivoted
+    
+    # Calculate ratios
+    ref_values = pivoted[reference_value]
+    for col in pivoted.columns:
+        if col not in index_cols and col != reference_value:
+            pivoted[col] = pivoted[col] / ref_values
+    
+    # Reference category becomes 1.0
+    pivoted[reference_value] = 1.0
+    
+    return pivoted
+
+
+def weighted_aggregate(df: pd.DataFrame,
+                       group_cols: list,
+                       value_col: str,
+                       weight_col: str = None) -> pd.DataFrame:
+    """
+    Aggregate values by group, optionally with weights.
+    
+    Args:
+        df: DataFrame
+        group_cols: Columns to group by
+        value_col: Column to aggregate
+        weight_col: Column with weights (None = simple mean)
+    
+    Returns:
+        DataFrame with grouped, (weighted) mean values
+    """
+    if weight_col is None or weight_col not in df.columns:
+        # Simple mean
+        return df.groupby(group_cols)[value_col].mean().reset_index()
+    
+    # Weighted mean
+    def weighted_mean(group):
+        weights = group[weight_col]
+        values = group[value_col]
+        return (values * weights).sum() / weights.sum()
+    
+    result = df.groupby(group_cols).apply(weighted_mean).reset_index()
+    result.columns = list(group_cols) + [value_col]
+    return result
+
+
+# =============================================================================
 # Merging
 # =============================================================================
 

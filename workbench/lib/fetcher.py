@@ -48,7 +48,9 @@ ILOSTAT_BASE_URL = "https://rplumber.ilo.org/data/indicator/"
 
 ILOSTAT_DATASETS = {
     "employment": "EMP_TEMP_SEX_OCU_NB_A",
-    "wages": "EAR_4MTH_SEX_OCU_CUR_NB_A",
+    # CRITICAL: Use HOURLY wages (4HRL), not MONTHLY (4MTH)!
+    # The original study uses hourly wages for distortion factor calculation
+    "wages": "EAR_4HRL_SEX_OCU_CUR_NB_A",
     "hours": "HOW_TEMP_SEX_OCU_NB_A",
 }
 

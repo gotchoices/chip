@@ -346,6 +346,20 @@ cfg = config.get_default_config()
 
 All scripts are run via `run.sh`:
 
+### `baseline.py`
+
+Reproduce the $2.56 CHIP value from the original study.
+
+```bash
+./run.sh baseline        # Run baseline reproduction
+./run.sh baseline -v     # Run and view report
+```
+
+**Purpose:**
+- Integration test for the entire library
+- Validates against known target ($2.56)
+- Reports validation status: PASSED, MARGINAL, or FAILED
+
 ### `coverage.py`
 
 Examine which countries have consistent data across which time periods.

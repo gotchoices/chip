@@ -99,15 +99,24 @@ def cobb_douglas(df: pd.DataFrame,
         df["efficient_labor"] = df["employment"]
         logger.warning("No human capital data; using raw employment")
     
-    # Step 3: Calculate MPL
-    # MPL = (1 - α) * Y / L_s
-    df["mpl"] = (1 - df["alpha"]) * df["gdp"] / df["efficient_labor"]
+    # Step 3: Calculate capital per effective worker
+    df["k_per_l"] = df["capital"] / df["efficient_labor"]
     
-    # Step 4: Calculate distortion factor
+    # Apply human capital adjustment to k/l ratio
+    if "human_capital" in df.columns:
+        df["k_per_l_hc"] = df["k_per_l"] * df["human_capital"]
+    else:
+        df["k_per_l_hc"] = df["k_per_l"]
+    
+    # Step 4: Calculate MPL using Cobb-Douglas formula
+    # From Y = K^α * L^(1-α), MPL = ∂Y/∂L = (1-α) * (K/L)^α
+    df["mpl"] = (1 - df["alpha"]) * np.power(df["k_per_l_hc"], df["alpha"])
+    
+    # Step 5: Calculate distortion factor
     # θ = MPL / wage
     df["theta"] = df["mpl"] / df["wage"]
     
-    # Step 5: Calculate distortion-free wage (CHIP value)
+    # Step 6: Calculate distortion-free wage (CHIP value)
     # CHIP = wage * θ = MPL
     df["chip_value"] = df["wage"] * df["theta"]
     
