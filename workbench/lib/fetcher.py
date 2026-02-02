@@ -159,7 +159,8 @@ def get_hours(use_cache: bool = True) -> pd.DataFrame:
 # Penn World Tables
 # =============================================================================
 
-PWT_URL = "https://dataverse.nl/api/access/datafile/354098"  # PWT 10.0
+# PWT URL - use same source as reproduction for consistency
+PWT_URL = "https://www.rug.nl/ggdc/docs/pwt100.xlsx"  # PWT 10.0 Excel
 
 
 def get_pwt(use_cache: bool = True) -> pd.DataFrame:
@@ -171,7 +172,7 @@ def get_pwt(use_cache: bool = True) -> pd.DataFrame:
         - country: Country name
         - year: Year
         - rgdpna: Real GDP (national accounts)
-        - rkna: Capital stock
+        - rnna: Real capital stock (national prices)
         - emp: Employment
         - hc: Human capital index
         - labsh: Labor share of income
@@ -184,10 +185,11 @@ def get_pwt(use_cache: bool = True) -> pd.DataFrame:
     
     for attempt in range(MAX_RETRIES):
         try:
-            df = pd.read_stata(PWT_URL)
+            # Read Excel file (same source as reproduction)
+            df = pd.read_excel(PWT_URL, sheet_name="Data")
             logger.info(f"  Received {len(df)} rows")
             df.to_parquet(cache.get_cache_path("pwt"))
-            cache.set_metadata("pwt", source="Dataverse", version="10.0")
+            cache.set_metadata("pwt", source="rug.nl", version="10.0")
             return df
         except Exception as e:
             logger.warning(f"  Attempt {attempt + 1} failed: {e}")

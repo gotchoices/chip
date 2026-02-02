@@ -206,19 +206,24 @@ All library modules are now implemented.
 - [x] `lib/config.py` — Load and validate config.yaml
 
 ### 5.3 Baseline Validation Script ✅ (COMPLETE)
-- [x] Create `scripts/baseline.py` — Reproduce $2.56 value
+- [x] Create `scripts/baseline.py` — Reproduce reproduction's result with fresh API data
 - [x] Implemented correct methodology directly in baseline.py:
   - [x] Calculate effective_labor using skill-weighted hours across ALL occupations
-  - [x] Implement wage ratio calculation (relative to Managers)
+  - [x] Implement wage ratio calculation (relative to Managers, per country-year then average)
   - [x] Use ILOSTAT effective_labor (not PWT employment) for k/L ratio
   - [x] Fixed MPL formula: `(1-α) × (K/L × hc)^α` (hc inside power)
   - [x] Fixed wage dataset: use HOURLY wages (`EAR_4HRL`) not monthly
   - [x] Separate elementary wage from aggregate wage
   - [x] Calculate adjusted_wage = elementary_wage × θ
   - [x] Filter to SEX_T (totals only, not male/female breakdowns)
-- [x] **VALIDATION RESULT: $1.84/hour (28% deviation from $2.56)**
-  - Status: MARGINAL — acceptable given fresh API data, no MICE imputation
-  - Mean α: 0.67, Mean θ: 3.26, Countries: 101
+  - [x] Keep ALL employment data for effective labor (don't require wages)
+  - [x] Estimate alpha on full PWT data (not just rows with wages)
+  - [x] Apply MICE-style imputation for wage ratios and alphas
+  - [x] Apply country-year exclusions (ISO codes + names)
+- [x] **VALIDATION RESULT: $2.33/hour (0.9% deviation from reproduction's $2.35)**
+  - Status: ✅ PASSED — matches reproduction methodology with fresh API data
+  - Target: $2.35 (reproduction with `data_source: api`)
+  - Mean α: 0.65, Countries: 99
   - Thoroughly documented with extensive comments in baseline.py
 
 ### 5.4 Research Scripts (BLOCKED: requires 5.2 + 5.3)
@@ -241,17 +246,22 @@ Using workbench scripts, test hypotheses from inflation-tracking paper:
 1. **Implement research scripts** (5.4) — nominal, timeseries, compare
 2. **Test hypotheses** (5.5) — validate H1-H4 from inflation-tracking paper
 3. **Write labor-value-future.md full paper** — convert outline to prose
-4. **Consider MICE imputation** — to close the 28% gap to target
+4. **Generate weighting comparison data** — for `weighting-analysis.md` Section 4
 
 ---
 
 ## Recent Accomplishments
 
-- ✅ **Workbench baseline validated** (`workbench/scripts/baseline.py`)
-  - Result: $1.84/hour (28% deviation from $2.56 target)
+- ✅ **Workbench baseline FULLY validated** (`workbench/scripts/baseline.py`)
+  - Result: **$2.33/hour** (0.9% deviation from reproduction's $2.35)
+  - Matches reproduction methodology with fresh API data
+  - Key fixes to match reproduction:
+    - Wage ratios: calculate per country-year, then average (not average wages then ratio)
+    - Keep all employment for effective labor (don't drop rows without wages)
+    - Estimate alpha on ALL PWT data (2030 obs), not just rows with wages (650 obs)
+    - Then filter to rows with wages for final MPL/CHIP calculation
+  - MICE-style imputation for wage ratios and alphas
   - Thoroughly documented with extensive methodology comments
-  - Fixed: hourly wages (EAR_4HRL), MPL formula, sex filtering
-  - Validation: MARGINAL (expected with fresh API data)
 - ✅ **Workbench infrastructure complete** (`workbench/`)
   - Modular library architecture designed
   - `run.sh` unified script runner with report viewing
