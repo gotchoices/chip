@@ -1,7 +1,7 @@
 # Data cache (auto-heals on next run)
 data/
 
-# Output files
+# Output files (logs, summaries, reports)
 output/
 
 # Python

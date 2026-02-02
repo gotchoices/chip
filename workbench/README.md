@@ -54,7 +54,7 @@ The data cache automatically rebuilds when deleted:
 
 ```bash
 rm -rf data/          # Delete cache
-make coverage         # Runs fine - data auto-fetched
+./run.sh coverage     # Runs fine - data auto-fetched
 ```
 
 ### Other Projects Can Import
@@ -77,12 +77,20 @@ data = fetcher.get_all()  # Uses workbench's cache
 cd workbench
 make setup
 
-# Activate virtual environment
-source .venv/bin/activate
-
 # Run an analysis
-make coverage
+./run.sh coverage
+
+# Run and view report (requires glow, mdcat, or similar)
+./run.sh coverage -v
+
+# View last report
+./run.sh --view coverage
+
+# List available scripts
+./run.sh --list
 ```
+
+No need to activate the virtual environment — `run.sh` handles it.
 
 ---
 
@@ -90,7 +98,7 @@ make coverage
 
 ```
 workbench/
-├── lib/                    # Reusable modules
+├── lib/                   # Reusable modules
 │   ├── __init__.py        # Package exports
 │   ├── fetcher.py         # Data retrieval + caching
 │   ├── cache.py           # Cache management
@@ -99,26 +107,57 @@ workbench/
 │   ├── models.py          # Estimation models
 │   ├── aggregate.py       # Weighting schemes
 │   ├── output.py          # Report generation
-│   └── config.py          # Configuration management
+│   ├── config.py          # Configuration management
+│   └── logging_config.py  # Structured logging
 │
 ├── scripts/               # Analysis scripts
-│   ├── analyze_data_coverage.py
-│   ├── test_nominal_chip.py
-│   ├── chip_time_series.py
-│   └── compare_aggregators.py
+│   ├── coverage.py        # Data coverage analysis
+│   ├── nominal.py         # Nominal vs deflated CHIP
+│   ├── timeseries.py      # CHIP over time
+│   └── compare.py         # Aggregation method comparison
 │
 ├── data/                  # Cache (gitignored)
 │   └── cache/
 │
 ├── output/                # Results (gitignored)
-│   ├── reports/
-│   └── plots/
+│   ├── reports/           # Markdown analysis reports
+│   ├── logs/              # Timestamped execution logs
+│   └── summaries/         # JSON summaries of each run
 │
 ├── config.yaml            # Configuration
 ├── pyproject.toml         # Dependencies
-├── Makefile               # Common commands
+├── Makefile               # Maintenance tasks (setup, clean, lint)
+├── run.sh                 # Script runner (use this for analysis)
 └── README.md              # This file
 ```
+
+---
+
+## The Runner (`run.sh`)
+
+All scripts are executed through `run.sh`, which handles:
+
+- Virtual environment activation
+- Running the script
+- Optionally viewing the generated report
+
+**Usage:**
+
+```bash
+./run.sh <script>              # Run script, save report
+./run.sh <script> -v           # Run and view report
+./run.sh --view <script>       # View last report for script
+./run.sh --view <path>         # View specific report file
+./run.sh --list                # List available scripts
+```
+
+**Viewer detection:** Automatically uses `glow` → `mdcat` → `bat` → `cat` (first available).
+
+**Output:**
+- Progress goes to stdout (brief status updates)
+- Full analysis goes to `output/reports/<script>_<timestamp>.md`
+- Execution log goes to `output/logs/<script>_<timestamp>.log`
+- Summary JSON goes to `output/summaries/<script>_<timestamp>.json`
 
 ---
 
@@ -305,14 +344,15 @@ cfg = config.get_default_config()
 
 ## Scripts
 
-### `analyze_data_coverage.py`
+All scripts are run via `run.sh`:
+
+### `coverage.py`
 
 Examine which countries have consistent data across which time periods.
 
 ```bash
-make coverage
-# or
-python scripts/analyze_data_coverage.py
+./run.sh coverage        # Run and save report
+./run.sh coverage -v     # Run and view report
 ```
 
 **Output:**
@@ -320,24 +360,24 @@ python scripts/analyze_data_coverage.py
 - Data quality flags
 - Recommendations for exclusions
 
-### `test_nominal_chip.py`
+### `nominal.py`
 
 Compare CHIP values computed with and without deflation.
 
 ```bash
-make nominal
+./run.sh nominal -v
 ```
 
 **Tests hypothesis from `inflation-tracking.md`:**
 - Does nominal CHIP naturally track inflation?
 - How does deflation affect the result?
 
-### `chip_time_series.py`
+### `timeseries.py`
 
 Analyze how CHIP value changes over time.
 
 ```bash
-make timeseries
+./run.sh timeseries -v
 ```
 
 **Output:**
@@ -345,12 +385,12 @@ make timeseries
 - Trend analysis
 - Stability assessment
 
-### `compare_aggregators.py`
+### `compare.py`
 
 Test different weighting schemes.
 
 ```bash
-make compare
+./run.sh compare -v
 ```
 
 **Compares:**
@@ -403,7 +443,7 @@ cfg.cleaning.outlier_threshold = 2.0
 
 1. Create `scripts/my_analysis.py`
 2. Import from `lib` as needed
-3. Add a Makefile target if useful
+3. The script will automatically be available via `./run.sh my_analysis`
 4. Document in this README
 
 ### Adding a New Model
