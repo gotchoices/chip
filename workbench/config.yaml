@@ -1,0 +1,41 @@
+# Workbench Configuration
+# Override defaults from lib/config.py
+
+data:
+  use_cache: true
+  cache_ttl_days: 30
+  fallback_to_original: true
+  year_start: 2000
+  year_end: 2022
+
+cleaning:
+  exclude_countries:
+    - Nepal
+    - Pakistan
+    - Sri Lanka
+    - Bangladesh
+    - Egypt
+    - Jordan
+    - Palestine
+    - Occupied Palestinian Territory
+  outlier_method: iqr
+  outlier_threshold: 1.5
+  require_complete_years: 3
+
+model:
+  default_model: cobb_douglas
+  estimate_alpha: true
+  default_alpha: 0.33
+  use_fixed_effects: true
+
+aggregation:
+  default_weighting: gdp_weighted
+  time_weighting: all_years  # all_years, recent_only, rolling, exponential
+  rolling_window_years: 5
+  half_life_years: 5.0
+
+output:
+  output_dir: output
+  report_format: md
+  save_intermediate: true
+  log_level: INFO

@@ -20,11 +20,11 @@ This project aims to quantify that base value using global labor market data and
 chip/
 ├── original/          # Read-only reference: original R-based studies
 ├── reproduction/      # Python reproduction of original methodology
-├── estimates/         # Production estimates using validated methods
-│   └── YYYY-MM/       # Dated estimate runs
-├── experiments/       # Alternative models, exploratory analysis
+├── workbench/         # Exploratory analysis environment (active)
+│   ├── lib/           # Modular Python library
+│   └── scripts/       # Analysis scripts
+├── estimates/         # Production estimates (to be created)
 ├── docs/              # Methodology reviews, papers, formal analysis
-├── lib/               # Shared Python modules (data fetching, utilities)
 └── data/              # Downloaded/cached data (gitignored)
 ```
 
@@ -91,10 +91,25 @@ Explored the long-term question: Will AI/automation make human labor more or les
 - Implications for CHIP's long-term viability
 - Market-based analysis only (no redistribution schemes)
 
-### Step 5: Production Estimates (Next)
+### Step 5: Workbench Development ✅ (In Progress)
+**Folder**: [`workbench/`](workbench/)
+
+Created a modular exploratory analysis environment:
+- **Independent from reproduction/** — can evolve freely without breaking the validated baseline
+- **Modular library** (`workbench/lib/`) — fetcher, cleaner, models, aggregators, output generators
+- **Self-healing cache** — delete data, it auto-fetches on next run
+- **Reusable by future projects** — `estimates/` will import from `workbench.lib`
+
+Scripts to implement:
+- `analyze_data_coverage.py` — which countries have reliable data?
+- `test_nominal_chip.py` — test hypothesis H1 (CHIP tracks inflation)
+- `chip_time_series.py` — test H2, H3 (temporal stability)
+- `compare_aggregators.py` — GDP vs labor vs freedom weighting
+
+### Step 6: Production Estimates (Next)
 **Folder**: `estimates/` (to be created)
 
-Will implement and test the hypotheses:
+Will implement and test the hypotheses from Step 4:
 - Build pipeline with nominal (non-deflated) output option
 - Implement trailing window methodology
 - Produce time series of annual CHIP values
@@ -117,9 +132,10 @@ Explore whether different economic models yield materially different results:
 |-------|-------|--------|
 | **1. Foundation** | Understand & validate original study | ✅ Complete |
 | **2. Analysis** | Stress test, form hypotheses | ✅ Complete |
-| **3. Production** | Implement improved methodology | 🔜 Next |
-| **4. Alternatives** | Explore other models | Planned |
-| **5. Automation** | Annual update pipeline | Planned |
+| **3. Workbench** | Build modular analysis environment | 🔄 In Progress |
+| **4. Production** | Implement improved methodology | Next |
+| **5. Alternatives** | Explore other models | Planned |
+| **6. Automation** | Annual update pipeline | Planned |
 
 ## Platform & Tooling
 
@@ -141,11 +157,14 @@ Explore whether different economic models yield materially different results:
 
 ## Current Status
 
-**Phases 1-2 complete. Phase 3 (Production Estimates) is next.**
+**Phases 1-2 complete. Phase 3 (Workbench) in progress.**
 
 Recent milestones:
 - ✅ Reproduction validated at $2.56/hour
 - ✅ Inflation-tracking analysis complete with testable hypotheses
+- ✅ Labor-value-future paper explores AI/automation impact
+- ✅ Workbench scaffolded with modular library and script stubs
+- 🔄 Current: Complete workbench scripts, test hypotheses
 - 🔜 Next: Create `estimates/` project to implement nominal CHIP methodology
 
 See [`docs/STATUS.md`](docs/STATUS.md) for detailed tracking.

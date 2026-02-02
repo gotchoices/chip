@@ -145,22 +145,69 @@ Detailed tracking of completed and pending work items.
 
 ---
 
+## Phase 5: Workbench Development
+
+### 5.1 Workbench Scaffolding
+- [x] Create folder structure (`workbench/`)
+- [x] Create lib modules with docstrings:
+  - [x] `lib/fetcher.py` — Data retrieval with caching
+  - [x] `lib/cache.py` — Cache management
+  - [x] `lib/normalize.py` — Column standardization
+  - [x] `lib/clean.py` — Data cleaning utilities
+  - [x] `lib/models.py` — Estimation models (Cobb-Douglas, direct wage)
+  - [x] `lib/aggregate.py` — Weighting schemes
+  - [x] `lib/output.py` — Report generation
+  - [x] `lib/config.py` — Configuration management
+- [x] Create example script stubs:
+  - [x] `scripts/analyze_data_coverage.py`
+  - [x] `scripts/test_nominal_chip.py`
+  - [x] `scripts/chip_time_series.py`
+  - [x] `scripts/compare_aggregators.py`
+- [x] Create workbench README with full documentation
+- [x] Create pyproject.toml and Makefile
+
+### 5.2 Workbench Implementation
+- [ ] Complete `analyze_data_coverage.py` — identify reliable country/year combinations
+- [ ] Complete `test_nominal_chip.py` — test H1 from inflation-tracking paper
+- [ ] Complete `chip_time_series.py` — test H2, H3 from inflation-tracking
+- [ ] Complete `compare_aggregators.py` — test GDP vs labor vs freedom weighting
+- [ ] Fetch and integrate economic freedom index data
+- [ ] Validate full pipeline with fresh API data
+
+### 5.3 Hypothesis Testing
+Using workbench scripts, test hypotheses from inflation-tracking paper:
+- [ ] H1: Nominal CHIP should track inflation
+- [ ] H2: Deflated CHIP stable when country sample held constant
+- [ ] H3: Windowed averaging produces coherent time series
+- [ ] H4: Recent-year nominal CHIP more actionable
+
+---
+
 ## Immediate Next Steps
 
-1. **Create `estimates/` project** — implement nominal CHIP methodology with trailing windows
-2. **Test hypotheses from inflation-tracking paper** — validate H1-H4
-3. **Write labor-value-future.md full paper** — convert outline to prose
+1. **Complete workbench scripts** — implement the logic in the script stubs
+2. **Run data coverage analysis** — identify which countries are reliable
+3. **Test hypotheses** — validate H1-H4 from inflation-tracking paper
+4. **Write labor-value-future.md full paper** — convert outline to prose
+
+---
 
 ## Recent Accomplishments
 
+- ✅ **Workbench created** (`workbench/`)
+  - Modular library architecture (fetcher, clean, models, aggregate, output)
+  - Independent from reproduction/ (can evolve freely)
+  - Self-healing cache design
+  - Example script stubs for key analyses
 - ✅ **Inflation-tracking paper complete** (`docs/inflation-tracking.md`)
   - Analyzed deflator appropriateness for MyCHIPs use case
   - Proposed windowed averaging methodology
   - Ran empirical tests showing composition sensitivity
   - Formulated testable hypotheses
-- ✅ **Labor-value-future outline created** (`docs/labor-value-future.md`)
+- ✅ **Labor-value-future paper complete** (`docs/labor-value-future.md`)
   - Explores AI/automation impact on labor value
   - Market-based analysis (no redistribution assumptions)
+  - Added regulatory paradox (open-source vs concentration)
 - ✅ Reproduction validated: $2.56/hour with `data_source: "original"`
 - ✅ Created explicit normalization layer (`pipeline/normalize.py`)
 - ✅ ILOSTAT API fixed (switched to rplumber endpoint)
