@@ -186,7 +186,7 @@ Even in nominal terms, CHIP could change due to real economic factors beyond inf
 
 **Globalization**: Integration of low-wage countries into global markets could shift the GDP-weighted average.
 
-**Automation**: Reduced demand for unskilled labor could compress wages at the low end.
+**Automation**: Reduced demand for unskilled labor could compress wages at the low end. (See [The Future of Labor Value](labor-value-future.md) for extended analysis of how AI and automation may affect CHIP's long-term viability.)
 
 **Educational shifts**: Changes in workforce composition affect the supply of "unskilled" labor.
 
