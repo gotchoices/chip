@@ -20,6 +20,14 @@ venv/
 *.swp
 .DS_Store
 
+# Large unused ILOSTAT bulk downloads
+original/Data/EAR_4MTH_SEX_OCU_CUR_NB_A-filtered-2022-09-06.csv
+original/Data/EMP_TEMP_ECO_OCU_NB_A-full-2022-09-06.csv
+
+# Web - WordPress source (large, not needed in repo)
+web/tmp/
+web/wp3.tgz
+
 # R artifacts
 .Rhistory
 .RData
