@@ -1,0 +1,27 @@
+#!/bin/bash
+# Deploy CHIP Central web pages to server
+# Requires CHIPCENTRAL_WEB_DEPLOY env var (e.g. user@host:/var/www/chipcentral)
+# Modeled on mychips.org publish script
+# -----------------------------------------------------------------------------
+mydir="$(dirname $BASH_SOURCE)"
+files=""
+
+while [ ! -z "$1" ]; do
+  files="$files $1"
+  shift
+done
+
+if [ -z "$files" ]; then
+  files="*.html css js assets includes"
+fi
+
+dest=$CHIPCENTRAL_WEB_DEPLOY
+if [ -z "$dest" ]; then
+  echo "No destination found in: CHIPCENTRAL_WEB_DEPLOY"
+  echo "Set it to e.g. user@host:/var/www/chipcentral"
+  exit 1
+else
+  echo "Deploying $files to $dest"
+  cd $mydir
+  scp -r $files $dest
+fi

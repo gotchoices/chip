@@ -1,0 +1,27 @@
+#!/bin/bash
+# Fetch current CHIP value data from mychips.org
+# Run periodically (e.g. daily cron) to keep chipcentral.net data current
+# -----------------------------------------------------------------------------
+mydir="$(dirname $BASH_SOURCE)"
+datadir="$mydir/assets/data"
+source="https://mychips.org"
+
+echo "Fetching CHIP value data from $source ..."
+
+# Fetch the time series CSV (date,value pairs from 1913 to present)
+curl -sfL "$source/chip-dollar.csv" -o "$datadir/chip-dollar.csv"
+if [ $? -ne 0 ]; then
+  echo "ERROR: Failed to fetch chip-dollar.csv"
+  exit 1
+fi
+
+# Fetch the base CHIP value JSON
+curl -sfL "$source/chip.json" -o "$datadir/chip.json"
+if [ $? -ne 0 ]; then
+  echo "WARNING: Failed to fetch chip.json (non-critical)"
+fi
+
+# Report the latest value
+latest=$(tail -5 "$datadir/chip-dollar.csv" | grep -v NaN | tail -1)
+echo "Latest: $latest"
+echo "Data saved to $datadir/"

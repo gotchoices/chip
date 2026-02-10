@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CHIP Value Today — CHIP Central</title>
+  <meta name="description" content="Interactive chart showing the estimated CHIP value in US Dollars over time, adjusted for inflation from the 2019 base estimate.">
+  <link rel="stylesheet" href="css/base.css">
+  <script src="js/theme.js"></script>
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <style>
+    .value-page { max-width: 800px; margin: 0 auto; }
+    .value-page p { font-size: 17px; color: var(--color-muted); margin-bottom: 16px; }
+    .current-value-display {
+      display: flex; align-items: baseline; gap: 16px;
+      margin: 24px 0 32px; flex-wrap: wrap;
+    }
+    .current-value-display .big {
+      font-size: 48px; font-weight: 800; color: var(--color-heading);
+    }
+    .current-value-display .big span { color: var(--color-primary); }
+    .current-value-display .as-of { font-size: 15px; color: var(--color-light); }
+    .chart-card {
+      background: var(--card-bg); border-radius: var(--card-radius);
+      padding: 24px; box-shadow: var(--card-shadow); margin: 32px 0;
+    }
+    .chart-card .chart-title {
+      font-size: 16px; font-weight: 600; margin-bottom: 16px;
+      color: var(--color-heading);
+    }
+    .chart-note {
+      font-size: 13px; color: var(--color-light); margin-top: 12px;
+    }
+    .chart-note a { color: var(--color-light); }
+    #chart svg { width: 100%; }
+    .line { fill: none; stroke: var(--color-primary, steelblue); stroke-width: 2; }
+    .methodology {
+      background: var(--color-primary-light); border-radius: 10px;
+      padding: 20px 24px; margin-top: 32px;
+    }
+    .methodology h3 { font-size: 16px; margin-bottom: 8px; }
+    .methodology p { font-size: 15px; margin-bottom: 0; }
+  </style>
+</head>
+<body>
+
+  <div data-include="includes/header.html"></div>
+
+  <div class="section">
+    <div class="container">
+      <div class="value-page">
+
+        <div class="section-header" style="text-align:left;">
+          <h2>CHIP Value Today</h2>
+        </div>
+
+        <div class="current-value-display">
+          <div class="big">$<span data-chip-value>---</span></div>
+          <div class="as-of">as of <span data-chip-date>---</span></div>
+        </div>
+
+        <p>Calculating a reasonable CHIP estimate requires analyzing mountains of data from
+           markets across the world. Some of the data is clearly not reliable and has to be
+           filtered out. Even the best data is slow to be published. So a quality CHIP estimate
+           by the current algorithm is likely at best to be a year or two out of date.</p>
+
+        <p>The graph below performs an extrapolation of the CHIP valuation estimate in both
+           time directions so we can see, based on the 2019 estimate, what a CHIP might have
+           been worth at various points in time.</p>
+
+        <p>The function is performed simply by adjusting the CHIP valuation, expressed in
+           US Dollars, by the inflation rate of the Dollar. This can provide a means of
+           estimating the present, adjusted CHIP value in between the more complex and less
+           frequent recalculations based on world economic data.</p>
+
+        <div class="chart-card">
+          <div class="chart-title">Estimated CHIP Value in US Dollars Over Time</div>
+          <div id="chart"></div>
+          <div class="chart-note">
+            Inflation data source:
+            <a href="https://download.bls.gov/pub/time.series/cu/">bls.gov</a>
+            (Series CUUR0000SA0). Drag to zoom; double-click to reset.
+            Hover for exact values.
+          </div>
+        </div>
+
+        <div class="methodology">
+          <h3>Methodology Note</h3>
+          <p>The base CHIP value of $2.53 was estimated from 2019 data. Values shown for other
+             dates are extrapolated using the US Consumer Price Index (CPI-U). This inflation
+             adjustment provides a useful approximation because the CHIP, as a measure of basic
+             human labor value, tends to track general price levels closely.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div data-include="includes/footer.html"></div>
+
+  <script src="js/common.js"></script>
+  <script>
+  window.loadChipValue();
+
+  // ── D3 Chart ──
+  var margin = {top: 10, right: 30, bottom: 30, left: 60},
+      width = 720 - margin.left - margin.right,
+      height = 400 - margin.top - margin.bottom;
+
+  var svg = d3.select("#chart")
+    .append("svg")
+      .attr("viewBox", "0 0 " + (width + margin.left + margin.right) + " " + (height + margin.top + margin.bottom))
+      .attr("preserveAspectRatio", "xMidYMid meet")
+    .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  d3.csv("assets/data/chip-dollar.csv",
+    function(d) {
+      var v = parseFloat(d.value);
+      if (isNaN(v)) return null;
+      return { date: d3.timeParse("%Y-%m-%d")(d.date), value: v };
+    },
+    function(data) {
+      data = data.filter(function(d) { return d !== null; });
+
+      var x = d3.scaleTime()
+        .domain(d3.extent(data, function(d) { return d.date; }))
+        .range([0, width]);
+      var xAxis = svg.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x));
+
+      var y = d3.scaleLinear()
+        .domain([0, d3.max(data, function(d) { return d.value; })])
+        .range([height, 0]);
+      var yAxis = svg.append("g")
+        .call(d3.axisLeft(y));
+
+      var clip = svg.append("defs").append("svg:clipPath")
+        .attr("id", "clip")
+        .append("svg:rect")
+        .attr("width", width)
+        .attr("height", height)
+        .attr("x", 0).attr("y", 0);
+
+      var bisect = d3.bisector(function(d) { return d.date; }).left;
+
+      var focus = svg.append('g').append('circle')
+        .style("fill", "none").attr("stroke", "black")
+        .attr('r', 6).style("opacity", 0);
+
+      var focusText = svg.append('g').append('text')
+        .style("opacity", 0)
+        .attr("text-anchor", "left")
+        .attr("alignment-baseline", "middle")
+        .style("font-size", "13px")
+        .style("font-family", "-apple-system, sans-serif");
+
+      var brush = d3.brushX()
+        .extent([[0,0], [width, height]])
+        .on("end", updateChart);
+
+      var line = svg.append('g').attr("clip-path", "url(#clip)");
+
+      line.append("path")
+        .datum(data)
+        .attr("class", "line")
+        .attr("d", d3.line()
+          .x(function(d) { return x(d.date); })
+          .y(function(d) { return y(d.value); })
+        );
+
+      line.append("g").attr("class", "brush").call(brush);
+
+      function mouseover() { focus.style("opacity", 1); focusText.style("opacity", 1); }
+      function mousemove() {
+        var x0 = x.invert(d3.mouse(this)[0]);
+        var i = bisect(data, x0, 1);
+        if (i >= data.length) i = data.length - 1;
+        var d = data[i];
+        focus.attr("cx", x(d.date)).attr("cy", y(d.value));
+        focusText.html("$" + d.value.toFixed(2))
+          .attr("x", x(d.date) + 10).attr("y", y(d.value) - 10);
+      }
+      function mouseout() { focus.style("opacity", 0); focusText.style("opacity", 0); }
+
+      var idleTimeout;
+      function idled() { idleTimeout = null; }
+
+      function updateChart() {
+        var extent = d3.event.selection;
+        if (!extent) {
+          if (!idleTimeout) return idleTimeout = setTimeout(idled, 350);
+          x.domain(d3.extent(data, function(d) { return d.date; }));
+        } else {
+          x.domain([x.invert(extent[0]), x.invert(extent[1])]);
+          line.select(".brush").call(brush.move, null);
+        }
+        xAxis.transition().duration(1000).call(d3.axisBottom(x));
+        line.select('.line').transition().duration(1000)
+          .attr("d", d3.line()
+            .x(function(d) { return x(d.date); })
+            .y(function(d) { return y(d.value); })
+          );
+      }
+
+      svg.on("dblclick", function() {
+        x.domain(d3.extent(data, function(d) { return d.date; }));
+        xAxis.transition().call(d3.axisBottom(x));
+        line.select('.line').transition()
+          .attr("d", d3.line()
+            .x(function(d) { return x(d.date); })
+            .y(function(d) { return y(d.value); })
+          );
+      });
+      svg.on('mouseover', mouseover).on('mousemove', mousemove).on('mouseout', mouseout);
+    }
+  );
+  </script>
+</body>
+</html>

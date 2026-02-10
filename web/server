@@ -1,0 +1,10 @@
+#!/bin/bash
+# Launch a local dev server for previewing the CHIP Central site
+# Usage: ./server [port]
+# -----------------------------------------------------------------------------
+port="${1:-8080}"
+dir="$(dirname $BASH_SOURCE)/site"
+
+echo "Serving $dir at http://localhost:$port"
+echo "Press Ctrl+C to stop"
+python3 -m http.server "$port" --directory "$dir"

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact — CHIP Central</title>
+  <meta name="description" content="Contact the CHIP Central team about research collaboration, questions, or feedback.">
+  <link rel="stylesheet" href="css/base.css">
+  <script src="js/theme.js"></script>
+  <style>
+    .contact-page { max-width: 600px; margin: 0 auto; text-align: center; }
+    .contact-page p { font-size: 17px; color: var(--color-muted); margin-bottom: 20px; }
+    .contact-email {
+      display: inline-block;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--color-primary);
+      margin: 24px 0;
+    }
+    .contact-links { margin-top: 48px; }
+    .contact-links h3 {
+      font-size: 20px; margin-bottom: 20px; color: var(--color-heading);
+    }
+    .contact-links-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px; text-align: left;
+    }
+    .contact-link-card {
+      border: 1px solid var(--border-color); border-radius: 10px;
+      padding: 20px; background: var(--card-bg);
+      transition: border-color 0.2s;
+    }
+    .contact-link-card:hover { border-color: var(--color-primary); }
+    .contact-link-card h4 { font-size: 15px; margin-bottom: 4px; }
+    .contact-link-card p { font-size: 14px; margin: 0; }
+  </style>
+</head>
+<body>
+
+  <div data-include="includes/header.html"></div>
+
+  <div class="section">
+    <div class="container">
+      <div class="contact-page">
+
+        <div class="section-header">
+          <h2>Contact Us</h2>
+        </div>
+
+        <p>Your constructive comments and feedback are welcome. We're also interested in
+           hearing from researchers who would like to collaborate on CHIP valuation.</p>
+
+        <a href="mailto:info@chipcentral.net?Subject=CHIP%20Central%20Inquiry"
+           class="contact-email">info@chipcentral.net</a>
+
+        <p>Funding may be available for bona fide research participants working on
+           novel CHIP valuation methodologies.</p>
+
+        <div class="contact-links">
+          <h3>Related Projects</h3>
+          <div class="contact-links-grid">
+            <a href="https://gotchoices.org" class="contact-link-card" style="text-decoration:none; color:inherit;">
+              <h4>Got Choices Foundation</h4>
+              <p>The parent organization behind the CHIP and MyCHIPs projects.</p>
+            </a>
+            <a href="https://mychips.org" class="contact-link-card" style="text-decoration:none; color:inherit;">
+              <h4>MyCHIPs.org</h4>
+              <p>The CHIP-based digital currency project.</p>
+            </a>
+            <a href="https://github.com/gotchoices/chip" class="contact-link-card" style="text-decoration:none; color:inherit;">
+              <h4>GitHub Repository</h4>
+              <p>Open-source research code, data, and documentation.</p>
+            </a>
+            <a href="https://sereus.org" class="contact-link-card" style="text-decoration:none; color:inherit;">
+              <h4>Sereus.org</h4>
+              <p>Related projects from the Got Choices ecosystem.</p>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div data-include="includes/footer.html"></div>
+
+  <script src="js/common.js"></script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FAQ — CHIP Central</title>
+  <meta name="description" content="Frequently asked questions about the CHIP, its valuation, and how to get involved in research.">
+  <link rel="stylesheet" href="css/base.css">
+  <script src="js/theme.js"></script>
+</head>
+<body>
+
+  <div data-include="includes/header.html"></div>
+
+  <div class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Frequently Asked Questions</h2>
+        <p>Common questions about the CHIP and this project</p>
+      </div>
+
+      <div class="faq-list">
+
+        <details class="faq-item">
+          <summary>What is a CHIP?</summary>
+          <p>A CHIP (Credit Hour In Pool) is a proposed unit for measuring value. It represents
+             the value produced by one continuously applied hour of adult human work under
+             standardized conditions: unskilled labor, balanced supply and demand, minimal
+             capital equipment, and a worker of average functioning ability. It is designed to
+             be independent of the volatility of traditional national currencies.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>What is the current CHIP value?</summary>
+          <p>The base CHIP value was estimated at <strong>$2.53 per hour</strong> in 2019 US
+             dollars, using econometric analysis of panel data from 89 countries. Adjusted for
+             inflation, today's estimated value is approximately
+             <strong>$<span data-chip-value>---</span></strong>. See the
+             <a href="value.html">CHIP Value</a> page for an interactive historical chart.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>How is the CHIP value calculated?</summary>
+          <p>The original study uses a Cobb-Douglas production function estimated from
+             international data on GDP, capital stock, employment, wages, and hours worked.
+             This yields the marginal product of labor for each country. A "distortion factor"
+             measures how far actual wages deviate from this theoretical value. The CHIP value
+             is then a GDP-weighted global average of the theoretical unskilled wage, adjusted
+             for these distortions.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Why not just use minimum wage data?</summary>
+          <p>Minimum wages are set by political processes and vary enormously between countries.
+             They don't reflect the true economic value of labor in a balanced market. The CHIP
+             methodology aims to estimate what unskilled labor would be worth in a frictionless
+             global market without borders, tariffs, or political distortions.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>What is MyCHIPs?</summary>
+          <p><a href="https://mychips.org">MyCHIPs</a> is a proposed digital currency based
+             on the CHIP unit of value. Unlike traditional cryptocurrencies, MyCHIPs are backed
+             by the value of human labor and can be implemented without a central authority.
+             Read more in <a href="https://gotchoices.org/mychips/intro.html">The MyCHIPs Papers</a>.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Where can I find the source code and data?</summary>
+          <p>All research code, data pipelines, original studies, and supporting documents are
+             open source and available at
+             <a href="https://github.com/gotchoices/chip">github.com/gotchoices/chip</a>.
+             This includes the original R-based study, a Python reproduction, and a modular
+             workbench for ongoing research.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>How can I contribute to CHIP research?</summary>
+          <p>We welcome researchers interested in contributing to CHIP valuation methodology.
+             Whether you want to propose a new estimation approach, test alternative models,
+             or improve the existing pipeline, we'd like to hear from you.
+             <a href="contact.html">Contact us</a> to discuss collaboration. Funding may be
+             available for bona fide research participants.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>How often is the CHIP value updated?</summary>
+          <p>The base econometric estimate is recalculated periodically as new international
+             data becomes available (typically lagging 1&ndash;2 years). The daily value shown
+             on this site is the base estimate adjusted for US CPI inflation, updated from
+             Bureau of Labor Statistics data.</p>
+        </details>
+
+      </div>
+    </div>
+  </div>
+
+  <div data-include="includes/footer.html"></div>
+
+  <script src="js/common.js"></script>
+  <script>window.loadChipValue();</script>
+</body>
+</html>

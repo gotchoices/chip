@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CHIP Central — Estimating the CHIP Value</title>
+  <meta name="description" content="CHIP Central is dedicated to estimating the value of a CHIP: an independent measure of value based on human productivity that transcends national currencies, borders, and cultures.">
+  <link rel="stylesheet" href="css/base.css">
+  <script src="js/theme.js"></script>
+</head>
+<body>
+
+  <!-- Header -->
+  <div data-include="includes/header.html"></div>
+
+  <!-- Hero -->
+  <div class="section container">
+    <div class="hero">
+      <div>
+        <div class="hero-tag">Estimating the CHIP Value</div>
+        <h2>How Valuable is One Hour of Human Work?</h2>
+        <p>CHIP Central is dedicated to quantifying the value of a CHIP &mdash; an independent measure anchored to human productivity, transcending national currencies and borders.</p>
+        <div class="hero-actions">
+          <a href="chip.html" class="btn btn-primary">Learn More</a>
+          <a href="publications.html" class="btn btn-outline">View Publications</a>
+        </div>
+      </div>
+      <div class="value-card">
+        <div class="label">Current Estimated CHIP Value</div>
+        <div class="amount">$<span data-chip-value>---</span></div>
+        <div class="meta">in US Dollars &middot; inflation-adjusted from 2019 base</div>
+        <a href="value.html" class="chart-link">View historical chart &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Publications Preview -->
+  <div class="section bg-alt">
+    <div class="container">
+      <div class="section-header">
+        <h2>Publications</h2>
+        <p>Research papers and algorithms for estimating the CHIP value</p>
+      </div>
+      <div class="pub-list">
+        <a href="https://github.com/gotchoices/chip/tree/main/original" class="pub-item">
+          <img src="assets/img/ICT_PIC.jpg" alt="ICT Capital study">
+          <div>
+            <h3>A Look at ICT Capital</h3>
+            <p>Follow-up study evaluating the robustness of the original CHIP value computation with ICT capital data.</p>
+          </div>
+          <div class="date">Feb 2024</div>
+        </a>
+        <a href="value.html" class="pub-item">
+          <img src="assets/img/chip-value-screenshot.png" alt="CHIP Value chart">
+          <div>
+            <h3>CHIP Value Today</h3>
+            <p>Extrapolating the CHIP valuation over time using US Dollar inflation rates.</p>
+          </div>
+          <div class="date">Apr 2023</div>
+        </a>
+        <a href="https://github.com/gotchoices/chip/blob/main/original/writeup/chips_note.pdf" class="pub-item">
+          <img src="assets/img/economics-graph-28403893.jpeg" alt="White paper">
+          <div>
+            <h3>CHIPs Valuation Theory White Paper</h3>
+            <p>A conceptual framework using panel data from 89 countries over 1992&ndash;2019.</p>
+          </div>
+          <div class="date">Jan 2023</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- What is a CHIP — Brief -->
+  <div class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>What's a CHIP?</h2>
+        <p>Credit Hour In Pool &mdash; a currency indexed to human productivity</p>
+      </div>
+      <div style="max-width:720px; margin:0 auto;">
+        <p style="font-size:17px; color:var(--color-muted); margin-bottom:20px;">
+          A CHIP is an independent measure of value based on a single hour of standardized
+          basic human labor. It is designed to be independent of the volatility associated
+          with traditional world currencies.
+        </p>
+        <p style="font-size:17px; color:var(--color-muted); margin-bottom:20px;">
+          The formal CHIP definition can be found in
+          <a href="https://gotchoices.org/mychips/definition.html">The MyCHIPs Papers</a>.
+          The CHIP is the basis for <a href="https://mychips.org">MyCHIPs</a>, a new kind of
+          digital currency that holds a more consistent value, is more efficient for consumers,
+          and is resistant to corruption and manipulation.
+        </p>
+        <p style="text-align:center; margin-top:32px;">
+          <a href="chip.html" class="btn btn-outline">Read the full story &rarr;</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Research Invitation / CTA -->
+  <div class="section" style="padding-top:0;">
+    <div class="container">
+      <div class="cta-banner">
+        <h2>Interested in CHIP Research?</h2>
+        <p>We welcome economists and researchers interested in contributing to CHIP valuation
+           methodology. Funding may be available for bona fide research participants.</p>
+        <a href="contact.html" class="btn-white">Get in Touch</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ Preview -->
+  <div class="section bg-alt">
+    <div class="container">
+      <div class="section-header">
+        <h2>Frequently Asked Questions</h2>
+      </div>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>What is a CHIP?</summary>
+          <p>A CHIP (Credit Hour In Pool) is a proposed unit for measuring value, indexed to
+             one hour of unskilled human labor in a balanced global market. It is designed to
+             be independent of the volatility of traditional currencies.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How is the CHIP value calculated?</summary>
+          <p>Using econometric models (Cobb-Douglas production functions) applied to panel data
+             from dozens of countries, estimating the marginal product of unskilled labor and
+             adjusting for market distortions. The base estimate of $2.53 (2019 dollars) is then
+             adjusted for inflation to produce a current value.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How can I get involved in CHIP research?</summary>
+          <p>We welcome researchers interested in contributing to CHIP valuation methodology.
+             <a href="contact.html">Contact us</a> to discuss collaboration opportunities.
+             Funding may be available for bona fide research participants.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Where is the source code?</summary>
+          <p>All research code, data pipelines, and supporting documents are open source and
+             available at <a href="https://github.com/gotchoices/chip">github.com/gotchoices/chip</a>.</p>
+        </details>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div data-include="includes/footer.html"></div>
+
+  <script src="js/common.js"></script>
+  <script>window.loadChipValue();</script>
+</body>
+</html>

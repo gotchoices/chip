@@ -1,0 +1,173 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   theme-startup.css — Design A: Startupzy / Dark Hero Style
+   Swap this file for theme-modern.css to use this style instead.
+   All values here are consumed via CSS custom properties in base.css.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ── Typography ── */
+  --font-body: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-heading: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --line-height: 1.6;
+  --logo-size: 26px;
+  --h2-size: 36px;
+  --h2-weight: 600;
+  --hero-h2-size: 56px;
+
+  /* ── Colors ── */
+  --color-primary: #1e70ea;
+  --color-primary-hover: #1558c0;
+  --color-primary-light: #e8f0fd;
+  --color-primary-shadow: rgba(30, 112, 234, 0.3);
+
+  --color-bg: #fff;
+  --color-bg-alt: #f5f7fa;
+  --color-dark: rgb(3, 21, 48);
+  --color-text: #222;
+  --color-heading: #222;
+  --color-muted: #666;
+  --color-light: #999;
+  --color-link: #1e70ea;
+
+  /* ── Header ── */
+  --header-bg: transparent;
+  --header-border: transparent;
+  --logo-color: #fff;
+  --logo-accent: #fff;
+  --nav-color: rgba(255,255,255,0.85);
+  --nav-hover: #fff;
+  --nav-active: #fff;
+  --header-pad: 24px 30px;
+
+  /* ── Hero ── */
+  --hero-display: block;
+  --hero-columns: 1fr;
+  --hero-gap: 0;
+  --hero-pad-top: 140px;
+  --hero-pad-bottom: 90px;
+  --hero-heading-color: #fff;
+  --hero-text-color: rgba(255,255,255,0.8);
+  --tag-bg: rgba(255,255,255,0.15);
+  --tag-color: rgba(255,255,255,0.8);
+
+  /* ── Cards & Borders ── */
+  --card-bg: #fff;
+  --card-radius: 12px;
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  --border-color: #e8eaed;
+  --btn-radius: 6px;
+
+  /* ── CTA ── */
+  --cta-bg: linear-gradient(135deg, rgb(3,21,48), #1e70ea);
+
+  /* ── Footer ── */
+  --footer-bg: rgb(3, 21, 48);
+  --footer-text: rgba(255,255,255,0.6);
+  --footer-link: rgba(255,255,255,0.8);
+  --footer-muted: rgba(255,255,255,0.4);
+
+  /* ── Social ── */
+  --social-bg: rgba(255,255,255,0.1);
+  --social-color: rgba(255,255,255,0.8);
+  --social-bg-hover: rgba(255,255,255,0.25);
+
+  /* ── Layout ── */
+  --container-width: 1140px;
+  --gutter: 30px;
+  --section-pad: 80px;
+}
+
+/* ── Theme-specific: dark hero background ── */
+.hero-wrap {
+  position: relative;
+  background: linear-gradient(rgba(1,12,28,0.82), rgba(1,12,28,0.82)),
+              url('../assets/img/hero-bg.webp') center/cover no-repeat;
+}
+.hero-wrap .hero {
+  max-width: var(--container-width);
+  text-align: left;
+}
+.hero-wrap .value-card {
+  background: var(--color-primary);
+  margin-top: 40px;
+  display: inline-block;
+}
+.hero-wrap .value-card .label { color: rgba(255,255,255,0.8); }
+.hero-wrap .value-card .amount { color: #fff; }
+.hero-wrap .value-card .amount span { color: #fff; }
+.hero-wrap .value-card .meta { color: rgba(255,255,255,0.7); }
+.hero-wrap .value-card .chart-link { color: rgba(255,255,255,0.9); }
+
+/* Value bar between hero and content */
+.value-bar {
+  background: var(--color-primary);
+  color: #fff;
+  text-align: center;
+  padding: 20px 30px;
+  font-size: 22px;
+  font-weight: 600;
+}
+.value-bar span { font-size: 28px; }
+
+/* Mountain divider */
+.mountain-divider {
+  position: relative;
+  height: 100px;
+  overflow: hidden;
+  background: #fff;
+}
+.mountain-divider svg {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Header sits over the hero */
+.header-wrap {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 10;
+  background: transparent;
+  border-bottom: none;
+}
+
+/* Publication cards instead of list */
+.pub-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 30px;
+}
+.pub-item {
+  display: flex;
+  flex-direction: column;
+  grid-template-columns: none;
+}
+.pub-item img {
+  width: 100%;
+  height: 200px;
+  border-radius: 12px 12px 0 0;
+}
+
+/* Dark FAQ section */
+.faq-section-dark {
+  background: var(--color-dark);
+  color: #fff;
+}
+.faq-section-dark .section-header h2 { color: #fff; }
+.faq-section-dark .faq-item {
+  border-color: rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.05);
+}
+.faq-section-dark .faq-item summary { color: #fff; }
+.faq-section-dark .faq-item p { color: rgba(255,255,255,0.7); }
+
+/* Footer social */
+.site-footer .social-links a {
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.8);
+}
+.site-footer .social-links a:hover {
+  background: rgba(255,255,255,0.25);
+  color: #fff;
+}

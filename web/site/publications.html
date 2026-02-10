@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Publications — CHIP Central</title>
+  <meta name="description" content="Research papers, white papers, and supporting documents for the CHIP valuation methodology.">
+  <link rel="stylesheet" href="css/base.css">
+  <script src="js/theme.js"></script>
+  <style>
+    .pub-detail { max-width: 800px; margin: 0 auto; }
+    .pub-entry {
+      border: 1px solid var(--border-color);
+      border-radius: var(--card-radius);
+      background: var(--card-bg);
+      padding: 32px;
+      margin-bottom: 24px;
+    }
+    .pub-entry h3 { font-size: 22px; margin-bottom: 8px; color: var(--color-heading); }
+    .pub-entry .pub-meta { font-size: 14px; color: var(--color-light); margin-bottom: 16px; }
+    .pub-entry p { font-size: 16px; color: var(--color-muted); margin-bottom: 16px; }
+    .pub-links { display: flex; gap: 16px; flex-wrap: wrap; }
+    .pub-links a {
+      display: inline-block; font-size: 14px; font-weight: 600;
+      color: var(--color-primary); padding: 8px 16px;
+      border: 1px solid var(--color-primary); border-radius: 6px;
+    }
+    .pub-links a:hover { background: var(--color-primary-light); text-decoration: none; }
+    .source-note {
+      background: var(--color-primary-light); border-radius: 10px;
+      padding: 20px 24px; margin-top: 40px;
+    }
+    .source-note h4 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+    .source-note p { font-size: 15px; color: var(--color-muted); margin: 0; }
+  </style>
+</head>
+<body>
+
+  <div data-include="includes/header.html"></div>
+
+  <div class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Publications</h2>
+        <p>Research papers and supporting documents for CHIP valuation</p>
+      </div>
+
+      <div class="pub-detail">
+
+        <div class="pub-entry">
+          <h3>A Look at ICT Capital</h3>
+          <div class="pub-meta">February 8, 2024</div>
+          <p>This follow-up study evaluates the robustness of the original CHIP value
+             computation, initially proposed to anchor the MyCHIPs currency to the global
+             average of one hour of unskilled work. It incorporates ICT (Information and
+             Communications Technology) capital data to test whether the inclusion of
+             technology-specific capital affects the CHIP estimate.</p>
+          <div class="pub-links">
+            <a href="https://github.com/gotchoices/chip/tree/main/original" target="_blank">View on GitHub</a>
+          </div>
+        </div>
+
+        <div class="pub-entry">
+          <h3>CHIP Value Today</h3>
+          <div class="pub-meta">April 16, 2023</div>
+          <p>Calculating a reasonable CHIP estimate requires analyzing mountains of data from
+             markets across the world. This page extrapolates the CHIP valuation estimate over
+             time by adjusting the base value for US Dollar inflation, providing a means of
+             estimating the present CHIP value between more complex recalculations.</p>
+          <div class="pub-links">
+            <a href="value.html">View Interactive Chart</a>
+          </div>
+        </div>
+
+        <div class="pub-entry">
+          <h3>CHIPs Valuation Theory White Paper</h3>
+          <div class="pub-meta">January 19, 2023 &middot; Updated October 14, 2023</div>
+          <p>This note presents a conceptual framework to quantify the baseline value of the
+             CHIP currency tied to the global average of one hour of unskilled work. Econometric
+             estimates using panel data from 89 world countries over the period 1992&ndash;2019
+             suggest the CHIP value of $2.53 per hour.</p>
+          <p><strong>October 2023 update:</strong> Improved R code that accesses public APIs
+             (ILO, FRED, Penn World Tables) to produce updated CHIP valuations and time series
+             without manual data downloads.</p>
+          <div class="pub-links">
+            <a href="https://github.com/gotchoices/chip/blob/main/original/writeup/chips_note.pdf" target="_blank">White Paper (PDF)</a>
+            <a href="https://github.com/gotchoices/chip/tree/main/original" target="_blank">Source Code &amp; Data</a>
+          </div>
+        </div>
+
+        <div class="pub-entry">
+          <h3>Python Reproduction Study</h3>
+          <div class="pub-meta">2024&ndash;2025 &middot; Ongoing</div>
+          <p>A full reproduction of the original R-based study in Python, plus a modular
+             workbench for exploring alternative models, weighting schemes, and temporal
+             stability of the CHIP estimate. Validates the original $2.53 result and provides
+             infrastructure for ongoing research.</p>
+          <div class="pub-links">
+            <a href="https://github.com/gotchoices/chip/tree/main/reproduction" target="_blank">Reproduction</a>
+            <a href="https://github.com/gotchoices/chip/tree/main/workbench" target="_blank">Workbench</a>
+          </div>
+        </div>
+
+        <div class="source-note">
+          <h4>Source Code &amp; Data Repository</h4>
+          <p>All research code, data pipelines, original studies, and supporting documents are
+             available in the open-source
+             <a href="https://github.com/gotchoices/chip">CHIP GitHub repository</a>.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div data-include="includes/footer.html"></div>
+
+  <script src="js/common.js"></script>
+</body>
+</html>
