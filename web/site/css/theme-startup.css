@@ -29,14 +29,14 @@
   --color-light: #999;
   --color-link: #1e70ea;
 
-  /* ── Header ── */
-  --header-bg: transparent;
-  --header-border: transparent;
-  --logo-color: #fff;
-  --logo-accent: #fff;
-  --nav-color: rgba(255,255,255,0.85);
-  --nav-hover: #fff;
-  --nav-active: #fff;
+  /* ── Header (default for inner pages: dark text on white) ── */
+  --header-bg: #fff;
+  --header-border: #e8eaed;
+  --logo-color: #222;
+  --logo-accent: #1e70ea;
+  --nav-color: #555;
+  --nav-hover: #222;
+  --nav-active: #1e70ea;
   --header-pad: 24px 30px;
 
   /* ── Hero ── */
@@ -77,62 +77,92 @@
   --section-pad: 80px;
 }
 
-/* ── Theme-specific: dark hero background ── */
+/* ═══════════════════════════════════════════════════════════════════════════
+   HOME PAGE HERO — dark background image with overlaid header
+   Only activates when .hero-wrap is present (index.html)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Dark hero background */
 .hero-wrap {
   position: relative;
   background: linear-gradient(rgba(1,12,28,0.82), rgba(1,12,28,0.82)),
               url('../assets/img/hero-bg.webp') center/cover no-repeat;
-}
-.hero-wrap .hero {
-  max-width: var(--container-width);
-  text-align: left;
-}
-.hero-wrap .value-card {
-  background: var(--color-primary);
-  margin-top: 40px;
-  display: inline-block;
-}
-.hero-wrap .value-card .label { color: rgba(255,255,255,0.8); }
-.hero-wrap .value-card .amount { color: #fff; }
-.hero-wrap .value-card .amount span { color: #fff; }
-.hero-wrap .value-card .meta { color: rgba(255,255,255,0.7); }
-.hero-wrap .value-card .chart-link { color: rgba(255,255,255,0.9); }
-
-/* Value bar between hero and content */
-.value-bar {
-  background: var(--color-primary);
-  color: #fff;
-  text-align: center;
-  padding: 20px 30px;
-  font-size: 22px;
-  font-weight: 600;
-}
-.value-bar span { font-size: 28px; }
-
-/* Mountain divider */
-.mountain-divider {
-  position: relative;
-  height: 100px;
-  overflow: hidden;
-  background: #fff;
-}
-.mountain-divider svg {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
+  min-height: 600px;
 }
 
-/* Header sits over the hero */
-.header-wrap {
+/* Header overlays the hero (transparent, white text) */
+.hero-wrap .header-wrap {
   position: absolute;
   top: 0; left: 0; right: 0;
   z-index: 10;
   background: transparent;
   border-bottom: none;
 }
+.hero-wrap .site-header .logo { color: #fff; }
+.hero-wrap .site-header .logo span { color: #fff; }
+.hero-wrap .site-nav a { color: rgba(255,255,255,0.85); }
+.hero-wrap .site-nav a:hover { color: #fff; }
+.hero-wrap .site-nav a.active { color: #fff; }
+.hero-wrap .nav-toggle { color: rgba(255,255,255,0.85); }
 
-/* Publication cards instead of list */
+/* Hero text styling */
+.hero-wrap .hero {
+  max-width: var(--container-width);
+  text-align: left;
+}
+.hero-wrap .hero h2 {
+  color: #fff;
+  font-size: var(--hero-h2-size);
+  max-width: 600px;
+}
+.hero-wrap .hero p {
+  color: rgba(255,255,255,0.8);
+  max-width: 540px;
+}
+.hero-wrap .hero-tag {
+  background: rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.8);
+}
+
+/* Hero buttons */
+.hero-wrap .btn-primary {
+  background: #1e70ea;
+  color: #fff;
+}
+.hero-wrap .btn-outline {
+  border-color: rgba(255,255,255,0.5);
+  color: #fff;
+}
+.hero-wrap .btn-outline:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: #fff;
+}
+
+/* Value card in hero */
+.hero-wrap .value-card {
+  background: var(--color-primary);
+  margin-top: 40px;
+  display: inline-block;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+.hero-wrap .value-card .label { color: rgba(255,255,255,0.8); }
+.hero-wrap .value-card .amount { color: #fff; }
+.hero-wrap .value-card .meta { color: rgba(255,255,255,0.7); }
+.hero-wrap .value-card .chart-link { color: rgba(255,255,255,0.9); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   INNER PAGES — normal header (dark text on white, with border)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.header-wrap {
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--header-border);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PUBLICATION CARDS — grid layout instead of list
+   ═══════════════════════════════════════════════════════════════════════════ */
+
 .pub-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -149,20 +179,10 @@
   border-radius: 12px 12px 0 0;
 }
 
-/* Dark FAQ section */
-.faq-section-dark {
-  background: var(--color-dark);
-  color: #fff;
-}
-.faq-section-dark .section-header h2 { color: #fff; }
-.faq-section-dark .faq-item {
-  border-color: rgba(255,255,255,0.15);
-  background: rgba(255,255,255,0.05);
-}
-.faq-section-dark .faq-item summary { color: #fff; }
-.faq-section-dark .faq-item p { color: rgba(255,255,255,0.7); }
+/* ═══════════════════════════════════════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════════════════════════════════════ */
 
-/* Footer social */
 .site-footer .social-links a {
   background: rgba(255,255,255,0.1);
   color: rgba(255,255,255,0.8);

@@ -5,6 +5,6 @@
    ═══════════════════════════════════════════════════════════════════════════ */
 
 // Options: 'theme-modern' (Design B, clean) or 'theme-startup' (Design A, dark hero)
-var CHIP_THEME = 'theme-modern';
+var CHIP_THEME = 'theme-startup';
 
 document.write('<link rel="stylesheet" href="css/' + CHIP_THEME + '.css">');
