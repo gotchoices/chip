@@ -95,17 +95,34 @@ Detailed tracking of completed and pending work items.
 - [x] `scripts/coverage.py` — Analyzes country/year coverage across all data sources
 - [x] Generates markdown report with tables and recommendations
 
-### 2.5 Research Scripts (Next)
-- [ ] `scripts/nominal.py` — Test H1: nominal CHIP tracks inflation
-- [ ] `scripts/timeseries.py` — Test H2, H3: CHIP stability over time
-- [ ] `scripts/compare.py` — GDP vs labor vs freedom weighting
+### 2.5 Time Series Exploration (Next)
+Single configurable script: `scripts/timeseries.py`
+
+**Purpose:** Build year-by-year CHIP time series under various assumptions to
+understand the data before testing specific hypotheses.
+
+Configurable knobs:
+- [ ] Deflation: on (2017 base) or off (nominal dollars)
+- [ ] Country filter: all available, stable panel (continuous coverage), or custom list
+- [ ] Year range and window size (single year, 3-year rolling, 5-year rolling)
+- [ ] Weighting: GDP-weighted, labor-weighted, unweighted
+
+Discovery steps:
+- [ ] Generate raw time series with all available data — observe trends, noise
+- [ ] Identify stable-panel countries (continuous data across desired time span)
+- [ ] Compare full dataset vs. stable panel — isolate composition effects
+- [ ] Evaluate whether spotty-coverage countries add material information
+- [ ] Overlay CPI/deflator for visual comparison to inflation
 
 ### 2.6 Hypothesis Testing (Requires 2.5)
-From `docs/inflation-tracking.md`:
+From `docs/inflation-tracking.md`, using time series output:
 - [ ] H1: Nominal CHIP should track inflation
 - [ ] H2: Deflated CHIP stable when country sample held constant
 - [ ] H3: Windowed averaging produces coherent time series
 - [ ] H4: Recent-year nominal CHIP more actionable
+
+### 2.7 Additional Research Scripts
+- [ ] `scripts/compare.py` — GDP vs labor vs freedom weighting
 
 ---
 
@@ -148,10 +165,11 @@ From `docs/inflation-tracking.md`:
 
 ## Immediate Next Steps
 
-1. **Implement research scripts** (2.5) — nominal, timeseries, compare
-2. **Test hypotheses** (2.6) — validate H1-H4 from inflation-tracking paper
-3. **Generate weighting comparison** — for `weighting-analysis.md` Section 4
-4. **Write labor-value-future.md full paper** — convert outline to prose
+1. **Build `scripts/timeseries.py`** (2.5) — configurable time series explorer
+2. **Discovery phase** — generate series, identify stable panel, isolate composition effects
+3. **Test hypotheses** (2.6) — validate H1-H4 using time series output
+4. **Generate weighting comparison** — `scripts/compare.py` for `weighting-analysis.md` Section 4
+5. **Write labor-value-future.md full paper** — convert outline to prose
 
 ---
 
