@@ -2,7 +2,7 @@
 
 Detailed tracking of completed and pending work items.
 
-**Last updated:** 2026-02-02
+**Last updated:** 2026-02-10
 
 ---
 
@@ -22,218 +22,86 @@ Detailed tracking of completed and pending work items.
 - [x] Platform decision: Python (documented in README)
 
 ### 1.3 Documentation — Critical Review
-- [x] Create outline for `docs/original-review.md`
-- [x] Write Section 1: Executive Summary
-- [x] Write Section 2: Introduction
-- [x] Write Section 3: The CHIP Definition
-- [x] Write Section 4: Overview of Original Study
-- [x] Write Section 5: Theoretical Framework
-- [x] Write Section 6: Empirical Methodology
-- [x] Write Section 7: Definition Alignment Analysis
-- [x] Write Section 8: Strengths
-- [x] Write Section 9: Limitations
-- [x] Write Section 10: Conclusions
-- [x] Write Section 11: References
+- [x] Create and write `docs/original-review.md` (Sections 1-11)
 - [ ] Review and refine draft
 
 ### 1.4 Documentation — Weighting Analysis
 - [x] Create outline for `docs/weighting-analysis.md`
-- [x] Write Section 1: Introduction (The Aggregation Problem)
-- [x] Write Section 2: Weighting Schemes (theoretical description)
-- [x] Write Section 3: Philosophical Considerations
-- [ ] Write Section 4: Empirical Comparison — **BLOCKED: requires reproduction data**
-- [x] Write Section 5: Recommendations
+- [x] Write Sections 1-3, 5 (Introduction, Schemes, Philosophy, Recommendations)
+- [ ] Write Section 4: Empirical Comparison — requires `scripts/compare.py` output
 
 ### 1.5 Documentation — Alternative Models
 - [x] Create outline for `docs/alternative-models.md`
 - [ ] Content development — **DEFERRED to Phase 3**
 
-### 1.6 Documentation — Inflation Tracking
-- [x] Create outline for `docs/inflation-tracking.md`
-- [x] Analyze deflator's role and appropriateness for MyCHIPs
-- [x] Propose windowed averaging alternatives
-- [x] Run preliminary empirical tests (different year windows)
+### 1.6 Documentation — Inflation Tracking ✅
+- [x] Write full paper `docs/inflation-tracking.md`
 - [x] Formulate testable hypotheses (H1-H4)
-- [x] Add epistemological discussion (can we know if labor value truly changes?)
-- [x] Write full paper from outline
 
 ### 1.7 Documentation — Future Labor Value
 - [x] Create outline for `docs/labor-value-future.md`
-- Explores: Will AI/automation make labor more or less valuable?
-- Market-based analysis only (no UBI/redistribution assumptions)
+- [x] Added Section 3.4: Cross-country evidence (US labor rates)
 - [ ] Write full paper from outline
 
-### 1.8 Python Reproduction
-- [x] Set up Python environment (`pyproject.toml`)
-- [x] Create config.yaml with study parameters
-- [x] Implement data fetching module (`pipeline/fetch.py`)
-- [x] Implement data cleaning pipeline (`pipeline/clean.py`)
-- [x] Implement Cobb-Douglas estimation (`pipeline/estimate.py`)
-- [x] Implement global aggregation (`pipeline/aggregate.py`)
-- [x] Create main runner with logging (`main.py`)
-- [x] Create Makefile for easy execution
-- [x] Fix ILOSTAT API (switched to rplumber endpoint)
-- [x] Add data_source config option (original/api/cache)
-- [x] Add time_weighting config option (all_years/recent_only/rolling/exponential)
-- [x] Validate: reproduce $2.56 result with `data_source: "original"`
-- [x] Refactor: Create explicit data normalization layer (`pipeline/normalize.py`)
-- [ ] Test: Verify API data source produces reasonable results
-- [ ] Generate weighting comparison data for `weighting-analysis.md`
+### 1.8 Python Reproduction ✅
+- [x] Implement full pipeline (`fetch.py`, `clean.py`, `estimate.py`, `aggregate.py`)
+- [x] Validate: $2.56/hour with `data_source: "original"`
+- [x] Validate: $2.35/hour with `data_source: "api"` (fresh data)
+- [x] Configurable: data_source, time_weighting options
+- [x] Explicit normalization layer (`pipeline/normalize.py`)
 
 ---
 
-## Phase 2: Validation & Sensitivity
+## Phase 2: Workbench Development
 
-### 2.1 Weighting Sensitivity
-- [ ] Calculate CHIP value under GDP weighting
-- [ ] Calculate CHIP value under labor-force weighting
-- [ ] Calculate CHIP value under equal (unweighted) scheme
-- [ ] Document sensitivity range
-
-### 2.2 Data Quality
-- [ ] Analyze outlier treatment sensitivity
-- [ ] Explore informal economy data availability
-- [ ] Document country coverage gaps
-
-### 2.3 Temporal Analysis
-- [ ] Extend time series beyond original study period
-- [ ] Analyze CHIP value stability over time
-- [ ] Compare to inflation benchmarks
-
----
-
-## Phase 3: Alternative Models
-
-### 3.1 CES Production Function
-- [ ] Research CES specification for CHIP context
-- [ ] Implement estimation
-- [ ] Compare results to Cobb-Douglas baseline
-
-### 3.2 Stochastic Frontier Analysis
-- [ ] Research applicability
-- [ ] Implement if warranted
-- [ ] Compare results
-
-### 3.3 Direct Wage Methods
-- [ ] Design simpler wage-averaging approach
-- [ ] Implement with PPP adjustments
-- [ ] Compare to production-function approach
-
-### 3.4 Model Comparison
-- [ ] Define comparison metrics
-- [ ] Run all models on same data
-- [ ] Document in `docs/alternative-models.md`
-
----
-
-## Phase 4: Automation
-
-### 4.1 Data Pipeline
-- [ ] Automated data fetching (scheduled or on-demand)
-- [ ] Data validation and anomaly detection
-- [ ] Caching strategy for API rate limits
-
-### 4.2 Estimation Pipeline
-- [ ] End-to-end script from data fetch to CHIP estimate
-- [ ] Configurable for different model specifications
-- [ ] Output formatting (JSON, markdown report)
-
-### 4.3 Review Process
-- [ ] AI-assisted outlier review
-- [ ] Change detection from prior estimates
-- [ ] Documentation of each estimate run
-
----
-
-## Phase 5: Workbench Development
-
-### 5.1 Workbench Scaffolding ✅
+### 2.1 Workbench Scaffolding ✅
 - [x] Create folder structure (`workbench/`)
-- [x] Create lib module stubs with docstrings
-- [x] Create script stubs
 - [x] Create workbench README with full documentation
 - [x] Create pyproject.toml
 - [x] Simplify Makefile to maintenance-only (setup/clean/lint)
 - [x] Create unified `run.sh` for script execution and report viewing
-- [x] Implement `lib/logging_config.py` with structured logging
-- [x] Implement `lib/fetcher.py` with ILOSTAT, PWT, FRED support
 
-### 5.2 Library Implementation ✅
-All library modules are now implemented.
+### 2.2 Library Implementation ✅
 
 **Data Layer:**
-- [x] `lib/fetcher.py` — Fetch from ILOSTAT, PWT, FRED with caching
-- [x] `lib/cache.py` — Cache validation, invalidation, metadata
-- [x] `lib/normalize.py` — Column standardization for all sources
-  - [x] `detect_format()` — Identify ILOSTAT API vs CSV, PWT version
-  - [x] `normalize_ilostat()` — Standardize ILOSTAT data
-  - [x] `normalize_pwt()` — Standardize PWT data
-  - [x] `normalize_deflator()` — Standardize FRED deflator
+- [x] `lib/fetcher.py` — ILOSTAT, PWT (rug.nl Excel), FRED with retries and caching
+- [x] `lib/cache.py` — Parquet cache, metadata, invalidation
+- [x] `lib/normalize.py` — Format detection, ILOSTAT/PWT/deflator standardization
+- [x] `lib/logging_config.py` — Structured logging, ScriptContext, JSON summaries
 
 **Processing Layer:**
-- [x] `lib/clean.py` — Data cleaning and merging
-  - [x] `harmonize_countries()` — Standardize country names
-  - [x] `exclude_countries()` — Remove configured exclusions
-  - [x] `filter_unskilled()` — Keep only elementary occupations
-  - [x] `classify_skill_level()` — Map ISCO codes to skill labels
-  - [x] `filter_outliers()` — Statistical outlier removal
-  - [x] `merge_datasets()` — Join employment, wages, hours, PWT
-  - [x] `filter_years()` — Filter by year range
-  - [x] `require_complete()` — Remove incomplete rows
+- [x] `lib/clean.py` — Country handling (harmonize, exclude, include, coverage),
+      occupation filtering (unskilled, skill classification), outlier removal,
+      year filtering, merging, `pivot_to_ratios()`, `weighted_aggregate()`
+- [x] `lib/impute.py` — MICE-style `norm_predict()`, wage ratio and alpha imputation
+- [x] `lib/config.py` — YAML config loading with typed dataclasses
 
-**Estimation Layer:**
-- [x] `lib/models.py` — Economic models
-  - [x] `cobb_douglas()` — Production function estimation
-  - [x] `direct_wage()` — Simple wage averaging (alternative)
-  - [x] `ModelResult` dataclass for consistent output
+**Estimation & Output:**
+- [x] `lib/models.py` — Cobb-Douglas, direct wage, ModelResult dataclass
+- [x] `lib/aggregate.py` — GDP/labor/freedom/unweighted, compare_weightings()
+- [x] `lib/output.py` — Markdown reports, CSV/JSON export, matplotlib plots
 
-**Aggregation Layer:**
-- [x] `lib/aggregate.py` — Global CHIP calculation
-  - [x] `gdp_weighted()` — Original study method
-  - [x] `labor_weighted()` — Alternative: weight by labor hours
-  - [x] `unweighted()` — Simple average
-  - [x] `freedom_weighted()` — Weight by economic freedom index
-  - [x] `compare_weightings()` — Run all methods, compare results
+### 2.3 Baseline Validation ✅
+- [x] `scripts/baseline.py` — Full pipeline reproducing original methodology
+- [x] **Result: $2.33/hour (0.9% deviation from reproduction's $2.35)**
+- [x] Key methodology details documented in baseline.py header:
+  - Wage ratios calculated per country-year, then averaged
+  - All employment kept for effective labor (not just rows with wages)
+  - Alpha estimated on full PWT data (~2000 obs), not just wage rows (~650)
+  - MICE-style imputation for wage ratios and alphas
+  - Country-year exclusions with both ISO codes and names
 
-**Output Layer:**
-- [x] `lib/output.py` — Report generation
-  - [x] `generate_report()` — Create markdown report
-  - [x] `save_csv()` — Export data
-  - [x] `save_json()` — Export results
-  - [x] `to_table()` — Format for display
+### 2.4 Data Coverage Script ✅
+- [x] `scripts/coverage.py` — Analyzes country/year coverage across all data sources
+- [x] Generates markdown report with tables and recommendations
 
-**Configuration:**
-- [x] `lib/config.py` — Load and validate config.yaml
-
-### 5.3 Baseline Validation Script ✅ (COMPLETE)
-- [x] Create `scripts/baseline.py` — Reproduce reproduction's result with fresh API data
-- [x] Implemented correct methodology directly in baseline.py:
-  - [x] Calculate effective_labor using skill-weighted hours across ALL occupations
-  - [x] Implement wage ratio calculation (relative to Managers, per country-year then average)
-  - [x] Use ILOSTAT effective_labor (not PWT employment) for k/L ratio
-  - [x] Fixed MPL formula: `(1-α) × (K/L × hc)^α` (hc inside power)
-  - [x] Fixed wage dataset: use HOURLY wages (`EAR_4HRL`) not monthly
-  - [x] Separate elementary wage from aggregate wage
-  - [x] Calculate adjusted_wage = elementary_wage × θ
-  - [x] Filter to SEX_T (totals only, not male/female breakdowns)
-  - [x] Keep ALL employment data for effective labor (don't require wages)
-  - [x] Estimate alpha on full PWT data (not just rows with wages)
-  - [x] Apply MICE-style imputation for wage ratios and alphas
-  - [x] Apply country-year exclusions (ISO codes + names)
-- [x] **VALIDATION RESULT: $2.33/hour (0.9% deviation from reproduction's $2.35)**
-  - Status: ✅ PASSED — matches reproduction methodology with fresh API data
-  - Target: $2.35 (reproduction with `data_source: api`)
-  - Mean α: 0.65, Countries: 99
-  - Thoroughly documented with extensive comments in baseline.py
-
-### 5.4 Research Scripts (BLOCKED: requires 5.2 + 5.3)
-- [ ] `scripts/coverage.py` — Data coverage analysis ✅ (uses only fetcher)
+### 2.5 Research Scripts (Next)
 - [ ] `scripts/nominal.py` — Test H1: nominal CHIP tracks inflation
 - [ ] `scripts/timeseries.py` — Test H2, H3: CHIP stability over time
-- [ ] `scripts/compare.py` — Test GDP vs labor vs freedom weighting
+- [ ] `scripts/compare.py` — GDP vs labor vs freedom weighting
 
-### 5.5 Hypothesis Testing (BLOCKED: requires 5.4)
-Using workbench scripts, test hypotheses from inflation-tracking paper:
+### 2.6 Hypothesis Testing (Requires 2.5)
+From `docs/inflation-tracking.md`:
 - [ ] H1: Nominal CHIP should track inflation
 - [ ] H2: Deflated CHIP stable when country sample held constant
 - [ ] H3: Windowed averaging produces coherent time series
@@ -241,12 +109,49 @@ Using workbench scripts, test hypotheses from inflation-tracking paper:
 
 ---
 
+## Phase 3: Production Estimates
+
+### 3.1 Estimates Pipeline
+- [ ] Create `estimates/` folder (imports from `workbench/lib/`)
+- [ ] Implement nominal (non-deflated) output option
+- [ ] Implement trailing window methodology
+- [ ] Produce time series of annual CHIP values
+- [ ] Validate against official inflation benchmarks
+- [ ] Establish annual update process for MyCHIPs
+
+### 3.2 Weighting Analysis
+- [ ] Generate empirical comparison data (`scripts/compare.py`)
+- [ ] Complete `docs/weighting-analysis.md` Section 4
+- [ ] Document sensitivity range across weighting schemes
+
+---
+
+## Phase 4: Alternative Models
+
+### 4.1 CES Production Function
+- [ ] Research CES specification for CHIP context
+- [ ] Implement and compare to Cobb-Douglas baseline
+
+### 4.2 Stochastic Frontier Analysis
+- [ ] Research applicability
+- [ ] Implement if warranted
+
+### 4.3 Direct Wage Methods
+- [ ] Design simpler wage-averaging approach with PPP adjustments
+- [ ] Compare to production-function approach
+
+### 4.4 Model Comparison
+- [ ] Run all models on same data
+- [ ] Document in `docs/alternative-models.md`
+
+---
+
 ## Immediate Next Steps
 
-1. **Implement research scripts** (5.4) — nominal, timeseries, compare
-2. **Test hypotheses** (5.5) — validate H1-H4 from inflation-tracking paper
-3. **Write labor-value-future.md full paper** — convert outline to prose
-4. **Generate weighting comparison data** — for `weighting-analysis.md` Section 4
+1. **Implement research scripts** (2.5) — nominal, timeseries, compare
+2. **Test hypotheses** (2.6) — validate H1-H4 from inflation-tracking paper
+3. **Generate weighting comparison** — for `weighting-analysis.md` Section 4
+4. **Write labor-value-future.md full paper** — convert outline to prose
 
 ---
 
@@ -254,33 +159,20 @@ Using workbench scripts, test hypotheses from inflation-tracking paper:
 
 - ✅ **Workbench baseline FULLY validated** (`workbench/scripts/baseline.py`)
   - Result: **$2.33/hour** (0.9% deviation from reproduction's $2.35)
-  - Matches reproduction methodology with fresh API data
+  - Matches reproduction methodology with identical fresh API data
   - Key fixes to match reproduction:
-    - Wage ratios: calculate per country-year, then average (not average wages then ratio)
+    - Wage ratios: calculate per country-year, then average
     - Keep all employment for effective labor (don't drop rows without wages)
-    - Estimate alpha on ALL PWT data (2030 obs), not just rows with wages (650 obs)
-    - Then filter to rows with wages for final MPL/CHIP calculation
+    - Estimate alpha on ALL PWT data (2030 obs), not just wage rows (650 obs)
+    - PWT source aligned (same rug.nl Excel as reproduction)
   - MICE-style imputation for wage ratios and alphas
   - Thoroughly documented with extensive methodology comments
-- ✅ **Workbench infrastructure complete** (`workbench/`)
-  - Modular library architecture designed
-  - `run.sh` unified script runner with report viewing
-  - Makefile simplified to maintenance-only
-  - Structured logging with file output
-  - `fetcher.py` implemented (ILOSTAT, PWT, FRED)
-  - `coverage.py` script working
-- ✅ **Inflation-tracking paper complete** (`docs/inflation-tracking.md`)
-  - Analyzed deflator appropriateness for MyCHIPs use case
-  - Proposed windowed averaging methodology
-  - Ran empirical tests showing composition sensitivity
-  - Formulated testable hypotheses
-- ✅ **Labor-value-future outline complete** (`docs/labor-value-future.md`)
-  - Explores AI/automation impact on labor value
-  - Market-based analysis (no redistribution assumptions)
-  - Added regulatory paradox (open-source vs concentration)
-- ✅ Reproduction validated: $2.56/hour with `data_source: "original"`
-- ✅ Created explicit normalization layer (`reproduction/pipeline/normalize.py`)
-- ✅ ILOSTAT API fixed (switched to rplumber endpoint)
+- ✅ **Workbench infrastructure complete** — run.sh, logging, Makefile, report viewer
+- ✅ **All library modules implemented** — 10 modules in `workbench/lib/`
+- ✅ **Coverage script working** — `scripts/coverage.py` with Rich markdown reports
+- ✅ **Reproduction validated** — $2.56 (original data), $2.35 (fresh API)
+- ✅ **Inflation-tracking paper complete** — with testable hypotheses H1-H4
+- ✅ **Labor-value-future outline complete** — with cross-country evidence section
 
 ---
 
