@@ -9,6 +9,8 @@ Modules:
     normalize      - Column and format standardization across data sources
     clean          - Data cleaning, filtering, and preprocessing
     impute         - MICE-style imputation for missing values
+    pipeline       - Shared CHIP estimation pipeline (occupation mapping,
+                     wage ratios, effective labor, alpha, MPL, CHIP)
     models         - Estimation models (Cobb-Douglas, CES, direct wage, etc.)
     aggregate      - Global aggregation with various weighting schemes
     output         - Report generation, tables, and visualization
@@ -16,12 +18,11 @@ Modules:
     logging_config - Structured logging with file output
 
 Usage:
-    from workbench.lib import fetcher, clean, models, aggregate, impute
+    from workbench.lib import fetcher, pipeline
     
     data = fetcher.get_all()
-    cleaned = clean.prepare(data)
-    estimates = models.cobb_douglas(cleaned)
-    chip_value = aggregate.gdp_weighted(estimates)
+    result = pipeline.prepare_labor_data(data, 1992, 2019, deflator_df=deflator)
+    chip_value, countries, est = pipeline.estimate_chip(result["est_data"])
 """
 
 from . import fetcher
@@ -29,6 +30,7 @@ from . import cache
 from . import normalize
 from . import clean
 from . import impute
+from . import pipeline
 from . import models
 from . import aggregate
 from . import output
