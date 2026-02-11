@@ -81,7 +81,7 @@ Formulated testable hypotheses:
 - H3: Windowed averaging produces coherent time series
 - H4: Recent-year nominal CHIP is more actionable for users
 
-### Step 4b: Future Labor Value Analysis ✅
+### Step 5: Future Labor Value Analysis ✅
 **Paper**: [`docs/labor-value-future.md`](docs/labor-value-future.md)
 
 Explored the long-term question: Will AI/automation make human labor more or less valuable?
@@ -91,7 +91,7 @@ Explored the long-term question: Will AI/automation make human labor more or les
 - Implications for CHIP's long-term viability
 - Market-based analysis only (no redistribution schemes)
 
-### Step 5: Workbench Development ✅
+### Step 6: Workbench Development ✅
 **Folder**: [`workbench/`](workbench/)
 
 Created a modular exploratory analysis environment:
@@ -108,7 +108,7 @@ Scripts:
 - `timeseries.py` — test H2, H3 (temporal stability)
 - `compare.py` — GDP vs labor vs freedom weighting
 
-### Step 6: Production Estimates (Next)
+### Step 7: Production Estimates (Next)
 **Folder**: `estimates/` (to be created)
 
 Will implement and test the hypotheses from Step 4:
@@ -125,6 +125,18 @@ Explore whether different economic models yield materially different results:
 - CES production functions
 - Stochastic frontier analysis
 - Direct wage comparison methods
+
+---
+
+## Reading Guide
+
+The papers in `docs/` build on each other. For readers new to this project:
+
+1. **[Original Study Review](docs/original-review.md)** -- What the original study did, how it works, and where it falls short. Start here.
+2. **[Weighting Analysis](docs/weighting-analysis.md)** -- Deep dive into one specific limitation: how country-level values are aggregated into a global CHIP.
+3. **[Inflation Tracking](docs/inflation-tracking.md)** -- The central methodological question: should CHIP track inflation? Argues yes, proposes alternatives, formulates testable hypotheses (H1-H4).
+4. **[Future Labor Value](docs/labor-value-future.md)** -- Will AI/automation make human labor worthless? Explores long-term viability of a labor-anchored currency.
+5. **[Alternative Models](docs/alternative-models.md)** -- (Outline) Other economic models that could replace or supplement Cobb-Douglas.
 
 ---
 
