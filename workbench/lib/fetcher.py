@@ -159,8 +159,30 @@ def get_hours(use_cache: bool = True) -> pd.DataFrame:
 # Penn World Tables
 # =============================================================================
 
-# PWT version registry: version -> (URL, year_range, sheet_name)
-# Add new versions here when released. See docs/data-sources.md.
+# ---------------------------------------------------------------------------
+# PWT Version Registry
+# ---------------------------------------------------------------------------
+# Each entry maps a version string to its download URL, year coverage, and
+# the Excel sheet name containing the data.
+#
+# WHEN A NEW PWT VERSION IS RELEASED (e.g. 12.0):
+#   1. Find the download URL on https://www.rug.nl/ggdc/productivity/pwt/
+#      Recent versions use Dataverse: https://dataverse.nl
+#      Look for the Excel (.xlsx) download link.
+#   2. Add a new entry to PWT_VERSIONS below.
+#   3. Update PWT_DEFAULT_VERSION to the new version string.
+#   4. Clear the PWT cache so the new version is fetched:
+#        rm workbench/data/cache/pwt_*.parquet
+#   5. Run a quick sanity check:
+#        ./run.sh baseline   (should still get ~$2.33 since baseline pins 10.0)
+#   6. Existing studies with pinned versions (config.yaml: pwt_version: "10.0")
+#      are NOT affected. Only studies without a pin (or with pwt_version: null)
+#      will pick up the new default.
+#   7. Update docs/data-sources.md with the new version details.
+#
+# The sheet name has been "Data" for every version so far, but verify for
+# new releases in case GGDC changes the format.
+# ---------------------------------------------------------------------------
 PWT_VERSIONS = {
     "10.0": {
         "url": "https://www.rug.nl/ggdc/docs/pwt100.xlsx",
