@@ -18,10 +18,21 @@ The timeseries study established that:
   panel, ~$2.89 for all countries, from 2005–2019).
 - Deflation cancels in the CHIP formula, so "nominal CHIP" must be constructed
   by multiplying real CHIP by the price level.
-- PWT data ends at 2019, but ILOSTAT has data through ~2025.
 
 The baseline and timeseries studies answered "does the methodology work?" This
 study answers "how do we use it to produce a number people can rely on?"
+
+### Data Availability
+
+This study uses **PWT 11.0** (released October 2025), which extends coverage
+from 2019 to **2023** and incorporates the ICP 2021 PPP benchmarks. This
+shrinks the bridge gap from ~6 years (2019→2025 with PWT 10.0) to ~2 years
+(2023→2025). ILOSTAT has wage data through ~2025 for many countries. FRED
+deflator data is current.
+
+The version-aware fetcher (`lib/fetcher.py`) caches PWT versions independently.
+This study defaults to PWT 11.0 while prior studies remain pinned to PWT 10.0
+via their `config.yaml`. See `docs/data-sources.md` for details on all sources.
 
 ## Hypotheses
 
@@ -30,62 +41,82 @@ each year's CHIP re-inflated to the target year's price level, produces a
 smoother series than single-year estimates while remaining responsive to real
 changes.
 
-**H2 (PWT bridge is viable):** For years beyond PWT coverage (2020+), we can
-hold capital stock and GDP estimates constant (or extrapolate with IMF/World
-Bank growth projections) and still produce a CHIP estimate within ±10% of what
-a full PWT update would yield. Alternatively, if the deflation-cancellation
-finding holds, we may be able to compute CHIP from ILOSTAT wages alone without
-PWT for the bridge period.
+**H2 (PWT bridge is viable):** For the ~2-year gap beyond PWT 11.0 coverage
+(2024–2025), we can hold capital stock and GDP estimates constant at 2023
+levels (or extrapolate with IMF/World Bank growth projections) and still
+produce a CHIP estimate within ±10% of what a full PWT update would yield.
+The deflation-cancellation finding suggests PWT's main contribution is the
+alpha estimate and MPL — if we use a fixed alpha from the last known year,
+the bridge may be simpler than expected.
 
 **H3 (CPI extrapolation works):** Between annual recalculations, nominal CHIP
 can be extrapolated forward using CPI (or GDP deflator), and the next official
 value will differ from the extrapolation by less than 5%.
 
-**H4 (Stable panel suffices for bridge):** Using only the 11 stable-panel
-countries (identified in the timeseries study) for the bridge period produces
-a result within the historical range of the full-panel estimate.
+**H4 (Stable panel suffices for bridge):** Using only stable-panel countries
+for the bridge period produces a result within the historical range of the
+full-panel estimate. (The timeseries study identified 11 countries with
+PWT 10.0; this number may change with PWT 11.0's 4 additional years.)
 
 ## Methodology
 
-### Phase 1: Trailing Window
+### Phase 1: Extend the Series
 
-1. Implement a trailing-window CHIP estimator (configurable: 1, 3, 5 years)
-2. For each target year Y, compute CHIP for years [Y-k, ..., Y], re-inflate
+1. Run the full CHIP pipeline with PWT 11.0 data (2000–2023)
+2. Compare the 2000–2019 overlap with previous timeseries results (PWT 10.0)
+   to gauge vintage sensitivity (feeds into the stability study)
+3. Examine the 2020–2023 extension: country count, CHIP levels, COVID effects
+4. Re-identify the stable panel with the extended year range
+
+### Phase 2: Trailing Window
+
+5. Implement a trailing-window CHIP estimator (configurable: 1, 3, 5 years)
+6. For each target year Y, compute CHIP for years [Y-k, ..., Y], re-inflate
    each to year-Y dollars, then average
-3. Compare windows: smoothness (std of year-over-year changes), lag
-   (responsiveness to a known shock), and level (mean over 2005–2019)
-4. Select the recommended window size
+7. Compare windows: smoothness (std of year-over-year changes), lag
+   (responsiveness to the 2020 COVID shock), and level (mean over 2005–2023)
+8. Select the recommended window size
 
-### Phase 2: PWT Bridge
+### Phase 3: PWT Bridge
 
-5. Compute CHIP for 2017–2019 using full PWT data (the "truth")
-6. Re-compute for 2017–2019 using only ILOSTAT data + extrapolated PWT
-   (hold capital/GDP constant at last known year, or use IMF projections)
-7. Compare: how far off is the bridge estimate?
-8. Test whether the deflation-cancellation makes PWT unnecessary for the
-   CHIP value itself (PWT provides alpha and MPL — can we use a fixed alpha?)
+9. Compute CHIP for 2021–2023 using full PWT 11.0 data (the "truth")
+10. Re-compute for 2021–2023 using only ILOSTAT data + frozen PWT values
+    (hold capital/GDP/alpha constant at 2020 levels)
+11. Compare: how far off is the bridge estimate?
+12. Test a fixed-alpha approach: use the mean alpha from 2015–2023 for all
+    bridge years, compute CHIP from ILOSTAT wages + deflator only
 
-### Phase 3: CPI Extrapolation
+### Phase 4: CPI Extrapolation
 
-9. Take the 2017 calculated CHIP, extrapolate to 2018 and 2019 using CPI
-10. Compare extrapolated values to calculated values
-11. Measure the "correction" that would occur when official data arrives
-12. Repeat for multiple base years to establish the typical correction range
+13. Take the 2021 calculated CHIP, extrapolate to 2022 and 2023 using CPI
+14. Compare extrapolated values to calculated values
+15. Measure the "correction" that would occur when official data arrives
+16. Repeat for multiple base years to establish the typical correction range
 
-### Phase 4: Production Pipeline
+### Phase 5: Production Pipeline
 
-13. Assemble the recommended methodology into a clean pipeline
-14. Produce a complete time series: calculated values where data exists,
-    extrapolated values for the gap period, with clear labeling
-15. Document the methodology for `estimates/` implementation
+17. Assemble the recommended methodology into a clean pipeline
+18. Produce a complete time series: calculated values where PWT exists,
+    bridge values for the gap, extrapolated values for the current year
+19. Label each value: "calculated", "bridge", or "extrapolated"
+20. Document the methodology for `estimates/` implementation
+
+## Expected Outputs
+
+- Time series of nominal CHIP values, 2000–present, with method labels
+- Trailing-window comparison table and plots
+- Bridge accuracy table (bridge estimate vs truth for withheld years)
+- CPI extrapolation accuracy table
+- Recommended production methodology document
 
 ## Dependencies
 
-- `baseline` and `timeseries` studies (completed)
+- `baseline` and `timeseries` studies (completed, pinned to PWT 10.0)
 - `lib/pipeline.py` for core CHIP estimation
+- PWT 11.0 (default version in fetcher)
 - CPI/GDP deflator data from FRED (already in fetcher)
 - Possibly IMF World Economic Outlook data for GDP/capital projections
 
 ## Status
 
-**Scaffold.** Implementation pending.
+**Scaffold.** Implementation pending. This is the highest-priority next study.
