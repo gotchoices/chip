@@ -343,13 +343,12 @@ def main():
         
         # Fetch data
         ctx.log("Fetching data from sources...")
-        print("Loading data (this may take a moment on first run)...")
+        ctx.log("Loading data (this may take a moment on first run)...")
         data = fetcher.get_all()
         ctx.log(f"Fetched {len(data)} datasets")
-        print(f"✓ Loaded {len(data)} datasets")
         
         # Analyze
-        print("Analyzing coverage...")
+        ctx.log("Analyzing coverage...")
         coverage = analyze_source_coverage(data, ctx)
         overlap = analyze_overlap(coverage, ctx)
         temporal = analyze_temporal(coverage)
@@ -375,15 +374,10 @@ def main():
             f.write(report_content)
         
         ctx.log(f"Report saved: {report_path}")
-        print(f"✓ Analysis complete")
-        print(f"✓ Report: {report_path}")
-        
-        # Quick summary to stdout
-        print("")
-        print(f"  Viable countries: {len(overlap['chip_viable'])}")
-        print(f"  Excellent quality: {len(quality['excellent'])}")
+        ctx.log(f"Viable countries: {len(overlap['chip_viable'])}")
+        ctx.log(f"Excellent quality: {len(quality['excellent'])}")
         if temporal["recommended_range"]:
-            print(f"  Recommended years: {temporal['recommended_range'][0]}–{temporal['recommended_range'][1]}")
+            ctx.log(f"Recommended years: {temporal['recommended_range'][0]}–{temporal['recommended_range'][1]}")
 
 
 if __name__ == "__main__":

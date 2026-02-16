@@ -186,7 +186,7 @@ def run_baseline():
     logger.info("STEP 1: Fetching data from sources")
     logger.info("=" * 70)
 
-    print("Fetching data (this may take a moment)...")
+    logger.info("Fetching data (this may take a moment)...")
     data = fetcher.get_all()
 
     for name, df in data.items():
@@ -355,9 +355,7 @@ def main():
     script_name = Path(__file__).stem
     log_path = setup_logging(script_name)
 
-    print("Baseline Reproduction")
-    print("Target: $2.56/hour")
-    print()
+    logger.info("Baseline Reproduction — Target: $2.56/hour")
 
     with ScriptContext(script_name) as ctx:
         try:
@@ -376,14 +374,12 @@ def main():
             report_path = output_dir / f"baseline_{timestamp}.md"
             report_path.write_text(report)
 
-            print()
-            print(f"{'=' * 60}")
-            print(f"CHIP Value: ${results['chip_value']:.2f}/hour")
-            print(f"Target:     ${results['target']:.2f}/hour")
-            print(f"Validation: {results['validation']}")
-            print(f"{'=' * 60}")
-            print()
-            print(f"Report: {report_path}")
+            logger.info("=" * 60)
+            logger.info(f"CHIP Value: ${results['chip_value']:.2f}/hour")
+            logger.info(f"Target:     ${results['target']:.2f}/hour")
+            logger.info(f"Validation: {results['validation']}")
+            logger.info("=" * 60)
+            logger.info(f"Report: {report_path}")
 
             ctx.set_result("chip_value", results["chip_value"])
             ctx.set_result("target", results["target"])
@@ -395,7 +391,6 @@ def main():
         except Exception as e:
             logger.exception("Pipeline failed")
             ctx.error(str(e))
-            print(f"\nError: {e}")
             return 1
 
 
