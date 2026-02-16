@@ -2,17 +2,14 @@
 """
 Baseline Reproduction Script
 
-This script reproduces the CHIP value from the original study methodology,
-matching the reproduction/ pipeline when both use fresh API data.
-
-Result: $2.33/hour (vs reproduction's $2.35 — 0.9% deviation)
-Target: $2.56/hour with original data, $2.35/hour with fresh API data
+Reproduces the original CHIP estimate using the Cobb-Douglas methodology.
+See README.md for research question, hypothesis, and methodology overview.
 
 =============================================================================
-KEY METHODOLOGY FIXES (to match reproduction)
+IMPLEMENTATION NOTES
 =============================================================================
 
-Several subtle methodology details were critical to matching reproduction:
+Several subtle details were critical to matching the reproduction/ pipeline:
 
 1. WAGE RATIOS: Calculate per country-YEAR first, then average across years.
    Wrong: Average wages across years, then calculate ratio
@@ -26,7 +23,6 @@ Several subtle methodology details were critical to matching reproduction:
    on ALL country-years that have PWT data (capital, GDP, human capital),
    even if those years don't have wage data. This gives ~2000 observations
    for alpha estimation vs ~650 if we required wage data.
-   
    Then, filter to rows WITH wage data for the final MPL/distortion calculation.
 
 4. AVERAGE WAGE: Simple mean across occupations, not labor-weighted.
@@ -34,59 +30,6 @@ Several subtle methodology details were critical to matching reproduction:
 
 5. ALPHA IMPUTATION: Use regression-based imputation (MICE-style) for countries
    without valid alpha estimates. Predicts missing alphas from ln_y and ln_k.
-
-=============================================================================
-METHODOLOGY OVERVIEW (from original chips.R)
-=============================================================================
-
-The original study calculates CHIP (value of one hour of unskilled labor)
-using a Cobb-Douglas production function approach:
-
-1. DATA: Collect labor data (employment, wages, hours) for ALL occupation
-   categories, not just unskilled. The study uses 9 ISCO major groups.
-
-2. WAGE RATIOS: Calculate wage ratios relative to Managers (the reference).
-   For example, if Elementary workers earn 30% of Managers, their ratio is 0.3.
-   These ratios serve as "skill weights" — how much each occupation 
-   contributes to production relative to Managers.
-
-3. EFFECTIVE LABOR: Calculate skill-weighted labor hours:
-   Eff_Labor = Σ (Employed × Hours × Wage_Ratio) across ALL occupations
-   This is a measure of total "equivalent Manager hours" in the economy.
-
-4. MERGE WITH PWT: Join with Penn World Tables to get capital stock (K),
-   GDP (Y), and human capital index (hc).
-
-5. ESTIMATE ALPHA: Run fixed-effects regression to estimate capital share (α):
-   ln(Y / Eff_Labor × hc) = α × ln(K / Eff_Labor × hc) + country_effects
-
-6. CALCULATE MPL: Marginal Product of Labor using Cobb-Douglas formula:
-   MPL = (1 - α) × (K / Eff_Labor × hc)^α
-   
-   KEY INSIGHT: The denominator is ILOSTAT's Eff_Labor, NOT PWT's employment.
-   This is skill-adjusted labor measured in "equivalent Manager hours".
-
-7. AVERAGE WAGE: Simple mean of wages across occupations (per original study).
-
-8. DISTORTION FACTOR: Compare actual wages to marginal product:
-   θ = MPL / AW_Wage
-   
-   If θ > 1, workers are underpaid relative to their marginal product.
-   If θ < 1, workers are overpaid (unlikely in competitive markets).
-
-9. ADJUSTED WAGE: Apply distortion factor to ELEMENTARY (unskilled) wage:
-   CHIP_country = Elementary_Wage × θ
-   
-   This gives the "fair" wage for unskilled labor if markets were frictionless.
-
-10. GLOBAL CHIP: GDP-weighted average across countries:
-    CHIP = Σ (CHIP_country × GDP_weight)
-
-=============================================================================
-
-Usage:
-    ./run.sh baseline
-    ./run.sh baseline -v   # Run and view report
 """
 
 import sys
@@ -95,8 +38,10 @@ from datetime import datetime
 
 import pandas as pd
 
-# Add lib to path
-sys.path.insert(0, str(Path(__file__).parent.parent))
+# Study and workbench paths
+STUDY_DIR = Path(__file__).parent
+WORKBENCH_ROOT = STUDY_DIR.parent.parent
+sys.path.insert(0, str(WORKBENCH_ROOT))
 
 from lib.logging_config import setup_logging, ScriptContext, get_logger
 from lib import fetcher, normalize
@@ -105,13 +50,16 @@ from lib.config import load_config
 
 logger = get_logger(__name__)
 
+# Output directory for this study
+OUTPUT_DIR = STUDY_DIR / "output"
+
 
 # =============================================================================
 # BASELINE-SPECIFIC CONFIGURATION
 # =============================================================================
 #
 # These settings control how baseline matches the original study.
-# Other scripts (timeseries, compare) will use different settings but
+# Other studies (timeseries, weighting) will use different settings but
 # the same pipeline functions.
 
 # Countries from the reproduction run (90 countries)
@@ -175,7 +123,7 @@ def run_baseline():
     Run the baseline reproduction pipeline.
     Delegates all computation to lib/pipeline.py.
     """
-    config = load_config()
+    config = load_config(study_dir=STUDY_DIR)
 
     # Resolve year range from constants or config
     year_start = YEAR_START if YEAR_START is not None else config.data.year_start
@@ -352,12 +300,13 @@ def generate_report(results: dict) -> str:
 
 def main():
     """Main entry point."""
-    script_name = Path(__file__).stem
-    log_path = setup_logging(script_name)
+    script_name = Path(__file__).parent.name
+    output_dir = OUTPUT_DIR
+    log_path = setup_logging(script_name, output_dir=output_dir)
 
     logger.info("Baseline Reproduction — Target: $2.56/hour")
 
-    with ScriptContext(script_name) as ctx:
+    with ScriptContext(script_name, output_dir=output_dir) as ctx:
         try:
             results = run_baseline()
 
@@ -367,11 +316,11 @@ def main():
 
             report = generate_report(results)
 
-            output_dir = Path(__file__).parent.parent / "output" / "reports"
-            output_dir.mkdir(parents=True, exist_ok=True)
+            reports_dir = output_dir / "reports"
+            reports_dir.mkdir(parents=True, exist_ok=True)
 
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            report_path = output_dir / f"baseline_{timestamp}.md"
+            report_path = reports_dir / f"baseline_{timestamp}.md"
             report_path.write_text(report)
 
             logger.info("=" * 60)

@@ -26,19 +26,22 @@ from contextlib import contextmanager
 import json
 
 
-# Output directories
-OUTPUT_ROOT = Path(__file__).parent.parent / "output"
-LOG_DIR = OUTPUT_ROOT / "logs"
+# Default output directory (workbench-level fallback)
+_DEFAULT_OUTPUT_ROOT = Path(__file__).parent.parent / "output"
 
 
-def _ensure_dirs():
+def _ensure_dirs(output_root: Path = None):
     """Create output directories if they don't exist."""
-    LOG_DIR.mkdir(parents=True, exist_ok=True)
+    root = output_root or _DEFAULT_OUTPUT_ROOT
+    (root / "logs").mkdir(parents=True, exist_ok=True)
+    (root / "summaries").mkdir(parents=True, exist_ok=True)
+    return root
 
 
 def setup_logging(name: str = "workbench", 
                   level: int = logging.INFO,
-                  log_to_file: bool = True) -> logging.Logger:
+                  log_to_file: bool = True,
+                  output_dir: Path = None) -> logging.Logger:
     """
     Set up logging with console and optional file output.
     
@@ -46,11 +49,12 @@ def setup_logging(name: str = "workbench",
         name: Logger name (used in log file naming)
         level: Logging level (default: INFO)
         log_to_file: If True, also log to timestamped file
+        output_dir: Base output directory for log files (default: workbench/output)
         
     Returns:
         Configured logger
     """
-    _ensure_dirs()
+    root = _ensure_dirs(output_dir)
     
     # Create logger
     logger = logging.getLogger(name)
@@ -72,7 +76,8 @@ def setup_logging(name: str = "workbench",
     # File handler with detailed format
     if log_to_file:
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        log_file = LOG_DIR / f"{name}_{timestamp}.log"
+        log_dir = root / "logs"
+        log_file = log_dir / f"{name}_{timestamp}.log"
         
         file_handler = logging.FileHandler(log_file)
         file_handler.setLevel(level)
@@ -102,9 +107,10 @@ class ScriptContext:
             ctx.set_result("n_countries", 90)
     """
     
-    def __init__(self, name: str, log_to_file: bool = True):
+    def __init__(self, name: str, log_to_file: bool = True, output_dir: Path = None):
         self.name = name
-        self.logger = setup_logging(name, log_to_file=log_to_file)
+        self.output_dir = Path(output_dir) if output_dir else _DEFAULT_OUTPUT_ROOT
+        self.logger = setup_logging(name, log_to_file=log_to_file, output_dir=self.output_dir)
         self.start_time = None
         self.end_time = None
         self.steps = []
@@ -176,7 +182,7 @@ class ScriptContext:
     
     def _save_summary(self):
         """Save JSON summary of the run."""
-        _ensure_dirs()
+        root = _ensure_dirs(self.output_dir)
         
         summary = {
             "script": self.name,
@@ -190,7 +196,7 @@ class ScriptContext:
         }
         
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        summary_file = OUTPUT_ROOT / "summaries" / f"{self.name}_{timestamp}.json"
+        summary_file = root / "summaries" / f"{self.name}_{timestamp}.json"
         summary_file.parent.mkdir(parents=True, exist_ok=True)
         
         with open(summary_file, "w") as f:

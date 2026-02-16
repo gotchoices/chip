@@ -31,13 +31,27 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-# Default output directory
-OUTPUT_DIR = Path(__file__).parent.parent / "output"
+# Default output directory (workbench-level fallback)
+_DEFAULT_OUTPUT_DIR = Path(__file__).parent.parent / "output"
+
+# Active output directory (can be set per-study via set_output_dir)
+_output_dir = _DEFAULT_OUTPUT_DIR
+
+
+def set_output_dir(path: Path):
+    """Set the output directory for subsequent calls."""
+    global _output_dir
+    _output_dir = Path(path)
+
+
+def get_output_dir() -> Path:
+    """Get the current output directory."""
+    return _output_dir
 
 
 def _ensure_output_dir(subdir: str = None) -> Path:
     """Ensure output directory exists."""
-    path = OUTPUT_DIR
+    path = _output_dir
     if subdir:
         path = path / subdir
     path.mkdir(parents=True, exist_ok=True)

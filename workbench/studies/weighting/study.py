@@ -1,30 +1,18 @@
 #!/usr/bin/env python3
 """
-Compare Aggregation Methods
+Aggregation Weighting Method Comparison
 
-Purpose:
-    Test different weighting schemes for global CHIP aggregation.
-    Compares GDP-weighted, labor-weighted, freedom-weighted, and unweighted.
-
-Methodology:
-    1. Compute country-level CHIP values using Cobb-Douglas
-    2. Apply different aggregation weights
-    3. Analyze sensitivity to weighting choice
-    
-Outputs:
-    - Comparison table of CHIP under each scheme
-    - Sensitivity analysis
-    - Country contribution breakdown for each method
-
-Usage:
-    python scripts/compare_aggregators.py [--include-freedom]
+Tests sensitivity of global CHIP to GDP, labor, freedom, and unweighted aggregation.
+See README.md for research question, hypothesis, and methodology.
 """
 
 import sys
 from pathlib import Path
 
-# Add lib to path
-sys.path.insert(0, str(Path(__file__).parent.parent))
+# Study and workbench paths
+STUDY_DIR = Path(__file__).parent
+WORKBENCH_ROOT = STUDY_DIR.parent.parent
+sys.path.insert(0, str(WORKBENCH_ROOT))
 
 from lib import fetcher, normalize, clean, models, aggregate, output
 import argparse
@@ -33,10 +21,13 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+# Output directory for this study
+OUTPUT_DIR = STUDY_DIR / "output"
+
 
 def main():
     print("=" * 60)
-    print("Aggregation Method Comparison")
+    print("Aggregation Weighting Method Comparison")
     print("=" * 60)
     print()
     

@@ -1,8 +1,8 @@
 # Data cache (auto-heals on next run)
 data/
 
-# Output files (logs, summaries, reports)
-output/
+# Per-study output files (logs, summaries, reports, plots)
+studies/*/output/
 
 # Python
 __pycache__/

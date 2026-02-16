@@ -1,32 +1,26 @@
 #!/usr/bin/env python3
 """
-Analyze Data Coverage
+Data Coverage Analysis
 
-Purpose:
-    Examine which countries have consistent data across which time periods.
-    Identify data quality issues and gaps.
-    
-Outputs:
-    - Markdown report with coverage analysis
-    - JSON summary with key metrics
-
-Usage:
-    ./run.sh coverage
-    ./run.sh coverage -v    # Run and view report
+Analyzes country/year coverage across ILOSTAT, PWT, and FRED sources.
+See README.md for research question, hypothesis, and methodology.
 """
 
 import sys
 from pathlib import Path
 from datetime import datetime
 
-# Add parent to path for lib imports
-sys.path.insert(0, str(Path(__file__).parent.parent))
+# Study and workbench paths
+STUDY_DIR = Path(__file__).parent
+WORKBENCH_ROOT = STUDY_DIR.parent.parent
+sys.path.insert(0, str(WORKBENCH_ROOT))
 
 from lib.logging_config import ScriptContext
 from lib import fetcher, normalize, clean
 
-# Output directory
-REPORTS_DIR = Path(__file__).parent.parent / "output" / "reports"
+# Output directory for this study
+OUTPUT_DIR = STUDY_DIR / "output"
+REPORTS_DIR = OUTPUT_DIR / "reports"
 
 
 def _get_country_col(df):
@@ -204,7 +198,7 @@ def generate_markdown_report(coverage: dict, overlap: dict, temporal: dict, qual
     lines.append("")
     
     # Data Source Summary
-    lines.append("## 📊 Data Source Summary")
+    lines.append("## Data Source Summary")
     lines.append("")
     lines.append("| Source | Countries | Year Range | Rows |")
     lines.append("|--------|-----------|------------|------|")
@@ -217,7 +211,7 @@ def generate_markdown_report(coverage: dict, overlap: dict, temporal: dict, qual
     lines.append("")
     
     # Country Overlap
-    lines.append("## 🔗 Country Overlap Analysis")
+    lines.append("## Country Overlap Analysis")
     lines.append("")
     lines.append("For CHIP estimation, we need:")
     lines.append("- Employment data (ILOSTAT)")
@@ -226,10 +220,10 @@ def generate_markdown_report(coverage: dict, overlap: dict, temporal: dict, qual
     lines.append("")
     lines.append("| Category | Count | Status |")
     lines.append("|----------|-------|--------|")
-    lines.append(f"| In ALL sources | {len(overlap['all_sources'])} | ✓ Full coverage |")
-    lines.append(f"| CHIP-viable (emp+wage+PWT) | {len(overlap['chip_viable'])} | ✓ Can estimate CHIP |")
-    lines.append(f"| Missing wage data | {len(overlap['missing_wages'])} | ⚠ Excluded |")
-    lines.append(f"| Missing PWT data | {len(overlap['missing_pwt'])} | ⚠ Excluded |")
+    lines.append(f"| In ALL sources | {len(overlap['all_sources'])} | Full coverage |")
+    lines.append(f"| CHIP-viable (emp+wage+PWT) | {len(overlap['chip_viable'])} | Can estimate CHIP |")
+    lines.append(f"| Missing wage data | {len(overlap['missing_wages'])} | Excluded |")
+    lines.append(f"| Missing PWT data | {len(overlap['missing_pwt'])} | Excluded |")
     lines.append("")
     
     # List viable countries
@@ -243,7 +237,7 @@ def generate_markdown_report(coverage: dict, overlap: dict, temporal: dict, qual
     lines.append("")
     
     # Year Coverage
-    lines.append("## 📅 Year Coverage")
+    lines.append("## Year Coverage")
     lines.append("")
     lines.append("| Source | Year Range | # Years |")
     lines.append("|--------|------------|---------|")
@@ -270,14 +264,14 @@ def generate_markdown_report(coverage: dict, overlap: dict, temporal: dict, qual
         lines.append("")
     
     # Data Quality Tiers
-    lines.append("## 📈 Data Quality Tiers")
+    lines.append("## Data Quality Tiers")
     lines.append("")
     lines.append("| Tier | Criteria | Countries | Recommendation |")
     lines.append("|------|----------|-----------|----------------|")
-    lines.append(f"| 🟢 Excellent | 15+ years | {len(quality['excellent'])} | Use for all analyses |")
-    lines.append(f"| 🔵 Good | 8–14 years | {len(quality['good'])} | Use for most analyses |")
-    lines.append(f"| 🟡 Fair | 3–7 years | {len(quality['fair'])} | Use with caution |")
-    lines.append(f"| 🔴 Sparse | < 3 years | {len(quality['sparse'])} | Consider excluding |")
+    lines.append(f"| Excellent | 15+ years | {len(quality['excellent'])} | Use for all analyses |")
+    lines.append(f"| Good | 8–14 years | {len(quality['good'])} | Use for most analyses |")
+    lines.append(f"| Fair | 3–7 years | {len(quality['fair'])} | Use with caution |")
+    lines.append(f"| Sparse | < 3 years | {len(quality['sparse'])} | Consider excluding |")
     lines.append("")
     
     # List excellent countries with years
@@ -294,7 +288,7 @@ def generate_markdown_report(coverage: dict, overlap: dict, temporal: dict, qual
         lines.append("")
     
     # Recommendations
-    lines.append("## 💡 Recommendations")
+    lines.append("## Recommendations")
     lines.append("")
     
     n_viable = len(overlap["chip_viable"])
@@ -339,7 +333,9 @@ def main():
     # Ensure reports directory exists
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
     
-    with ScriptContext("coverage", log_to_file=True) as ctx:
+    script_name = Path(__file__).parent.name
+    
+    with ScriptContext(script_name, log_to_file=True, output_dir=OUTPUT_DIR) as ctx:
         
         # Fetch data
         ctx.log("Fetching data from sources...")

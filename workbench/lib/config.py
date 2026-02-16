@@ -101,12 +101,59 @@ def get_default_config() -> Config:
     return Config()
 
 
-def load_config(path: Path = None) -> Config:
+def _apply_yaml_overrides(config: Config, raw: dict):
+    """Apply raw YAML dict overrides onto a Config object."""
+    if raw is None:
+        return
+
+    if "data" in raw:
+        for k, v in raw["data"].items():
+            if hasattr(config.data, k):
+                setattr(config.data, k, v)
+
+    if "cleaning" in raw:
+        for k, v in raw["cleaning"].items():
+            if hasattr(config.cleaning, k):
+                setattr(config.cleaning, k, v)
+
+    if "model" in raw:
+        for k, v in raw["model"].items():
+            if hasattr(config.model, k):
+                setattr(config.model, k, v)
+
+    if "aggregation" in raw:
+        for k, v in raw["aggregation"].items():
+            if hasattr(config.aggregation, k):
+                setattr(config.aggregation, k, v)
+
+    if "output" in raw:
+        for k, v in raw["output"].items():
+            if hasattr(config.output, k):
+                if k == "output_dir":
+                    v = Path(v)
+                setattr(config.output, k, v)
+
+
+def _load_yaml(path: Path) -> dict:
+    """Load a YAML file and return the raw dict (or None)."""
+    import yaml
+    with open(path) as f:
+        return yaml.safe_load(f)
+
+
+def load_config(path: Path = None, study_dir: Path = None) -> Config:
     """
-    Load configuration from YAML file.
+    Load configuration from YAML file, with optional per-study overrides.
+    
+    Configuration is layered:
+        1. Built-in defaults
+        2. Base config (workbench/config.yaml)
+        3. Study config (studies/<name>/config.yaml) — if study_dir provided
     
     Args:
-        path: Path to config file (default: workbench/config.yaml)
+        path: Path to base config file (default: workbench/config.yaml)
+        study_dir: Path to study directory. If it contains a config.yaml,
+                   those values override the base config.
         
     Returns:
         Config object with loaded settings
@@ -116,56 +163,31 @@ def load_config(path: Path = None) -> Config:
     
     config = get_default_config()
     
-    if not path.exists():
+    # Layer 2: base config
+    if path.exists():
+        try:
+            raw = _load_yaml(path)
+            _apply_yaml_overrides(config, raw)
+            logger.info(f"Loaded base config from {path}")
+        except ImportError:
+            logger.warning("pyyaml not available; using default config")
+        except Exception as e:
+            logger.error(f"Error loading base config: {e}")
+    else:
         logger.info(f"No config file at {path}, using defaults")
-        return config
     
-    try:
-        import yaml
-        
-        with open(path) as f:
-            raw = yaml.safe_load(f)
-        
-        if raw is None:
-            return config
-        
-        # Apply overrides from file
-        if "data" in raw:
-            for k, v in raw["data"].items():
-                if hasattr(config.data, k):
-                    setattr(config.data, k, v)
-        
-        if "cleaning" in raw:
-            for k, v in raw["cleaning"].items():
-                if hasattr(config.cleaning, k):
-                    setattr(config.cleaning, k, v)
-        
-        if "model" in raw:
-            for k, v in raw["model"].items():
-                if hasattr(config.model, k):
-                    setattr(config.model, k, v)
-        
-        if "aggregation" in raw:
-            for k, v in raw["aggregation"].items():
-                if hasattr(config.aggregation, k):
-                    setattr(config.aggregation, k, v)
-        
-        if "output" in raw:
-            for k, v in raw["output"].items():
-                if hasattr(config.output, k):
-                    if k == "output_dir":
-                        v = Path(v)
-                    setattr(config.output, k, v)
-        
-        logger.info(f"Loaded config from {path}")
-        return config
-        
-    except ImportError:
-        logger.warning("pyyaml not available; using default config")
-        return config
-    except Exception as e:
-        logger.error(f"Error loading config: {e}")
-        return config
+    # Layer 3: per-study overrides
+    if study_dir is not None:
+        study_config = Path(study_dir) / "config.yaml"
+        if study_config.exists():
+            try:
+                raw = _load_yaml(study_config)
+                _apply_yaml_overrides(config, raw)
+                logger.info(f"Applied study overrides from {study_config}")
+            except Exception as e:
+                logger.error(f"Error loading study config: {e}")
+    
+    return config
 
 
 # =============================================================================

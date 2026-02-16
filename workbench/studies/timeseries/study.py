@@ -2,64 +2,20 @@
 """
 Time Series Discovery Script
 
-Builds year-by-year CHIP time series under various assumptions to understand
-the data before testing specific hypotheses (H1-H4 from inflation-tracking.md).
-
-This is a DISCOVERY tool — it produces multiple time series on one report so
-you can compare the effects of each assumption at a glance.
+Builds year-by-year CHIP time series under various assumptions.
+See README.md for research question, hypotheses (H1-H3), and methodology.
 
 =============================================================================
-KEY FINDING: DEFLATION CANCELS IN THE CHIP FORMULA
+IMPLEMENTATION NOTES
 =============================================================================
 
-CHIP = elementary_wage × (MPL / average_wage)
+Deflation cancels in the CHIP formula: both elementary_wage and average_wage
+are scaled identically, so the deflator drops out of theta = MPL / avg_wage.
+To produce a meaningful nominal series, we RE-INFLATE the constant-dollar
+CHIP: CHIP_nominal(Y) = CHIP_constant(Y) × deflator(Y) / deflator(2017).
 
-MPL depends on capital (K), effective labor (L), and human capital (hc) —
-NOT on wages. The deflator affects both elementary_wage and average_wage
-equally, so it cancels in the ratio theta = MPL / average_wage.
-
-Therefore: CHIP_deflated = CHIP_nominal. Skipping deflation does not change
-the CHIP value at all.
-
-To produce a meaningful "nominal" series, we compute CHIP in constant 2017$
-(the pipeline's natural output) and then RE-INFLATE it:
-
-    CHIP_nominal(Y) = CHIP_constant(Y) × deflator(Y) / deflator(2017)
-
-This gives us a series that rises with inflation, testable against H1.
-
-=============================================================================
-WHAT THIS SCRIPT PRODUCES
-=============================================================================
-
-1. CHIP time series in two framings:
-     A) Constant 2017$ — shows real changes in labor value
-     B) Re-inflated nominal $ — should track inflation (H1)
-
-2. Both framings for:
-     - All available countries (composition changes year to year)
-     - Stable panel (countries with coverage across the span)
-
-3. Comparison of nominal CHIP index to US GDP deflator index (H1 test).
-
-4. Rolling-window smoothed variants (3-year and 5-year).
-
-5. Country coverage analysis — how many countries contribute each year.
-
-=============================================================================
-CONFIGURATION KNOBS
-=============================================================================
-
-    YEAR_START, YEAR_END     — full data range to fetch
-    SERIES_MIN_COUNTRIES     — minimum countries per year to include in series
-    MIN_COVERAGE_PCT         — threshold for "stable panel" membership
-    WEIGHTING                — "gdp", "labor", or "unweighted"
-
-=============================================================================
-
-Usage:
-    ./run.sh timeseries
-    ./run.sh timeseries -v     # Run and view report
+Configuration constants below control year range, minimum country thresholds,
+stable-panel membership, and weighting method.
 """
 
 import sys
@@ -69,14 +25,19 @@ from datetime import datetime
 import numpy as np
 import pandas as pd
 
-# Add lib to path
-sys.path.insert(0, str(Path(__file__).parent.parent))
+# Study and workbench paths
+STUDY_DIR = Path(__file__).parent
+WORKBENCH_ROOT = STUDY_DIR.parent.parent
+sys.path.insert(0, str(WORKBENCH_ROOT))
 
 from lib.logging_config import setup_logging, ScriptContext, get_logger
 from lib import fetcher, normalize, pipeline
 from lib.config import load_config
 
 logger = get_logger(__name__)
+
+# Output directory for this study
+OUTPUT_DIR = STUDY_DIR / "output"
 
 
 # =============================================================================
@@ -597,7 +558,7 @@ def run_timeseries():
     5. Create nominal series by re-inflating with GDP deflator
     6. Generate comparison plots
     """
-    config = load_config()
+    config = load_config(study_dir=STUDY_DIR)
 
     year_start = YEAR_START
     year_end = YEAR_END
@@ -744,8 +705,7 @@ def run_timeseries():
     logger.info("STEP 8: Generating plots")
     logger.info("=" * 70)
 
-    output_dir = Path(__file__).parent.parent / "output"
-    plot_paths = generate_plots(series, deflator_df, output_dir)
+    plot_paths = generate_plots(series, deflator_df, OUTPUT_DIR)
 
     # ------------------------------------------------------------------
     # Summary
@@ -788,12 +748,13 @@ def run_timeseries():
 
 def main():
     """Main entry point."""
-    script_name = Path(__file__).stem
-    log_path = setup_logging(script_name)
+    script_name = Path(__file__).parent.name
+    output_dir = OUTPUT_DIR
+    log_path = setup_logging(script_name, output_dir=output_dir)
 
     logger.info(f"Time Series Discovery — Range: {YEAR_START}–{YEAR_END}")
 
-    with ScriptContext(script_name) as ctx:
+    with ScriptContext(script_name, output_dir=output_dir) as ctx:
         try:
             results = run_timeseries()
 
@@ -810,11 +771,11 @@ def main():
                 config_info=results["config_info"],
             )
 
-            output_dir = Path(__file__).parent.parent / "output" / "reports"
-            output_dir.mkdir(parents=True, exist_ok=True)
+            reports_dir = output_dir / "reports"
+            reports_dir.mkdir(parents=True, exist_ok=True)
 
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            report_path = output_dir / f"timeseries_{timestamp}.md"
+            report_path = reports_dir / f"timeseries_{timestamp}.md"
             report_path.write_text(report)
 
             ts_con = results["series"].get("all_constant")

@@ -3,25 +3,24 @@
 # CHIP Workbench Runner
 #
 # Usage:
-#   ./run.sh <script>              Run a script (e.g., coverage, timeseries)
-#   ./run.sh <script> -v           Run script and view report
-#   ./run.sh --view <script>       View last report for script
-#   ./run.sh --view <path>         View specific report file
-#   ./run.sh --list                List available scripts
+#   ./run.sh <study>              Run a study (e.g., coverage, timeseries)
+#   ./run.sh <study> -v           Run study and view report
+#   ./run.sh --view <study>       View last report for study
+#   ./run.sh --view <path>        View specific report file
+#   ./run.sh --list               List available studies
 #
 # Examples:
 #   ./run.sh coverage              Run coverage analysis
 #   ./run.sh coverage -v           Run and view report
 #   ./run.sh --view coverage       View last coverage report
-#   ./run.sh --view output/reports/coverage_20260201.md
+#   ./run.sh --view studies/coverage/output/reports/coverage_20260201.md
 #
 
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 VENV_PYTHON="$SCRIPT_DIR/.venv/bin/python"
-SCRIPTS_DIR="$SCRIPT_DIR/scripts"
-REPORTS_DIR="$SCRIPT_DIR/output/reports"
+STUDIES_DIR="$SCRIPT_DIR/studies"
 
 # Colors for output
 RED='\033[0;31m'
@@ -38,33 +37,30 @@ show_help() {
     echo "CHIP Workbench Runner"
     echo ""
     echo "Usage:"
-    echo "  ./run.sh <script>              Run a script"
-    echo "  ./run.sh <script> -v           Run script and view report"
-    echo "  ./run.sh --view <script>       View last report for script"
-    echo "  ./run.sh --view <path>         View specific report file"
-    echo "  ./run.sh --list                List available scripts"
+    echo "  ./run.sh <study>              Run a study"
+    echo "  ./run.sh <study> -v           Run study and view report"
+    echo "  ./run.sh --view <study>       View last report for study"
+    echo "  ./run.sh --view <path>        View specific report file"
+    echo "  ./run.sh --list               List available studies"
     echo ""
-    echo "Scripts:"
-    list_scripts
+    echo "Studies:"
+    list_studies
 }
 
-list_scripts() {
-    for f in "$SCRIPTS_DIR"/*.py; do
-        if [[ -f "$f" && "$(basename "$f")" != "__init__.py" ]]; then
-            name=$(basename "$f" .py)
-            # Extract first line of docstring as description
+list_studies() {
+    for d in "$STUDIES_DIR"/*/; do
+        if [[ -f "$d/study.py" ]]; then
+            name=$(basename "$d")
+            # Extract first non-empty docstring line as description
             desc=$("$VENV_PYTHON" -c "
-import sys
-sys.path.insert(0, '$SCRIPT_DIR')
+import ast, sys
 try:
-    from scripts import $name
-    doc = ${name}.__doc__ or ''
-    # Get purpose line
+    with open('$d/study.py') as f:
+        tree = ast.parse(f.read())
+    doc = ast.get_docstring(tree) or ''
     for line in doc.split('\n'):
         line = line.strip()
-        if line.startswith('Purpose:'):
-            continue
-        if line and not line.startswith('Usage:') and not line.startswith('Outputs:'):
+        if line and not line.startswith('Purpose:') and not line.startswith('Usage:') and not line.startswith('Outputs:'):
             print(line[:60])
             break
 except:
@@ -102,30 +98,32 @@ view_report() {
 }
 
 find_latest_report() {
-    local script_name="$1"
-    local pattern="${script_name}_*.md"
+    local study_name="$1"
+    local reports_dir="$STUDIES_DIR/$study_name/output/reports"
+    local pattern="${study_name}_*.md"
     
     # Find most recent report matching pattern
-    local latest=$(ls -t "$REPORTS_DIR"/$pattern 2>/dev/null | head -1)
+    local latest=$(ls -t "$reports_dir"/$pattern 2>/dev/null | head -1)
     
     if [[ -z "$latest" ]]; then
-        echo -e "${RED}No reports found for: $script_name${NC}"
-        echo "Reports directory: $REPORTS_DIR"
+        echo -e "${RED}No reports found for: $study_name${NC}"
+        echo "Reports directory: $reports_dir"
         exit 1
     fi
     
     echo "$latest"
 }
 
-run_script() {
-    local script_name="$1"
-    local script_path="$SCRIPTS_DIR/${script_name}.py"
+run_study() {
+    local study_name="$1"
+    local study_dir="$STUDIES_DIR/$study_name"
+    local study_script="$study_dir/study.py"
     
-    if [[ ! -f "$script_path" ]]; then
-        echo -e "${RED}Script not found: $script_name${NC}"
+    if [[ ! -f "$study_script" ]]; then
+        echo -e "${RED}Study not found: $study_name${NC}"
         echo ""
-        echo "Available scripts:"
-        list_scripts
+        echo "Available studies:"
+        list_studies
         exit 1
     fi
     
@@ -136,16 +134,16 @@ run_script() {
         exit 1
     fi
     
-    echo -e "${GREEN}Running: $script_name${NC}"
+    echo -e "${GREEN}Running: $study_name${NC}"
     echo ""
     
-    # Run the script
-    "$VENV_PYTHON" "$script_path"
+    # Run the study script
+    "$VENV_PYTHON" "$study_script"
     
     echo ""
     
     # Find and report the output file
-    local report=$(find_latest_report "$script_name" 2>/dev/null || true)
+    local report=$(find_latest_report "$study_name" 2>/dev/null || true)
     if [[ -n "$report" && -f "$report" ]]; then
         echo -e "${GREEN}Report saved: $report${NC}"
         echo "$report"  # Output path for programmatic use
@@ -170,27 +168,27 @@ case "$1" in
         ;;
     
     --list)
-        echo "Available scripts:"
-        list_scripts
+        echo "Available studies:"
+        list_studies
         exit 0
         ;;
     
     --view)
         # View mode
         if [[ -z "$2" ]]; then
-            echo -e "${RED}Usage: ./run.sh --view <script|path>${NC}"
+            echo -e "${RED}Usage: ./run.sh --view <study|path>${NC}"
             exit 1
         fi
         
-        # Check if it's a file path or script name
+        # Check if it's a file path or study name
         if [[ -f "$2" ]]; then
             # It's a file path
             view_report "$2"
-        elif [[ -f "$REPORTS_DIR/$2" ]]; then
-            # It's a filename in reports dir
-            view_report "$REPORTS_DIR/$2"
+        elif [[ -f "$STUDIES_DIR/$2/output/reports/$2" ]]; then
+            # It's a filename in the study's reports dir
+            view_report "$STUDIES_DIR/$2/output/reports/$2"
         else
-            # Assume it's a script name, find latest report
+            # Assume it's a study name, find latest report
             report=$(find_latest_report "$2")
             view_report "$report"
         fi
@@ -198,18 +196,18 @@ case "$1" in
     
     *)
         # Run mode
-        SCRIPT_NAME="$1"
+        STUDY_NAME="$1"
         VIEW_AFTER=false
         
         if [[ "$2" == "-v" || "$2" == "--view" ]]; then
             VIEW_AFTER=true
         fi
         
-        run_script "$SCRIPT_NAME"
+        run_study "$STUDY_NAME"
         
         if $VIEW_AFTER; then
             echo ""
-            report=$(find_latest_report "$SCRIPT_NAME")
+            report=$(find_latest_report "$STUDY_NAME")
             view_report "$report"
         fi
         ;;

@@ -1,31 +1,18 @@
 #!/usr/bin/env python3
 """
-Test Nominal vs Deflated CHIP Computation
+Nominal vs Deflated CHIP Comparison
 
-Purpose:
-    Compare CHIP values computed with and without deflation.
-    Tests hypothesis from inflation-tracking.md that nominal CHIP
-    naturally tracks currency inflation.
-
-Methodology:
-    1. Compute CHIP using original deflator-based approach
-    2. Compute CHIP without deflation (nominal)
-    3. Compare results across time periods
-    
-Outputs:
-    - Side-by-side comparison table
-    - Time series of both measures
-    - Analysis of divergence
-
-Usage:
-    python scripts/test_nominal_chip.py [--years 2010-2020]
+Formal test of H1: does nominal CHIP track currency inflation?
+See README.md for research question, hypothesis, and methodology.
 """
 
 import sys
 from pathlib import Path
 
-# Add lib to path
-sys.path.insert(0, str(Path(__file__).parent.parent))
+# Study and workbench paths
+STUDY_DIR = Path(__file__).parent
+WORKBENCH_ROOT = STUDY_DIR.parent.parent
+sys.path.insert(0, str(WORKBENCH_ROOT))
 
 from lib import fetcher, normalize, clean, models, aggregate, output
 import pandas as pd
@@ -33,6 +20,9 @@ import logging
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+# Output directory for this study
+OUTPUT_DIR = STUDY_DIR / "output"
 
 
 def main():
