@@ -28,5 +28,16 @@ underlying real CHIP is stable.
 
 ## Status
 
-**Scaffold.** Implementation pending. The timeseries study already demonstrates
-the cancellation finding; this study would formalize the H1 test.
+**Absorbed.** The core finding of this study — that deflation cancels
+algebraically in the CHIP formula — was discovered and documented during the
+`timeseries` study. See `studies/timeseries/FINDINGS.md` §"Deflation Cancels
+in the CHIP Formula" and §"H1: Nominal CHIP Tracks Inflation."
+
+The timeseries study demonstrated that:
+- Nominal and deflated CHIP are mathematically identical
+- Nominal CHIP must be constructed by re-inflating constant-dollar CHIP
+- The nominal series tracks the GDP deflator by construction
+
+If a formal correlation coefficient or regression is desired, it can be added
+as a small extension to the timeseries study rather than a separate study.
+No further implementation is planned here.

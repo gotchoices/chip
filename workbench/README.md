@@ -115,13 +115,17 @@ Each study is a self-contained directory under `studies/`. A study has:
 
 ### Current Studies
 
-| Study | Status | Description |
-|-------|--------|-------------|
-| **baseline** | Complete | Reproduce original $2.56 CHIP estimate ($2.33 achieved) |
-| **coverage** | Complete | Analyze country/year data coverage across sources |
-| **timeseries** | Complete | Year-by-year CHIP series, stable panel, inflation tracking |
-| **nominal** | Scaffold | Formal test of nominal vs deflated CHIP (H1) |
-| **weighting** | Scaffold | Compare GDP, labor, freedom, and unweighted aggregation |
+| Study | Status | Description | Design Goals |
+|-------|--------|-------------|--------------|
+| **baseline** | Complete | Reproduce original $2.56 CHIP estimate ($2.33 achieved) | 1, 2 |
+| **coverage** | Complete | Analyze country/year data coverage across sources | 2 |
+| **timeseries** | Complete | Year-by-year CHIP series, stable panel, inflation tracking | 1, 3, 4 |
+| **production** | Scaffold | Trailing-window methodology for current-year estimates | 2, 3, 5, 6, 8 |
+| **stability** | Scaffold | Vintage stability, update continuity, change decomposition | 4, 6, 7 |
+| **weighting** | Scaffold | Compare GDP, labor, freedom, and unweighted aggregation | 1, 7 |
+| **nominal** | Absorbed | Nominal vs deflated CHIP — answered by timeseries study | 3 |
+
+Design Goal numbers refer to the top-level `README.md` § Design Goals.
 
 ### Running a Study
 

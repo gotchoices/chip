@@ -14,6 +14,66 @@ The term "nominal unskilled" (from the canonical definition) is important: it do
 
 This project aims to quantify that base value using global labor market data and economic theory.
 
+## Design Goals
+
+The CHIP estimator exists to serve a practical purpose: anchoring the
+[MyCHIPs](https://gotchoices.org/mychips/) credit system to the real value of
+human labor. The following goals guide both the research and the eventual
+production pipeline.
+
+### Core Definition
+
+1. **Nominal labor index.** CHIP is denominated in current (nominal) dollars,
+   not inflation-adjusted dollars. One CHIP represents what one hour of
+   unskilled labor is worth *today*, at today's prices. (See the
+   [formal definition](https://gotchoices.org/mychips/definition.html).)
+
+2. **Global, objective measure.** CHIP is derived from publicly available
+   world data (ILOSTAT, Penn World Tables), not from any single country or
+   proprietary source. It should be reproducible by anyone with access to the
+   same data.
+
+### Inflation Behavior
+
+3. **Inflation immunity.** When a currency loses purchasing power, the CHIP
+   value stated in that currency should rise proportionally. A user holding
+   CHIPs is holding labor-hours, not dollars — their value is preserved as
+   currencies inflate. This is a *feature* of using labor as the index.
+
+4. **Real changes are accepted.** If the real demand for unskilled human labor
+   shifts (due to automation, demographics, or other structural forces), CHIP
+   reflects that change honestly. Ideally, we can quantify the real component
+   separately from inflation. (See `docs/labor-value-future.md` for analysis of
+   long-term labor demand under AI/automation.)
+
+### Operational Stability
+
+5. **Periodic, repeatable estimation.** The CHIP value is recalculated
+   periodically (at least annually) using fresh data. The pipeline must be
+   automated and deterministic — same data in, same number out.
+
+6. **Continuity between updates.** When new data arrives and the index is
+   recalculated, the update should not produce a large discontinuity. Between
+   official recalculations, the CHIP value can be extrapolated using CPI or a
+   similar price index, so the next official value is largely predictable and
+   requires only a small correction.
+
+7. **Stable methodology.** Changes to the estimation methodology should be
+   rare and well-justified. Users and implementors need confidence that the
+   number won't shift dramatically due to a modeling decision.
+
+### Practical Use
+
+8. **Actionable for MyCHIPs.** The published CHIP value must be immediately
+   usable: a user sees "1 CHIP = $X.XX" in their native currency, with no
+   further calculation required. The estimate should be date-stamped and
+   expressed in nominal terms. (See `docs/inflation-tracking.md` Sec 4 for the
+   academic-vs-practical tension.)
+
+9. **Transparent and auditable.** The data sources, methodology, and code are
+   open. Anyone can verify how the number was derived, reproduce it, or propose
+   improvements.
+
 ## Project Structure
 
 ```
@@ -22,7 +82,7 @@ chip/
 ├── reproduction/      # Python reproduction of original methodology
 ├── workbench/         # Exploratory analysis environment (active)
 │   ├── lib/           # Modular Python library
-│   ├── scripts/       # Analysis scripts
+│   ├── studies/       # Individual research investigations
 │   └── data/          # Cached data (gitignored, self-healing)
 ├── estimates/         # Production estimates (to be created)
 └── docs/              # Methodology reviews, papers, formal analysis
@@ -96,17 +156,20 @@ Explored the long-term question: Will AI/automation make human labor more or les
 
 Created a modular exploratory analysis environment:
 - **Independent from reproduction/** — can evolve freely without breaking the validated baseline
-- **Modular library** (`workbench/lib/`) — 10 modules: fetcher, normalize, clean, impute, models, aggregate, output, config, cache, logging
+- **Modular library** (`workbench/lib/`) — 11 modules: fetcher, normalize, clean, impute, pipeline, models, aggregate, output, config, cache, logging
 - **Self-healing cache** — delete data, it auto-fetches on next run
-- **Baseline validated** — `scripts/baseline.py` produces $2.33/hour (matches reproduction's $2.35 within 1%)
+- **Study-based structure** — each investigation lives in `studies/<name>/` with its own `study.py`, `README.md`, `FINDINGS.md`, and `output/`
 - **Reusable by future projects** — `estimates/` will import from `workbench.lib`
 
-Scripts:
-- `coverage.py` ✅ — data coverage analysis across all sources
-- `baseline.py` ✅ — reproduces original methodology end-to-end
-- `nominal.py` — test hypothesis H1 (CHIP tracks inflation)
-- `timeseries.py` — test H2, H3 (temporal stability)
-- `compare.py` — GDP vs labor vs freedom weighting
+Completed studies:
+- `baseline` ✅ — reproduces original methodology ($2.33/hr, within 1% of target)
+- `coverage` ✅ — data coverage analysis (123 viable countries, 2000–2019 range)
+- `timeseries` ✅ — year-by-year CHIP series, stable panel, inflation tracking; key discovery that deflation cancels in the CHIP formula
+
+Planned studies:
+- `production` — trailing-window methodology for current-year estimates (Design Goal 5–6)
+- `stability` — vintage stability, update continuity, change decomposition (Design Goal 6–7)
+- `weighting` — GDP vs labor vs unweighted aggregation sensitivity
 
 ### Step 7: Production Estimates (Next)
 **Folder**: `estimates/` (to be created)
@@ -169,16 +232,17 @@ The papers in `docs/` build on each other. For readers new to this project:
 
 ## Current Status
 
-**Phase 1 complete. Phase 2 (Workbench) infrastructure complete, research scripts next.**
+**Phase 2 (Workbench) research studies substantially complete. Transitioning to production methodology.**
 
 Recent milestones:
 - ✅ Reproduction validated at $2.56/hour (original data) and $2.35/hour (fresh API)
 - ✅ Workbench baseline validated at $2.33/hour (matches reproduction within 1%)
-- ✅ All 10 library modules implemented and working
+- ✅ All 11 library modules implemented (including shared `pipeline.py`)
 - ✅ Inflation-tracking analysis complete with testable hypotheses (H1-H4)
-- ✅ Labor-value-future paper explores AI/automation impact
-- 🔄 Current: Implement research scripts (nominal, timeseries, compare)
-- 🔜 Next: Test hypotheses, then create `estimates/` for production methodology
+- ✅ Time series study complete — deflation cancellation discovered, real CHIP ~$3.50/hr (stable panel), nominal tracking confirmed
+- ✅ Coverage study complete — 123 viable countries, 79 excellent, recommended range 2000–2019
+- 🔄 Current: Design production methodology studies (trailing window, vintage stability)
+- 🔜 Next: Implement production pipeline, then create `estimates/` for official values
 
 See [`docs/STATUS.md`](docs/STATUS.md) for detailed tracking.
 
