@@ -1,0 +1,15 @@
+2026-02-16 14:50:00 | INFO     | baseline | Logging to: /Users/kyle/share/devel/chip/workbench/studies/baseline/output/logs/baseline_20260216_145000.log
+2026-02-16 14:50:00 | INFO     | baseline | Logging to: /Users/kyle/share/devel/chip/workbench/studies/baseline/output/logs/baseline_20260216_145000.log
+2026-02-16 14:50:00 | INFO     | baseline | ============================================================
+2026-02-16 14:50:00 | INFO     | baseline | Starting: baseline
+2026-02-16 14:50:00 | INFO     | baseline | ============================================================
+2026-02-16 14:50:01 | INFO     | baseline | Result: chip_value = 2.3265539228595284
+2026-02-16 14:50:01 | INFO     | baseline | Result: target = 2.35
+2026-02-16 14:50:01 | INFO     | baseline | Result: validation = PASSED
+2026-02-16 14:50:01 | INFO     | baseline | Result: n_countries = 99
+2026-02-16 14:50:01 | INFO     | baseline | ============================================================
+2026-02-16 14:50:01 | INFO     | baseline | Completed: baseline
+2026-02-16 14:50:01 | INFO     | baseline | Duration: 0.8s
+2026-02-16 14:50:01 | INFO     | baseline | Results: {'chip_value': np.float64(2.3265539228595284), 'target': 2.35, 'validation': 'PASSED', 'n_countries': 99}
+2026-02-16 14:50:01 | INFO     | baseline | ============================================================
+2026-02-16 14:50:01 | INFO     | baseline | Summary saved: /Users/kyle/share/devel/chip/workbench/studies/baseline/output/summaries/baseline_20260216_145001.json

@@ -7,13 +7,14 @@
 #   ./run.sh <study> -v           Run study and view report
 #   ./run.sh --view <study>       View last report for study
 #   ./run.sh --view <path>        View specific report file
+#   ./run.sh --pdf <study>        Generate PDF from study's FINDINGS.md
 #   ./run.sh --list               List available studies
 #
 # Examples:
 #   ./run.sh coverage              Run coverage analysis
 #   ./run.sh coverage -v           Run and view report
 #   ./run.sh --view coverage       View last coverage report
-#   ./run.sh --view studies/coverage/output/reports/coverage_20260201.md
+#   ./run.sh --pdf timeseries      Generate timeseries FINDINGS.pdf
 #
 
 set -e
@@ -41,6 +42,7 @@ show_help() {
     echo "  ./run.sh <study> -v           Run study and view report"
     echo "  ./run.sh --view <study>       View last report for study"
     echo "  ./run.sh --view <path>        View specific report file"
+    echo "  ./run.sh --pdf <study>        Generate PDF from FINDINGS.md"
     echo "  ./run.sh --list               List available studies"
     echo ""
     echo "Studies:"
@@ -114,6 +116,69 @@ find_latest_report() {
     echo "$latest"
 }
 
+generate_pdf() {
+    local study_name="$1"
+    local study_dir="$STUDIES_DIR/$study_name"
+    local findings="$study_dir/FINDINGS.md"
+    local output_pdf="$study_dir/FINDINGS.pdf"
+    
+    if [[ ! -d "$study_dir" ]]; then
+        echo -e "${RED}Study not found: $study_name${NC}"
+        exit 1
+    fi
+    
+    if [[ ! -f "$findings" ]]; then
+        echo -e "${RED}No FINDINGS.md in: $study_dir${NC}"
+        exit 1
+    fi
+    
+    if ! command -v pandoc &>/dev/null; then
+        echo -e "${RED}pandoc is required for PDF generation.${NC}"
+        echo "Install with: brew install pandoc"
+        echo ""
+        echo "For best results, also install a LaTeX engine:"
+        echo "  brew install --cask basictex   # minimal LaTeX"
+        echo "  # or: brew install --cask mactex  # full LaTeX"
+        exit 1
+    fi
+    
+    echo -e "${BLUE}Generating PDF: $output_pdf${NC}"
+    
+    # Run pandoc from the study directory so relative image paths resolve
+    if command -v xelatex &>/dev/null || command -v pdflatex &>/dev/null; then
+        # LaTeX available — best quality
+        local engine="pdflatex"
+        command -v xelatex &>/dev/null && engine="xelatex"
+        
+        (cd "$study_dir" && pandoc FINDINGS.md -o FINDINGS.pdf \
+            --pdf-engine="$engine" \
+            -V geometry:margin=1in \
+            -V colorlinks=true \
+            -V linkcolor=blue \
+            --standalone)
+    elif command -v wkhtmltopdf &>/dev/null; then
+        # HTML-to-PDF fallback
+        (cd "$study_dir" && pandoc FINDINGS.md -t html5 --standalone | \
+            wkhtmltopdf --enable-local-file-access - FINDINGS.pdf)
+    else
+        echo -e "${YELLOW}No LaTeX or wkhtmltopdf found. Trying pandoc default...${NC}"
+        echo "For best results, install LaTeX: brew install --cask basictex"
+        (cd "$study_dir" && pandoc FINDINGS.md -o FINDINGS.pdf \
+            --standalone) || {
+            echo -e "${RED}PDF generation failed.${NC}"
+            echo "Install a PDF engine: brew install --cask basictex"
+            exit 1
+        }
+    fi
+    
+    if [[ -f "$output_pdf" ]]; then
+        echo -e "${GREEN}PDF saved: $output_pdf${NC}"
+    else
+        echo -e "${RED}PDF generation failed — no output file created.${NC}"
+        exit 1
+    fi
+}
+
 run_study() {
     local study_name="$1"
     local study_dir="$STUDIES_DIR/$study_name"
@@ -171,6 +236,15 @@ case "$1" in
         echo "Available studies:"
         list_studies
         exit 0
+        ;;
+    
+    --pdf)
+        # PDF generation mode
+        if [[ -z "$2" ]]; then
+            echo -e "${RED}Usage: ./run.sh --pdf <study>${NC}"
+            exit 1
+        fi
+        generate_pdf "$2"
         ;;
     
     --view)

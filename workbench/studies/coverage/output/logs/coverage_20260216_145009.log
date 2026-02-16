@@ -1,0 +1,40 @@
+2026-02-16 14:50:09 | INFO     | coverage | Logging to: /Users/kyle/share/devel/chip/workbench/studies/coverage/output/logs/coverage_20260216_145009.log
+2026-02-16 14:50:09 | INFO     | coverage | ============================================================
+2026-02-16 14:50:09 | INFO     | coverage | Starting: coverage
+2026-02-16 14:50:09 | INFO     | coverage | ============================================================
+2026-02-16 14:50:09 | INFO     | coverage | Fetching data from sources...
+2026-02-16 14:50:09 | INFO     | coverage | Loading data (this may take a moment on first run)...
+2026-02-16 14:50:09 | INFO     | coverage | Fetched 5 datasets
+2026-02-16 14:50:09 | INFO     | coverage | Analyzing coverage...
+2026-02-16 14:50:09 | INFO     | coverage | Analyzing employment data...
+2026-02-16 14:50:09 | INFO     | coverage |   Employment using column: isocode
+2026-02-16 14:50:10 | INFO     | coverage | Analyzing wage data...
+2026-02-16 14:50:10 | INFO     | coverage |   Wages using column: isocode
+2026-02-16 14:50:10 | INFO     | coverage | Analyzing hours data...
+2026-02-16 14:50:10 | INFO     | coverage |   Hours using column: isocode
+2026-02-16 14:50:10 | INFO     | coverage | Analyzing PWT data...
+2026-02-16 14:50:10 | INFO     | coverage |   PWT using column: isocode
+2026-02-16 14:50:10 | INFO     | coverage | Analyzing country overlap...
+2026-02-16 14:50:10 | INFO     | coverage |   Sample emp: ['LUX', 'BLR', 'SSD']
+2026-02-16 14:50:10 | INFO     | coverage |   Sample wage: ['LUX', 'SRB', 'TUN']
+2026-02-16 14:50:10 | INFO     | coverage |   Sample pwt: ['LUX', 'BLR', 'BMU']
+2026-02-16 14:50:10 | INFO     | coverage |   Overlap (all sources): 121
+2026-02-16 14:50:10 | INFO     | coverage |   CHIP-viable: 123
+2026-02-16 14:50:10 | INFO     | coverage | Analyzing data quality...
+2026-02-16 14:50:10 | INFO     | coverage | Result: viable_countries = 123
+2026-02-16 14:50:10 | INFO     | coverage | Result: all_source_countries = 121
+2026-02-16 14:50:10 | INFO     | coverage | Result: excellent_countries = 79
+2026-02-16 14:50:10 | INFO     | coverage | Result: sparse_countries = 6
+2026-02-16 14:50:10 | INFO     | coverage | Result: recommended_start = 2000
+2026-02-16 14:50:10 | INFO     | coverage | Result: recommended_end = 2019
+2026-02-16 14:50:10 | INFO     | coverage | Generating report...
+2026-02-16 14:50:10 | INFO     | coverage | Report saved: /Users/kyle/share/devel/chip/workbench/studies/coverage/output/reports/coverage_20260216_145010.md
+2026-02-16 14:50:10 | INFO     | coverage | Viable countries: 123
+2026-02-16 14:50:10 | INFO     | coverage | Excellent quality: 79
+2026-02-16 14:50:10 | INFO     | coverage | Recommended years: 2000–2019
+2026-02-16 14:50:10 | INFO     | coverage | ============================================================
+2026-02-16 14:50:10 | INFO     | coverage | Completed: coverage
+2026-02-16 14:50:10 | INFO     | coverage | Duration: 0.2s
+2026-02-16 14:50:10 | INFO     | coverage | Results: {'viable_countries': 123, 'all_source_countries': 121, 'excellent_countries': 79, 'sparse_countries': 6, 'recommended_start': 2000, 'recommended_end': 2019}
+2026-02-16 14:50:10 | INFO     | coverage | ============================================================
+2026-02-16 14:50:10 | INFO     | coverage | Summary saved: /Users/kyle/share/devel/chip/workbench/studies/coverage/output/summaries/coverage_20260216_145010.json

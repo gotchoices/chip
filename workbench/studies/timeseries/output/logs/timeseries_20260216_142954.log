@@ -1,0 +1,15 @@
+2026-02-16 14:29:54 | INFO     | timeseries | Logging to: /Users/kyle/share/devel/chip/workbench/studies/timeseries/output/logs/timeseries_20260216_142954.log
+2026-02-16 14:29:54 | INFO     | timeseries | Logging to: /Users/kyle/share/devel/chip/workbench/studies/timeseries/output/logs/timeseries_20260216_142954.log
+2026-02-16 14:29:54 | INFO     | timeseries | ============================================================
+2026-02-16 14:29:54 | INFO     | timeseries | Starting: timeseries
+2026-02-16 14:29:54 | INFO     | timeseries | ============================================================
+2026-02-16 14:29:57 | INFO     | timeseries | Result: n_years = 20
+2026-02-16 14:29:57 | INFO     | timeseries | Result: n_stable_countries = 11
+2026-02-16 14:29:57 | INFO     | timeseries | Result: mean_constant_chip = 2.7670266290210432
+2026-02-16 14:29:57 | INFO     | timeseries | Result: mean_nominal_chip = 2.467080776725198
+2026-02-16 14:29:57 | INFO     | timeseries | ============================================================
+2026-02-16 14:29:57 | INFO     | timeseries | Completed: timeseries
+2026-02-16 14:29:57 | INFO     | timeseries | Duration: 3.0s
+2026-02-16 14:29:57 | INFO     | timeseries | Results: {'n_years': 20, 'n_stable_countries': 11, 'mean_constant_chip': 2.7670266290210432, 'mean_nominal_chip': 2.467080776725198}
+2026-02-16 14:29:57 | INFO     | timeseries | ============================================================
+2026-02-16 14:29:57 | INFO     | timeseries | Summary saved: /Users/kyle/share/devel/chip/workbench/studies/timeseries/output/summaries/timeseries_20260216_142957.json

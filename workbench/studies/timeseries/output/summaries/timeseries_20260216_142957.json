@@ -1,0 +1,15 @@
+{
+  "script": "timeseries",
+  "start_time": "2026-02-16T14:29:54.441094",
+  "end_time": "2026-02-16T14:29:57.446316",
+  "duration_seconds": 3.005222,
+  "steps": [],
+  "results": {
+    "n_years": 20,
+    "n_stable_countries": 11,
+    "mean_constant_chip": 2.7670266290210432,
+    "mean_nominal_chip": 2.467080776725198
+  },
+  "errors": [],
+  "log_file": "/Users/kyle/share/devel/chip/workbench/studies/timeseries/output/logs/timeseries_20260216_142954.log"
+}

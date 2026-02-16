@@ -2,7 +2,10 @@
 data/
 
 # Per-study output files (logs, summaries, reports, plots)
-studies/*/output/
+#studies/*/output/
+
+# Generated PDFs
+#studies/*/FINDINGS.pdf
 
 # Python
 __pycache__/

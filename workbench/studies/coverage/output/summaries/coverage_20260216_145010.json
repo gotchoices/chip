@@ -1,0 +1,42 @@
+{
+  "script": "coverage",
+  "start_time": "2026-02-16T14:50:09.862154",
+  "end_time": "2026-02-16T14:50:10.059484",
+  "duration_seconds": 0.19733,
+  "steps": [
+    "Fetching data from sources...",
+    "Loading data (this may take a moment on first run)...",
+    "Fetched 5 datasets",
+    "Analyzing coverage...",
+    "Analyzing employment data...",
+    "  Employment using column: isocode",
+    "Analyzing wage data...",
+    "  Wages using column: isocode",
+    "Analyzing hours data...",
+    "  Hours using column: isocode",
+    "Analyzing PWT data...",
+    "  PWT using column: isocode",
+    "Analyzing country overlap...",
+    "  Sample emp: ['LUX', 'BLR', 'SSD']",
+    "  Sample wage: ['LUX', 'SRB', 'TUN']",
+    "  Sample pwt: ['LUX', 'BLR', 'BMU']",
+    "  Overlap (all sources): 121",
+    "  CHIP-viable: 123",
+    "Analyzing data quality...",
+    "Generating report...",
+    "Report saved: /Users/kyle/share/devel/chip/workbench/studies/coverage/output/reports/coverage_20260216_145010.md",
+    "Viable countries: 123",
+    "Excellent quality: 79",
+    "Recommended years: 2000\u20132019"
+  ],
+  "results": {
+    "viable_countries": 123,
+    "all_source_countries": 121,
+    "excellent_countries": 79,
+    "sparse_countries": 6,
+    "recommended_start": 2000,
+    "recommended_end": 2019
+  },
+  "errors": [],
+  "log_file": "/Users/kyle/share/devel/chip/workbench/studies/coverage/output/logs/coverage_20260216_145009.log"
+}

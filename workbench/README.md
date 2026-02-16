@@ -129,6 +129,7 @@ Each study is a self-contained directory under `studies/`. A study has:
 ./run.sh <study>              # Run study, save output
 ./run.sh <study> -v           # Run and view report
 ./run.sh --view <study>       # View last report for study
+./run.sh --pdf <study>        # Generate PDF from FINDINGS.md
 ./run.sh --list               # List all studies
 ```
 
@@ -248,9 +249,44 @@ is the study's "charter."
 
 **FINDINGS.md** — Written *after* results arrive. Contains interpretation of
 results, conclusions, and known limitations. This is the study's "lab notebook."
+Embed plots with standard markdown image syntax:
+
+```markdown
+![Four-panel comparison](output/plots/timeseries_4panel.png)
+```
 
 Together, they provide a complete narrative: why we ran the study, how we ran
 it, what we found, and what it means.
+
+### Generating PDFs
+
+To generate a PDF from a study's FINDINGS.md (with embedded plots):
+
+```bash
+./run.sh --pdf timeseries
+```
+
+This produces `studies/timeseries/FINDINGS.pdf`. Requires
+[pandoc](https://pandoc.org/) and a LaTeX engine:
+
+```bash
+brew install pandoc
+brew install --cask basictex    # minimal LaTeX (recommended)
+# or: brew install --cask mactex  # full LaTeX
+```
+
+To generate a PDF manually (e.g., with custom options):
+
+```bash
+cd studies/timeseries
+pandoc FINDINGS.md -o FINDINGS.pdf \
+  --pdf-engine=xelatex \
+  -V geometry:margin=1in \
+  -V colorlinks=true
+```
+
+Run `pandoc` from the study directory so that relative image paths
+(e.g., `output/plots/...`) resolve correctly.
 
 ---
 

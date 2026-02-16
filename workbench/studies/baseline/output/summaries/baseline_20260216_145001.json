@@ -1,0 +1,15 @@
+{
+  "script": "baseline",
+  "start_time": "2026-02-16T14:50:00.286415",
+  "end_time": "2026-02-16T14:50:01.077516",
+  "duration_seconds": 0.791101,
+  "steps": [],
+  "results": {
+    "chip_value": 2.3265539228595284,
+    "target": 2.35,
+    "validation": "PASSED",
+    "n_countries": 99
+  },
+  "errors": [],
+  "log_file": "/Users/kyle/share/devel/chip/workbench/studies/baseline/output/logs/baseline_20260216_145000.log"
+}
