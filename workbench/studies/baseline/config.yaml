@@ -1,0 +1,5 @@
+# Baseline study — pinned to PWT 10.0 for reproducibility.
+# This study was validated against the reproduction/ pipeline which used PWT 10.0.
+# Result: $2.33/hr. Do not change without re-validating.
+data:
+  pwt_version: "10.0"

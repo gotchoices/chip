@@ -1,0 +1,4 @@
+# Coverage study — pinned to PWT 10.0 for consistency with baseline.
+# Coverage results (123 viable countries, 2000-2019) were established with PWT 10.0.
+data:
+  pwt_version: "10.0"

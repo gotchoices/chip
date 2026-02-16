@@ -196,10 +196,11 @@ Explore whether different economic models yield materially different results:
 The papers in `docs/` build on each other. For readers new to this project:
 
 1. **[Original Study Review](docs/original-review.md)** -- What the original study did, how it works, and where it falls short. Start here.
-2. **[Weighting Analysis](docs/weighting-analysis.md)** -- Deep dive into one specific limitation: how country-level values are aggregated into a global CHIP.
-3. **[Inflation Tracking](docs/inflation-tracking.md)** -- The central methodological question: should CHIP track inflation? Argues yes, proposes alternatives, formulates testable hypotheses (H1-H4).
-4. **[Future Labor Value](docs/labor-value-future.md)** -- Will AI/automation make human labor worthless? Explores long-term viability of a labor-anchored currency.
-5. **[Alternative Models](docs/alternative-models.md)** -- (Outline) Other economic models that could replace or supplement Cobb-Douglas.
+2. **[Data Sources](docs/data-sources.md)** -- The three external data sources (ILOSTAT, PWT, FRED): what they provide, their coverage and limitations, versioning policy, and alternatives.
+3. **[Weighting Analysis](docs/weighting-analysis.md)** -- Deep dive into one specific limitation: how country-level values are aggregated into a global CHIP.
+4. **[Inflation Tracking](docs/inflation-tracking.md)** -- The central methodological question: should CHIP track inflation? Argues yes, proposes alternatives, formulates testable hypotheses (H1-H4).
+5. **[Future Labor Value](docs/labor-value-future.md)** -- Will AI/automation make human labor worthless? Explores long-term viability of a labor-anchored currency.
+6. **[Alternative Models](docs/alternative-models.md)** -- (Outline) Other economic models that could replace or supplement Cobb-Douglas.
 
 ---
 

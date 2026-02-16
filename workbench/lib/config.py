@@ -40,6 +40,7 @@ class DataConfig:
     fallback_to_original: bool = True
     year_start: int = 2000
     year_end: int = 2022
+    pwt_version: str = None  # None = use fetcher default (latest)
 
 
 @dataclass

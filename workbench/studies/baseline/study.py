@@ -135,7 +135,7 @@ def run_baseline():
     logger.info("=" * 70)
 
     logger.info("Fetching data (this may take a moment)...")
-    data = fetcher.get_all()
+    data = fetcher.get_all(pwt_version=config.data.pwt_version)
 
     for name, df in data.items():
         logger.info(f"  {name}: {len(df):,} rows")

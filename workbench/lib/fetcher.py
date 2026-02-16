@@ -159,14 +159,35 @@ def get_hours(use_cache: bool = True) -> pd.DataFrame:
 # Penn World Tables
 # =============================================================================
 
-# PWT URL - use same source as reproduction for consistency
-PWT_URL = "https://www.rug.nl/ggdc/docs/pwt100.xlsx"  # PWT 10.0 Excel
+# PWT version registry: version -> (URL, year_range, sheet_name)
+# Add new versions here when released. See docs/data-sources.md.
+PWT_VERSIONS = {
+    "10.0": {
+        "url": "https://www.rug.nl/ggdc/docs/pwt100.xlsx",
+        "years": "1950-2019",
+        "sheet": "Data",
+    },
+    "11.0": {
+        "url": "https://dataverse.nl/api/access/datafile/554105",
+        "years": "1950-2023",
+        "sheet": "Data",
+    },
+}
+
+PWT_DEFAULT_VERSION = "11.0"
 
 
-def get_pwt(use_cache: bool = True) -> pd.DataFrame:
+def get_pwt(use_cache: bool = True, version: str = None) -> pd.DataFrame:
     """
     Get Penn World Tables data.
-    
+
+    Args:
+        use_cache: Use cached data if available.
+        version: PWT version to fetch (e.g. "10.0", "11.0").
+                 Defaults to PWT_DEFAULT_VERSION.
+                 Each version is cached independently so multiple versions
+                 can coexist without interference.
+
     Returns DataFrame with columns:
         - countrycode: ISO country code
         - country: Country name
@@ -177,26 +198,40 @@ def get_pwt(use_cache: bool = True) -> pd.DataFrame:
         - hc: Human capital index
         - labsh: Labor share of income
     """
-    if use_cache and cache.is_cached("pwt"):
-        logger.debug("Loading PWT from cache")
-        return pd.read_parquet(cache.get_cache_path("pwt"))
-    
-    logger.info("Fetching Penn World Tables 10.0")
-    
+    if version is None:
+        version = PWT_DEFAULT_VERSION
+
+    if version not in PWT_VERSIONS:
+        available = ", ".join(sorted(PWT_VERSIONS.keys()))
+        raise ValueError(
+            f"Unknown PWT version '{version}'. Available: {available}"
+        )
+
+    info = PWT_VERSIONS[version]
+    cache_key = f"pwt_{version.replace('.', '_')}"
+
+    if use_cache and cache.is_cached(cache_key):
+        logger.debug(f"Loading PWT {version} from cache")
+        return pd.read_parquet(cache.get_cache_path(cache_key))
+
+    logger.info(f"Fetching Penn World Tables {version} ({info['years']})")
+
     for attempt in range(MAX_RETRIES):
         try:
-            # Read Excel file (same source as reproduction)
-            df = pd.read_excel(PWT_URL, sheet_name="Data")
+            df = pd.read_excel(info["url"], sheet_name=info["sheet"])
             logger.info(f"  Received {len(df)} rows")
-            df.to_parquet(cache.get_cache_path("pwt"))
-            cache.set_metadata("pwt", source="rug.nl", version="10.0")
+            df.to_parquet(cache.get_cache_path(cache_key))
+            cache.set_metadata(cache_key, source="rug.nl/ggdc",
+                               version=version, years=info["years"])
             return df
         except Exception as e:
             logger.warning(f"  Attempt {attempt + 1} failed: {e}")
             if attempt < MAX_RETRIES - 1:
                 time.sleep(RETRY_DELAY)
             else:
-                raise RuntimeError(f"PWT fetch failed after {MAX_RETRIES} attempts: {e}")
+                raise RuntimeError(
+                    f"PWT {version} fetch failed after {MAX_RETRIES} attempts: {e}"
+                )
 
 
 # =============================================================================
@@ -312,10 +347,14 @@ def get_freedom_index(use_cache: bool = True) -> pd.DataFrame:
 # Convenience Functions
 # =============================================================================
 
-def get_all(use_cache: bool = True) -> dict:
+def get_all(use_cache: bool = True, pwt_version: str = None) -> dict:
     """
     Fetch all standard datasets.
-    
+
+    Args:
+        use_cache: Use cached data if available.
+        pwt_version: PWT version to fetch (default: PWT_DEFAULT_VERSION).
+
     Returns:
         dict with keys: employment, wages, hours, pwt, deflator
     """
@@ -323,12 +362,12 @@ def get_all(use_cache: bool = True) -> dict:
         "employment": get_employment(use_cache),
         "wages": get_wages(use_cache),
         "hours": get_hours(use_cache),
-        "pwt": get_pwt(use_cache),
+        "pwt": get_pwt(use_cache, version=pwt_version),
         "deflator": get_deflator(use_cache),
     }
 
 
-def refresh_all():
+def refresh_all(pwt_version: str = None):
     """Force refresh of all cached data."""
     cache.invalidate()
-    return get_all(use_cache=False)
+    return get_all(use_cache=False, pwt_version=pwt_version)

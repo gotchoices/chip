@@ -1,0 +1,5 @@
+# Timeseries study — pinned to PWT 10.0 for consistency with baseline.
+# Key findings (deflation cancellation, stable panel, H1-H3) were established
+# with PWT 10.0 (1950-2019). The production study will test PWT 11.0.
+data:
+  pwt_version: "10.0"

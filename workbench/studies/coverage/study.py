@@ -16,6 +16,7 @@ WORKBENCH_ROOT = STUDY_DIR.parent.parent
 sys.path.insert(0, str(WORKBENCH_ROOT))
 
 from lib.logging_config import ScriptContext
+from lib.config import load_config
 from lib import fetcher, normalize, clean
 
 # Output directory for this study
@@ -336,11 +337,12 @@ def main():
     script_name = Path(__file__).parent.name
     
     with ScriptContext(script_name, log_to_file=True, output_dir=OUTPUT_DIR) as ctx:
-        
+        config = load_config(study_dir=STUDY_DIR)
+
         # Fetch data
         ctx.log("Fetching data from sources...")
         ctx.log("Loading data (this may take a moment on first run)...")
-        data = fetcher.get_all()
+        data = fetcher.get_all(pwt_version=config.data.pwt_version)
         ctx.log(f"Fetched {len(data)} datasets")
         
         # Analyze
