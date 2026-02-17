@@ -32,3 +32,6 @@ web/wp3.tgz
 .Rhistory
 .RData
 .Rproj.user/
+
+# Estimates pipeline output (reproducible from source data)
+estimates/output/

@@ -1,0 +1,19 @@
+# Production CHIP estimator — locked methodology.
+# Changes should be justified and documented.
+
+data:
+  pwt_version: "11.0"
+
+pipeline:
+  year_start: 1992
+  year_end: 2023          # Latest year available in PWT 11.0
+  window_years: 5
+  weighting: "gdp"        # GDP-weighted aggregation (from weighting study)
+  min_countries: 5
+  min_coverage_pct: 0.70
+  enable_imputation: true
+  wage_averaging: "simple"
+
+extrapolation:
+  index: "cpi_u"            # FRED series CPIAUCSL
+  deflator_base_year: 2017  # PWT base year for constant dollars

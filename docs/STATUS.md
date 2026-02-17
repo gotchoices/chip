@@ -152,31 +152,34 @@ Detailed tracking of completed and pending work items.
 
 ## Phase 3: Production Estimates & Deployment
 
-### 3.1 Estimates Pipeline
-- [ ] Create `estimates/` folder (imports from `workbench/lib/`)
-- [ ] Implement recommended methodology from `production` study
-- [ ] Produce time series of annual nominal CHIP values
+### 3.1 Estimates Pipeline — In Progress
+- [x] Create `estimates/` folder (imports from `workbench/lib/`)
+- [x] `estimates/README.md` — comprehensive operational documentation
+- [x] `estimates/config.yaml` — locked methodology parameters
+- [x] `estimates/recalculate.py` — annual full pipeline (fetch → estimate → aggregate → trailing window → multipliers → base params)
+- [x] `estimates/extrapolate.py` — monthly CPI-U extrapolation from base params
+- [x] `estimates/publish.py` — format output for API consumption (`current.json`, `multipliers.json`, `history.json`)
+- [ ] First run: validate `recalculate.py` produces expected results (~$3.17 nominal 2022)
+- [ ] End-to-end test: recalculate → extrapolate → publish
 - [ ] Validate against official inflation benchmarks
-- [ ] Publish country-specific multipliers (country CHIP / global CHIP)
 - [ ] Document methodology for external reviewers
 
-### 3.2 Automated Publishing (Two-Tier Model)
-- [ ] **Daily/weekly extrapolation script** — applies latest CPI (or GDP
-      deflator) to the official base value, produces current nominal CHIP
-- [ ] **Annual recalculation** — full pipeline re-estimation when new source
-      data arrives (ILOSTAT, PWT); updates base parameters and records
-      correction magnitude
-- [ ] **API endpoint** — HTTP service returning current global CHIP and
-      per-country multipliers (replaces/evolves `updateCPI` cron on mychips.org)
-- [ ] **Snap-back mechanism** — when recalculation produces a new base value,
-      the daily script's parameters are updated automatically; the magnitude
-      and direction of the snap are logged for transparency
-- [ ] Integration testing: daily script → recalculation → snap → daily script
+### 3.2 Automated Publishing (Two-Tier Model) — Scaffolded
+- [x] **Monthly extrapolation script** (`estimates/extrapolate.py`) — applies
+      latest CPI-U to the base value, appends to history ledger
+- [x] **Annual recalculation** (`estimates/recalculate.py`) — full pipeline
+      re-estimation; updates base parameters and records snap magnitude
+- [x] **Snap-back mechanism** — recalculation detects previous value, logs
+      snap percentage in history entry
+- [ ] **API endpoint** — HTTP service or static file hosting for `current.json`
+      and `multipliers.json` (replaces/evolves `updateCPI` cron on mychips.org)
+- [ ] Set up monthly cron job for `extrapolate.py` + `publish.py`
+- [ ] Integration testing: recalculate → extrapolate → publish → verify
 
-### 3.3 Country-Specific Outputs
-- [ ] Per-country multiplier table (θ-derived or direct wage ratio)
-- [ ] Historical multiplier series per country
-- [ ] Publish alongside global CHIP via API endpoint (3.2)
+### 3.3 Country-Specific Outputs — Scaffolded
+- [x] Per-country multiplier table (`estimates/output/multipliers.csv`)
+- [x] Published via `publish.py` → `api/multipliers.json`
+- [ ] Historical multiplier series per country (across recalculations)
 - [ ] Documentation: how to interpret and use country multipliers
 
 ### 3.4 Documentation Updates
@@ -208,11 +211,12 @@ Detailed tracking of completed and pending work items.
 
 ## Immediate Next Steps
 
-1. **Create `estimates/` pipeline** (3.1) — official CHIP estimator using production study findings
-4. **Build automated publishing** (3.2) — two-tier extrapolation + recalculation, API endpoint
-5. **Publish country multipliers** (3.3) — per-country labor-valuation ratios via API
-6. **Update chipcentral.net** — revised CHIP value from PWT 11.0 ($3.17 nominal 2022)
-7. ~~Write labor-value-future.md full paper~~ — done
+1. ~~Create `estimates/` pipeline~~ (3.1) — scaffolded, needs first run and validation
+2. **Validate estimates pipeline** — run `recalculate.py`, verify ~$3.17 nominal 2022
+3. **Set up automated publishing** (3.2) — cron job for monthly extrapolation
+4. **Stand up API endpoint** — serve `estimates/output/api/` files
+5. **Update chipcentral.net** — revised CHIP value from PWT 11.0 ($3.17 nominal 2022)
+6. ~~Write labor-value-future.md full paper~~ — done
 
 ---
 
