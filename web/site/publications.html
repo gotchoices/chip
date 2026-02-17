@@ -90,22 +90,118 @@
 
         <div class="pub-entry">
           <h3>Python Reproduction Study</h3>
-          <div class="pub-meta">2024&ndash;2025 &middot; Ongoing</div>
-          <p>A full reproduction of the original R-based study in Python, plus a modular
-             workbench for exploring alternative models, weighting schemes, and temporal
-             stability of the CHIP estimate. Validates the original $2.53 result and provides
-             infrastructure for ongoing research.</p>
+          <div class="pub-meta">2024&ndash;2025</div>
+          <p>A full reproduction of the original R-based study in Python. Validates the
+             original $2.53 result ($2.33/hr with fresh API data, within 1% of target)
+             and provides the infrastructure for the workbench studies below.</p>
           <div class="pub-links">
             <a href="https://github.com/gotchoices/chip/tree/main/reproduction" target="_blank">Reproduction</a>
-            <a href="https://github.com/gotchoices/chip/tree/main/workbench" target="_blank">Workbench</a>
+            <a href="https://github.com/gotchoices/chip/tree/main/workbench/studies/baseline" target="_blank">Baseline Validation</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Workbench Studies -->
+  <div class="section bg-alt">
+    <div class="container">
+      <div class="section-header">
+        <h2>Workbench Studies</h2>
+        <p>Systematic investigations into the robustness, sensitivity, and production
+           methodology of CHIP estimation</p>
+      </div>
+
+      <div class="pub-detail">
+
+        <div class="pub-entry">
+          <h3>Production Methodology</h3>
+          <div class="pub-meta">2025 &middot; Workbench Study</div>
+          <p>Develops a methodology for producing current-year CHIP estimates using
+             PWT 11.0 data (2000&ndash;2023). Tests trailing-window smoothing, PWT bridge
+             strategies for post-PWT years, and CPI-based extrapolation.</p>
+          <p><strong>Key finding:</strong> 2022 nominal CHIP of $3.17/hr, closely matching
+             the site's independent CPI-extrapolated value of $3.18. A 5-year trailing
+             window reduces year-over-year volatility by 75%. CPI extrapolation is validated
+             as a reliable bridge method between full recalculations.</p>
+          <div class="pub-links">
+            <a href="https://github.com/gotchoices/chip/tree/main/workbench/studies/production" target="_blank">Study &amp; Findings</a>
+          </div>
+        </div>
+
+        <div class="pub-entry">
+          <h3>Weighting Sensitivity</h3>
+          <div class="pub-meta">2025 &middot; Workbench Study</div>
+          <p>Tests how sensitive the global CHIP estimate is to the choice of aggregation
+             weights, comparing GDP-weighted, labor-weighted, unweighted, freedom-weighted,
+             and HDI-weighted schemes across 85 countries.</p>
+          <p><strong>Key finding:</strong> CHIP ranges from $1.67/hr (labor-weighted) to
+             $2.85/hr (freedom-weighted) &mdash; a 51% spread, making weight choice a
+             first-order methodological decision. GDP-weighting ($2.68/hr) is defensible:
+             it produces the second-highest result and no single country dominates
+             (USA = 24% weight). HDI-weighting is the most balanced alternative.</p>
+          <div class="pub-links">
+            <a href="https://github.com/gotchoices/chip/tree/main/workbench/studies/weighting" target="_blank">Study &amp; Findings</a>
+          </div>
+        </div>
+
+        <div class="pub-entry">
+          <h3>Data Stability Across PWT Versions</h3>
+          <div class="pub-meta">2025 &middot; Workbench Study</div>
+          <p>Tests how stable CHIP estimates are across data vintages by comparing
+             PWT 10.0 vs PWT 11.0 results for 2000&ndash;2019. Examines whether
+             previously published CHIP values shift when new PWT releases revise
+             historical national accounts.</p>
+          <p><strong>Key finding:</strong> Mean upward revision of +5.9% between PWT
+             versions, with early years showing extreme shifts (up to +37.6%). For the
+             mature period (2002&ndash;2019), revisions average 3.8%. Recommendation:
+             always use the latest PWT release and anchor to recent years with a trailing
+             window.</p>
+          <div class="pub-links">
+            <a href="https://github.com/gotchoices/chip/tree/main/workbench/studies/stability" target="_blank">Study &amp; Findings</a>
+          </div>
+        </div>
+
+        <div class="pub-entry">
+          <h3>Temporal Analysis &amp; Deflation</h3>
+          <div class="pub-meta">2025 &middot; Workbench Study</div>
+          <p>Examines how CHIP evolves year-by-year from 1992 to 2019 and tests whether
+             nominal (un-deflated) CHIP produces different results from the deflated approach.
+             Identifies an 11-country stable panel with consistent coverage.</p>
+          <p><strong>Key finding:</strong> Deflation cancels algebraically in the CHIP
+             formula &mdash; both elementary and average wages are scaled by the same
+             deflator, so nominal and deflated CHIP are mathematically identical. Real
+             CHIP is approximately stable at $2.80&ndash;$3.15/hr (2005&ndash;2019),
+             and nominal CHIP tracks the GDP deflator closely.</p>
+          <div class="pub-links">
+            <a href="https://github.com/gotchoices/chip/tree/main/workbench/studies/timeseries" target="_blank">Study &amp; Findings</a>
+          </div>
+        </div>
+
+        <div class="pub-entry">
+          <h3>Data Coverage Analysis</h3>
+          <div class="pub-meta">2025 &middot; Workbench Study</div>
+          <p>Analyzes data availability across countries and time periods to assess
+             CHIP estimate reliability. Examines coverage from ILOSTAT (employment,
+             wages, hours), Penn World Tables, and the FRED GDP deflator.</p>
+          <p><strong>Key finding:</strong> 123 countries have sufficient data to estimate
+             CHIP, but wage data is the binding constraint (134 countries vs 208 for
+             employment). Of these, 79 countries have excellent coverage (15+ years).
+             Recommended common analysis range: 2000&ndash;2019.</p>
+          <div class="pub-links">
+            <a href="https://github.com/gotchoices/chip/tree/main/workbench/studies/coverage" target="_blank">Study &amp; Findings</a>
           </div>
         </div>
 
         <div class="source-note">
           <h4>Source Code &amp; Data Repository</h4>
-          <p>All research code, data pipelines, original studies, and supporting documents are
+          <p>All research code, data pipelines, studies, and supporting documents are
              available in the open-source
-             <a href="https://github.com/gotchoices/chip">CHIP GitHub repository</a>.</p>
+             <a href="https://github.com/gotchoices/chip">CHIP GitHub repository</a>.
+             The workbench studies are fully reproducible from the
+             <a href="https://github.com/gotchoices/chip/tree/main/workbench">workbench</a>
+             directory.</p>
         </div>
 
       </div>
