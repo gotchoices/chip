@@ -111,13 +111,17 @@ Detailed tracking of completed and pending work items.
 - [x] README updated to reference timeseries findings
 - No further implementation needed
 
-### 2.7 Study: Production (Next)
-- [ ] Implement trailing-window CHIP estimator (1, 3, 5 year windows)
-- [ ] Test PWT bridge for years beyond 2019 (ILOSTAT + extrapolated capital)
-- [ ] Test CPI extrapolation accuracy between recalculations
-- [ ] Evaluate stable-panel-only estimation for bridge period
-- [ ] Assemble recommended production methodology
-- See `studies/production/README.md` for full design
+### 2.7 Study: Production ✅
+- [x] Implement trailing-window CHIP estimator (1, 3, 5 year windows)
+- [x] Test PWT bridge for years beyond PWT — freeze and slope methods
+- [x] Test CPI extrapolation accuracy between recalculations
+- [x] Identify stable panel with PWT 11.0 (10 countries)
+- [x] Produce current CHIP estimate: **$3.17/hr nominal (2022), ~$3.44–$3.55 est. 2026**
+- [x] FINDINGS.md with inline plots, hypothesis assessments, recommendations
+- [ ] Evaluate stable-panel-only estimation for bridge period (deferred to stability)
+- [ ] Re-test bridge at non-COVID freeze year (future work)
+- [ ] Assemble recommended production pipeline in `estimates/` (Phase 3)
+- See `studies/production/README.md` and `FINDINGS.md` for full results
 
 ### 2.8 Study: Stability
 - [ ] Simulate vintage changes (compute CHIP with truncated data, compare)
@@ -174,11 +178,11 @@ Detailed tracking of completed and pending work items.
 
 ## Immediate Next Steps
 
-1. **Implement `production` study** (2.7) — trailing window, PWT bridge, CPI extrapolation
-2. **Implement `stability` study** (2.8) — vintage simulation, change decomposition
-3. **Implement `weighting` study** (2.9) — aggregation sensitivity analysis
-4. **Write labor-value-future.md full paper** — convert outline to prose
-5. **Create `estimates/` pipeline** (3.1) — official CHIP estimator using production study findings
+1. **Implement `stability` study** (2.8) — PWT 10.0 vs 11.0 vintage comparison, change decomposition
+2. **Implement `weighting` study** (2.9) — aggregation sensitivity analysis
+3. **Create `estimates/` pipeline** (3.1) — official CHIP estimator using production study findings
+4. **Update chipcentral.net** — revised CHIP value from PWT 11.0 ($3.17 nominal 2022)
+5. **Write labor-value-future.md full paper** — convert outline to prose
 
 ---
 
@@ -191,7 +195,7 @@ Detailed tracking of completed and pending work items.
 | Coverage | 123 viable countries, 79 excellent, range 2000–2019 | Complete |
 | Timeseries | Real CHIP ~$3.50/hr (panel), deflation cancels in formula | Complete |
 | Nominal | Absorbed into timeseries findings | N/A |
-| Production | — | Scaffold |
+| Production | 5yr window recommended, $3.17 nominal (2022), ~$3.50 est. 2026 | Complete |
 | Stability | — | Scaffold |
 | Weighting | — | Scaffold |
 

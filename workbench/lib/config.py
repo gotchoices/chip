@@ -41,6 +41,7 @@ class DataConfig:
     year_start: int = 2000
     year_end: int = 2022
     pwt_version: str = None  # None = use fetcher default (latest)
+    bridge_freeze_year: int = None  # Year to freeze PWT for bridge test
 
 
 @dataclass

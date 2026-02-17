@@ -120,7 +120,7 @@ Each study is a self-contained directory under `studies/`. A study has:
 | **baseline** | Complete | Reproduce original $2.56 CHIP estimate ($2.33 achieved) | 1, 2 |
 | **coverage** | Complete | Analyze country/year data coverage across sources | 2 |
 | **timeseries** | Complete | Year-by-year CHIP series, stable panel, inflation tracking | 1, 3, 4 |
-| **production** | Scaffold | Trailing-window methodology for current-year estimates | 2, 3, 5, 6, 8 |
+| **production** | Complete | Trailing-window methodology for current-year estimates | 2, 3, 5, 6, 8 |
 | **stability** | Scaffold | Vintage stability, update continuity, change decomposition | 4, 6, 7 |
 | **weighting** | Scaffold | Compare GDP, labor, freedom, and unweighted aggregation | 1, 7 |
 | **nominal** | Absorbed | Nominal vs deflated CHIP — answered by timeseries study | 3 |
@@ -216,13 +216,16 @@ How will we test this?
 Current state: scaffold | active | complete
 ```
 
-4. Add `FINDINGS.md` (fill in as results arrive):
+4. Add `FINDINGS.md` (fill in as results arrive).  Embed plots inline so
+   the document renders correctly as a PDF via `./run.sh --pdf`:
 
 ```markdown
 # My Study Title — Findings
 
 ## Results
 Summary of findings.
+
+![Description of plot](output/plots/my_plot.png)
 
 ## Interpretation
 What do the results mean?
@@ -455,7 +458,7 @@ chip/
 See `docs/STATUS.md` for the full project roadmap.
 
 Current workbench priorities:
-1. Complete nominal and weighting study implementations
-2. Test freedom-weighted aggregation
-3. Validate time series behavior
-4. Prepare data for `docs/weighting-analysis.md`
+1. Complete stability study (vintage comparison, change decomposition)
+2. Complete weighting study (GDP vs labor vs unweighted aggregation)
+3. Package production methodology into `estimates/` pipeline
+4. Update chipcentral.net with revised CHIP value from PWT 11.0

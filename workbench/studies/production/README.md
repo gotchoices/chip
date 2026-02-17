@@ -119,4 +119,5 @@ PWT 10.0; this number may change with PWT 11.0's 4 additional years.)
 
 ## Status
 
-**Scaffold.** Implementation pending. This is the highest-priority next study.
+**Complete.** Phases 1–4 implemented and analyzed. See FINDINGS.md for results.
+Phase 5 (production pipeline assembly) deferred to `estimates/` implementation.

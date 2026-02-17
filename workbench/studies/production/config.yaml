@@ -1,0 +1,4 @@
+# Production study — uses PWT 11.0 (latest available, extends to 2023).
+data:
+  pwt_version: "11.0"
+  bridge_freeze_year: 2020  # Change to test different freeze scenarios

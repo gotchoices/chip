@@ -748,9 +748,10 @@ def run_timeseries():
 
 def main():
     """Main entry point."""
+    global logger
     script_name = Path(__file__).parent.name
     output_dir = OUTPUT_DIR
-    log_path = setup_logging(script_name, output_dir=output_dir)
+    logger = setup_logging(script_name, output_dir=output_dir)
 
     logger.info(f"Time Series Discovery — Range: {YEAR_START}–{YEAR_END}")
 

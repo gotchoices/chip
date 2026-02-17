@@ -1,0 +1,17 @@
+{
+  "script": "production",
+  "start_time": "2026-02-16T16:09:19.217001",
+  "end_time": "2026-02-16T16:09:33.608934",
+  "duration_seconds": 14.391933,
+  "steps": [],
+  "results": {
+    "n_years": 23,
+    "mean_constant_chip": 2.812020346699206,
+    "mean_nominal_chip": 2.5844114222137025,
+    "n_stable_countries": 10,
+    "bridge_mean_error_pct": 8.865625740508813,
+    "extrap_correction_std_pct": 6.445733067004268
+  },
+  "errors": [],
+  "log_file": "/Users/kyle/share/devel/chip/workbench/studies/production/output/logs/production_20260216_160919.log"
+}

@@ -1,0 +1,18 @@
+2026-02-16 16:28:07 | INFO     | production | Logging to: /Users/kyle/share/devel/chip/workbench/studies/production/output/logs/production_20260216_162807.log
+2026-02-16 16:28:07 | INFO     | production | Logging to: /Users/kyle/share/devel/chip/workbench/studies/production/output/logs/production_20260216_162807.log
+2026-02-16 16:28:07 | INFO     | production | ============================================================
+2026-02-16 16:28:07 | INFO     | production | Starting: production
+2026-02-16 16:28:07 | INFO     | production | ============================================================
+2026-02-16 16:28:12 | INFO     | production | Result: n_years = 23
+2026-02-16 16:28:12 | INFO     | production | Result: mean_constant_chip = 2.812020346699206
+2026-02-16 16:28:12 | INFO     | production | Result: mean_nominal_chip = 2.5844114222137025
+2026-02-16 16:28:12 | INFO     | production | Result: n_stable_countries = 10
+2026-02-16 16:28:12 | INFO     | production | Result: bridge_freeze_mean_error_pct = 8.865625740508813
+2026-02-16 16:28:12 | INFO     | production | Result: bridge_slope_mean_error_pct = 8.772654800570368
+2026-02-16 16:28:12 | INFO     | production | Result: extrap_correction_std_pct = 6.445733067004268
+2026-02-16 16:28:12 | INFO     | production | ============================================================
+2026-02-16 16:28:12 | INFO     | production | Completed: production
+2026-02-16 16:28:12 | INFO     | production | Duration: 5.1s
+2026-02-16 16:28:12 | INFO     | production | Results: {'n_years': 23, 'mean_constant_chip': 2.812020346699206, 'mean_nominal_chip': 2.5844114222137025, 'n_stable_countries': 10, 'bridge_freeze_mean_error_pct': 8.865625740508813, 'bridge_slope_mean_error_pct': 8.772654800570368, 'extrap_correction_std_pct': 6.445733067004268}
+2026-02-16 16:28:12 | INFO     | production | ============================================================
+2026-02-16 16:28:12 | INFO     | production | Summary saved: /Users/kyle/share/devel/chip/workbench/studies/production/output/summaries/production_20260216_162812.json
