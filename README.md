@@ -168,10 +168,12 @@ Formulated testable hypotheses:
 **Paper**: [`docs/labor-value-future.md`](docs/labor-value-future.md)
 
 Explored the long-term question: Will AI/automation make human labor more or less valuable?
-- Standard narrative: Supply/demand says less valuable
-- Contrarian view: Reservation wage argument says more valuable (leisure becomes the alternative)
-- Bifurcation hypothesis: Commoditized tasks → worthless; human-presence tasks → premium
-- Implications for CHIP's long-term viability
+- **Thesis:** AI amplifies labor productivity; labor value rises if tools are accessible at competitive prices, falls if concentrated by monopoly/regulatory capture
+- The "access fork" — same technology, two opposite outcomes depending on market structure
+- Regulatory paradox: heavy regulation favors concentration; open environments distribute capability
+- CHIP's evolution from measured index (Phase 1) to market-discovered price (Phase 2)
+- The tethered market: why CHIP resists speculation (labor as delivery mechanism)
+- Advocacy conclusion: open AI is an economic prerequisite for labor value
 - Market-based analysis only (no redistribution schemes)
 
 ### Step 6: Workbench Development ✅
@@ -188,21 +190,19 @@ Completed studies:
 - `baseline` ✅ — reproduces original methodology ($2.33/hr, within 1% of target)
 - `coverage` ✅ — data coverage analysis (123 viable countries, 2000–2019 range)
 - `timeseries` ✅ — year-by-year CHIP series, stable panel, inflation tracking; key discovery that deflation cancels in the CHIP formula
+- `production` ✅ — trailing-window methodology, PWT bridge, CPI extrapolation; **$3.17/hr nominal (2022), ~$3.50 est. 2026**
+- `stability` ✅ — PWT vintage comparison (10.0 vs 11.0); mean |revision| 3.8% for mature years, upward bias
+- `weighting` ✅ — five schemes (GDP, labor, unweighted, freedom, HDI); $1.67–$2.85 range; GDP-weighted ($2.68) recommended; 85 country multipliers
 
-Planned studies:
-- `production` — trailing-window methodology for current-year estimates (Design Goal 5–6)
-- `stability` — vintage stability, update continuity, change decomposition (Design Goal 6–7)
-- `weighting` — GDP vs labor vs unweighted aggregation sensitivity
-
-### Step 7: Production Estimates (Next)
+### Step 7: Production Estimates & Deployment (Next)
 **Folder**: `estimates/` (to be created)
 
-Will implement and test the hypotheses from Step 4:
-- Build pipeline with nominal (non-deflated) output option
-- Implement trailing window methodology
-- Produce time series of annual CHIP values
-- Validate against official inflation benchmarks
-- Establish annual update process for MyCHIPs
+Build the operational CHIP pipeline using findings from completed studies:
+- Implement 5-year trailing-window methodology (from `production` study)
+- GDP-weighted aggregation (from `weighting` study)
+- Two-tier update model: daily CPI extrapolation + annual recalculation (Design Goal 6)
+- Publish country-specific multipliers via API endpoint (Design Goals 10–11)
+- Snap-back mechanism when new source data arrives
 
 ### Future: Alternative Models
 **Paper outline**: [`docs/alternative-models.md`](docs/alternative-models.md)
@@ -212,6 +212,33 @@ Explore whether different economic models yield materially different results:
 - Stochastic frontier analysis
 - Direct wage comparison methods
 
+### Future: Open Research Directions
+
+The following areas could strengthen the CHIP methodology and are good
+entry points for contributors:
+
+- **Baumol effect quantification** — How fast does the real price of
+  labor-intensive services rise relative to goods?  Provides a floor on
+  CHIP's long-run real appreciation.  (See `docs/labor-value-future.md`
+  Section 7.1.)
+- **Automation exposure scoring** — What fraction of ISCO-9 (elementary
+  occupations, CHIP's reference category) are at high risk of full
+  automation vs. "human-presence" tasks?  (Section 7.2.)
+- **Reservation wage estimation** — Is there a measurable relationship
+  between a country's standard of living and the floor wage its workers
+  will accept?  PWT + ILOSTAT data may answer this.  (Section 7.3.)
+- **Labor share trends** — PWT's `labsh` variable tracks labor's share
+  of national income.  Has the declining-labor-share narrative been
+  uniform across countries, or is it concentrated in specific regulatory
+  environments?  (Section 7.4.)
+- **Bridge methodology improvements** — The `production` study tested
+  freeze and slope methods for extending CHIP beyond the latest PWT
+  release.  Better extrapolation approaches (e.g., incorporating
+  preliminary national accounts data) could reduce snap-back magnitude.
+- **Additional data sources** — World Bank, OECD, and ICP data could
+  supplement or cross-validate ILOSTAT and PWT.  Evaluating these
+  against existing sources would improve coverage and robustness.
+
 ---
 
 ## Reading Guide
@@ -220,9 +247,9 @@ The papers in `docs/` build on each other. For readers new to this project:
 
 1. **[Original Study Review](docs/original-review.md)** -- What the original study did, how it works, and where it falls short. Start here.
 2. **[Data Sources](docs/data-sources.md)** -- The three external data sources (ILOSTAT, PWT, FRED): what they provide, their coverage and limitations, versioning policy, and alternatives.
-3. **[Weighting Analysis](docs/weighting-analysis.md)** -- Deep dive into one specific limitation: how country-level values are aggregated into a global CHIP.
+3. **[Weighting Analysis](docs/weighting-analysis.md)** -- How country-level values are aggregated into a global CHIP. Compares five weighting schemes (GDP, labor, unweighted, freedom, HDI); recommends GDP-weighted ($2.68/hr) with full range disclosure.
 4. **[Inflation Tracking](docs/inflation-tracking.md)** -- The central methodological question: should CHIP track inflation? Argues yes, proposes alternatives, formulates testable hypotheses (H1-H4).
-5. **[Future Labor Value](docs/labor-value-future.md)** -- Will AI/automation make human labor worthless? Explores long-term viability of a labor-anchored currency.
+5. **[Future Labor Value](docs/labor-value-future.md)** -- Will AI raise or lower the value of labor? Argues that open AI access at competitive prices raises labor value; regulatory concentration lowers it. Includes CHIP's evolution from index to market price.
 6. **[Alternative Models](docs/alternative-models.md)** -- (Outline) Other economic models that could replace or supplement Cobb-Douglas.
 
 ---
@@ -232,9 +259,9 @@ The papers in `docs/` build on each other. For readers new to this project:
 | Phase | Focus | Status |
 |-------|-------|--------|
 | **1. Foundation** | Understand & validate original study | ✅ Complete |
-| **2. Workbench** | Build modular analysis environment | ✅ Infrastructure complete, research scripts next |
-| **3. Production** | Implement improved methodology | Next |
-| **4. Alternatives** | Explore other models | Planned |
+| **2. Workbench** | Build modular analysis environment & studies | ✅ Complete (6 studies, 5 papers) |
+| **3. Production** | Estimates pipeline, automated publishing, API | Next |
+| **4. Alternatives** | Explore other economic models | Planned |
 
 ## Platform & Tooling
 
@@ -249,24 +276,26 @@ The papers in `docs/` build on each other. For readers new to this project:
 | Source | Data | Notes |
 |--------|------|-------|
 | **ILOSTAT** | Employment, wages, hours by occupation | Primary labor data |
-| **Penn World Tables** | GDP, capital stock, human capital index | Primary macro data |
-| **FRED** | US GDP deflator | Inflation adjustment only |
+| **Penn World Tables** | GDP, capital stock, human capital index, labor share | Primary macro data (10.0, 10.01, 11.0) |
+| **FRED** | US GDP deflator, CPI-U | Inflation adjustment & extrapolation |
+| **Heritage Foundation** | Index of Economic Freedom (0–100) | Weighting study |
+| **UNDP** | Human Development Index (0–1) | Weighting study |
 | **World Bank API** | Alternative/supplementary | To evaluate |
 | **OECD.Stat** | ICT capital, productivity | Used in ICT extension |
 
 ## Current Status
 
-**Phase 2 (Workbench) research studies substantially complete. Transitioning to production methodology.**
+**Phase 2 (Workbench) complete. All six studies finished, all documentation papers written. Transitioning to Phase 3 (production pipeline and deployment).**
 
-Recent milestones:
+Research milestones:
 - ✅ Reproduction validated at $2.56/hour (original data) and $2.35/hour (fresh API)
 - ✅ Workbench baseline validated at $2.33/hour (matches reproduction within 1%)
-- ✅ All 11 library modules implemented (including shared `pipeline.py`)
-- ✅ Inflation-tracking analysis complete with testable hypotheses (H1-H4)
-- ✅ Time series study complete — deflation cancellation discovered, real CHIP ~$3.50/hr (stable panel), nominal tracking confirmed
-- ✅ Coverage study complete — 123 viable countries, 79 excellent, recommended range 2000–2019
-- 🔄 Current: Design production methodology studies (trailing window, vintage stability)
-- 🔜 Next: Implement production pipeline, then create `estimates/` for official values
+- ✅ All 11 library modules implemented (including Heritage and HDI fetchers)
+- ✅ Production study complete — **$3.17/hr nominal (2022), ~$3.50 est. 2026** (PWT 11.0, 5-year trailing window)
+- ✅ Stability study complete — PWT vintage revisions quantified (mean 3.8% for mature years)
+- ✅ Weighting study complete — five schemes compared, GDP-weighted ($2.68) recommended, 85 country multipliers produced
+- ✅ All five documentation papers written (original-review, weighting-analysis, inflation-tracking, labor-value-future, data-sources)
+- 🔜 Next: Build `estimates/` pipeline, automated publishing (two-tier model), and API endpoint
 
 See [`docs/STATUS.md`](docs/STATUS.md) for detailed tracking.
 
