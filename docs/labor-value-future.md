@@ -20,7 +20,8 @@ viability of labor-anchored value systems like CHIP.
    - 2.1 The Supply/Demand Argument
    - 2.2 Historical Precedent
    - 2.3 Why AI Might Be Different
-   - 2.4 Where the Narrative Goes Wrong
+   - 2.4 A Deeper Cut, Not a Different Pattern
+   - 2.5 Where the Pessimistic Narrative Goes Wrong
 3. [The Productivity-Amplification Argument](#3-the-productivity-amplification-argument)
    - 3.1 Tools Amplify Labor; They Don't Replace It
    - 3.2 The Reservation Wage Mechanism
@@ -91,7 +92,7 @@ government redistribution schemes (e.g., UBI) as solutions because they do
 not address the fundamental economic question — they merely obscure it by
 ignoring the liability side of the ledger (i.e., who pays).
 
-**Thesis:** AI and automation amplify human labor productivity.  If the
+**Thesis:** Like any other capital, AI and automation amplify human labor productivity.  If the
 tools are universally accessible **at free-market prices**, workers capture
 the productivity gain, work fewer hours to meet their needs, and demand
 higher compensation for their remaining time.  Labor value rises.  If the
@@ -127,7 +128,7 @@ This argument is simple, intuitive, and dominates popular media coverage.
 Previous waves of automation (agriculture, manufacturing) did displace
 workers, but:
 - New industries emerged to absorb displaced workers
-- Overall living standards rose
+- Overall living standards rose (at least in free markets)
 - Labor remained valuable, just in different forms
 
 The agricultural share of US employment fell from ~80% (1800) to ~2%
@@ -144,12 +145,47 @@ cognitive task.  If true, there may be no "new industries" for humans to
 move to.  Every sector is simultaneously automated.
 
 This is the strongest version of the pessimistic case.  It deserves a
-serious answer, which we provide in Section 3.
+serious answer.
 
-### 2.4 Where the Narrative Goes Wrong
+### 2.4 A Deeper Cut, Not a Different Pattern
+
+A more useful framing: AI is not different in *kind* from previous
+automation waves — it is different in *depth*.
+
+Each wave of technology has displaced a tier of the labor hierarchy and
+pushed workers upward:
+
+| Wave | Displaced | Workers moved to |
+|------|-----------|-----------------|
+| Agricultural mechanization (1800s) | Farm labor | Factory floors — "blue collar" |
+| Industrial automation (1900s) | Repetitive manufacturing | Offices, services — "white collar" |
+| Computerization (1980s–2000s) | Clerical, data processing | Knowledge work, creative roles |
+| AI (2020s–) | Routine cognitive tasks | ??? |
+
+The pattern is consistent: technology automates the bottom of the current
+hierarchy, and people move up.  The pessimistic claim is that AI breaks
+this pattern because there is no "up" left — it automates everything.
+
+But the historical pattern suggests otherwise.  Each previous wave *also*
+appeared to leave no room above.  Factory workers in 1890 could not
+imagine "white collar" jobs — the category barely existed.  Clerical
+workers in 1980 could not imagine "data scientist" or "UX designer" as
+careers.  The next tier of work is, almost by definition, invisible from
+the current one.
+
+We might call the emerging tier **"no-collar"** — not in the sense of
+unemployment, but in the sense that work becomes so integrated with
+personal agency, creativity, and human connection that the distinction
+between "work" and "life" blurs.  Some of this is already visible:
+people who earn a living through creative expression, community building,
+caregiving, mentorship, or curating experiences.  These activities were
+not "jobs" a generation ago.  They are becoming jobs now — and AI
+amplification (Section 3) accelerates the trend.
+
+### 2.5 Where the Pessimistic Narrative Goes Wrong
 
 The supply/demand argument treats labor as a commodity whose demand can
-fall to zero.  But it ignores two forces:
+fall to zero.  But it ignores three forces:
 
 1. **Productivity amplification** — AI doesn't just replace workers; it
    makes remaining workers vastly more productive.  A farmer with a tractor
@@ -162,9 +198,15 @@ fall to zero.  But it ignores two forces:
    which they refuse to work.  If productivity gains raise living
    standards, that floor rises.  Section 3.2 develops this.
 
+3. **Upward displacement** — Every previous automation wave pushed workers
+   into categories of work that didn't previously exist.  The pessimistic
+   narrative assumes the current hierarchy is the final one.  History
+   suggests it is not.
+
 The pessimistic narrative correctly identifies that *demand for unaugmented
-human labor* may fall.  But it incorrectly concludes that the value of
-*human time* falls.  These are different things.
+human labor at current skill tiers* may fall.  But it incorrectly
+concludes that the value of *human time* falls.  These are different
+things.
 
 ---
 
@@ -344,6 +386,40 @@ smartphones, the internet, or hand tools):
    distributed at low cost, people invent uses no one anticipated (the
    internet produced careers that didn't exist in 1990).
 
+**Breaking the dependency chain.**  Today, most workers operate within a
+linear dependency:
+
+> I need to eat → I must buy food → I need money → I must work for an
+> employer on their terms.
+
+Every link forces the worker toward the next, and the chain terminates at
+"accept whatever a large entity offers."  The worker has no exit, so they
+have no leverage.  Labor is priced by desperation, not negotiation.
+
+Distributed access to AI and technology breaks this linearity.  When a
+worker can use AI-amplified tools to partially provide for themselves —
+produce food, generate energy, build shelter, offer skilled services
+directly to peers — the chain becomes a **network** with multiple paths.
+The worker no longer depends on any single employer or platform.  They can
+walk away from a bad deal because they have other options.
+
+This is the reservation wage argument made structural.  The reservation
+wage isn't just "I have savings so I can hold out for a better offer."
+It's "I have independent productive capacity, so I don't *need* your
+offer."  That is a fundamentally different bargaining position — and it is
+only possible when the tools of production are accessible at competitive
+prices.
+
+This distributed, multi-path economic model is not hypothetical — it is
+the founding premise of both [MyCHIPs](https://mychips.org) and
+[GotChoices](https://gotchoices.org).  A peer-to-peer credit network
+where individuals extend value directly to each other, denominated in a
+labor-anchored unit of account, *is* the infrastructure for an economy
+that doesn't route through centralized gatekeepers.  CHIP as a unit of
+account and MyCHIPs as a network are both tools for enabling the
+multi-path economy this paper argues is necessary for labor value to
+thrive.
+
 In this path, the CHIP value rises because the same hour of human time
 commands a higher price.  The worker owns their own labor *and* can obtain
 the tools that amplify it at prices set by open competition.
@@ -420,7 +496,7 @@ converges to three components:
    commodity traded on open markets.
 3. **Competitive return on capital** — the profit margin required to
    attract investment into AI infrastructure.  In competitive commodity
-   markets, this is typically 3–7% — enough to justify the investment,
+   markets with low to moderate risk, this might typically be 3–7% — enough to justify the investment,
    not enough to extract rents.
 
 That's it.  There is no secret ingredient, no scarce raw material, no
