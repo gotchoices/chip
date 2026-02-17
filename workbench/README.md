@@ -122,7 +122,7 @@ Each study is a self-contained directory under `studies/`. A study has:
 | **timeseries** | Complete | Year-by-year CHIP series, stable panel, inflation tracking | 1, 3, 4 |
 | **production** | Complete | Trailing-window methodology for current-year estimates | 2, 3, 5, 6, 8, 11 |
 | **stability** | Scaffold | Vintage stability, update continuity, change decomposition | 4, 6, 7 |
-| **weighting** | Scaffold | Compare GDP, labor, freedom, and unweighted aggregation | 1, 7, 10 |
+| **weighting** | Ready | Compare GDP, labor, freedom, HDI, and unweighted aggregation | 1, 7, 10 |
 | **nominal** | Absorbed | Nominal vs deflated CHIP — answered by timeseries study | 3 |
 
 Design Goal numbers refer to the top-level `README.md` § Design Goals.

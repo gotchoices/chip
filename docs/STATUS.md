@@ -132,9 +132,13 @@ Detailed tracking of completed and pending work items.
 - See `studies/stability/README.md` for full design
 
 ### 2.9 Study: Weighting
-- [ ] Implement GDP, labor-force, freedom-index, and unweighted aggregation
-- [ ] Compare CHIP values across weighting schemes
+- [x] Implement Heritage Foundation freedom index fetcher (tested, cached)
+- [x] Implement UNDP HDI fetcher (tested, cached)
+- [x] Add HDI-weighted scheme to `lib/aggregate.py`
+- [ ] Implement study: GDP, labor, freedom, HDI, and unweighted aggregation
+- [ ] Compare CHIP values across 5 weighting schemes
 - [ ] Analyze country contribution breakdown
+- [ ] Produce country-specific multipliers (Design Goal 10)
 - [ ] Generate data for `docs/weighting-analysis.md` Section 4
 - See `studies/weighting/README.md` for full design
 

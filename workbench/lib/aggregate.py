@@ -6,7 +6,8 @@ Methods for combining country-level CHIP values into a global estimate.
 Available Weighting Schemes:
     - GDP-weighted: Weight by economic output (original study approach)
     - Labor-force weighted: Weight by number of workers
-    - Freedom-weighted: Weight by economic freedom index
+    - Freedom-weighted: Weight by Heritage Foundation economic freedom index
+    - HDI-weighted: Weight by UNDP Human Development Index (standard of living)
     - Unweighted: Simple average across countries
 
 Design Principles:
@@ -18,6 +19,7 @@ Public API:
     gdp_weighted(df, gdp_col="gdp") -> AggregateResult
     labor_weighted(df, labor_col="employment") -> AggregateResult
     freedom_weighted(df, freedom_col="freedom_score") -> AggregateResult
+    hdi_weighted(df, hdi_col="hdi") -> AggregateResult
     unweighted(df) -> AggregateResult
     
     compare_weightings(df) -> pd.DataFrame  # Side-by-side comparison
@@ -268,6 +270,61 @@ def unweighted(df: pd.DataFrame,
     )
 
 
+def hdi_weighted(df: pd.DataFrame,
+                 chip_col: str = "chip_value",
+                 hdi_col: str = "hdi") -> AggregateResult:
+    """
+    Calculate HDI-weighted global CHIP value.
+
+    Countries with higher Human Development Index (standard of living)
+    receive more weight, reflecting the premise that developed economies
+    better approximate the free-market wage equilibrium.
+
+    Args:
+        df: DataFrame with country-level CHIP values and HDI scores
+        chip_col: Column with CHIP values
+        hdi_col: Column with HDI values (0-1 scale)
+
+    Returns:
+        AggregateResult with global CHIP value
+    """
+    df = df.copy()
+
+    if chip_col not in df.columns or hdi_col not in df.columns:
+        raise ValueError(f"Required columns: {chip_col}, {hdi_col}")
+
+    df = df.dropna(subset=[chip_col, hdi_col])
+
+    # Calculate weights (HDI is 0-1, directly usable as weight)
+    total_hdi = df[hdi_col].sum()
+    df["weight"] = df[hdi_col] / total_hdi
+
+    # Weighted average
+    chip_value = (df[chip_col] * df["weight"]).sum()
+
+    # Contributions
+    df["contribution"] = df[chip_col] * df["weight"]
+    contributions = df[["country", chip_col, hdi_col, "weight", "contribution"]].copy()
+    contributions = contributions.sort_values("contribution", ascending=False)
+
+    metadata = {
+        "mean_hdi": df[hdi_col].mean(),
+        "top_contributor": contributions.iloc[0]["country"],
+        "top_contribution_pct": contributions.iloc[0]["weight"] * 100,
+    }
+
+    logger.info(f"HDI-weighted CHIP: ${chip_value:.2f}/hour "
+                f"({len(df)} countries)")
+
+    return AggregateResult(
+        chip_value=chip_value,
+        weighting_scheme="hdi_weighted",
+        contributions=contributions,
+        n_countries=len(df),
+        metadata=metadata,
+    )
+
+
 # =============================================================================
 # Comparison
 # =============================================================================
@@ -276,7 +333,8 @@ def compare_weightings(df: pd.DataFrame,
                        chip_col: str = "chip_value",
                        gdp_col: str = "gdp",
                        labor_col: str = "employment",
-                       freedom_col: str = "freedom_score") -> pd.DataFrame:
+                       freedom_col: str = "freedom_score",
+                       hdi_col: str = "hdi") -> pd.DataFrame:
     """
     Compare CHIP values across different weighting schemes.
     
@@ -338,5 +396,18 @@ def compare_weightings(df: pd.DataFrame,
             })
         except Exception as e:
             results.append({"scheme": "freedom_weighted", "chip_value": None, "notes": str(e)})
+    
+    # HDI-weighted
+    if hdi_col in df.columns:
+        try:
+            r = hdi_weighted(df, chip_col, hdi_col)
+            results.append({
+                "scheme": r.weighting_scheme,
+                "chip_value": r.chip_value,
+                "n_countries": r.n_countries,
+                "notes": "",
+            })
+        except Exception as e:
+            results.append({"scheme": "hdi_weighted", "chip_value": None, "notes": str(e)})
     
     return pd.DataFrame(results)

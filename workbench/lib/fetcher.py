@@ -7,7 +7,8 @@ Supported Sources:
     - ILOSTAT: Employment, wages, hours worked by occupation
     - PWT (Penn World Tables): GDP, capital, labor productivity
     - FRED: US GDP deflator for inflation adjustment
-    - Heritage Foundation: Economic Freedom Index (planned)
+    - Heritage Foundation: Index of Economic Freedom (market openness)
+    - UNDP: Human Development Index (standard of living)
 
 Design Principles:
     - Fetch once, cache forever (until explicitly invalidated)
@@ -21,7 +22,8 @@ Public API:
     get_hours() -> pd.DataFrame
     get_pwt() -> pd.DataFrame
     get_deflator() -> pd.DataFrame
-    get_freedom_index() -> pd.DataFrame  # planned
+    get_freedom_index() -> pd.DataFrame
+    get_hdi() -> pd.DataFrame
     get_all() -> dict[str, pd.DataFrame]
 """
 
@@ -345,24 +347,291 @@ def get_deflator(use_cache: bool = True) -> pd.DataFrame:
 
 
 # =============================================================================
-# Economic Freedom Index (Planned)
+# Heritage Foundation — Index of Economic Freedom
 # =============================================================================
+# Direct Excel downloads, no API key required.
+# URL pattern: https://static.heritage.org/index/data/{year}/{year}_indexofeconomicfreedom_data.xlsx
+# Older editions (≤2023) use a different host.
+# Each edition's "Overall Score" represents the assessment for that year.
+# Coverage: ~184 countries, scored 0-100, published annually since 1995.
 
-def get_freedom_index(use_cache: bool = True) -> pd.DataFrame:
+HERITAGE_URLS = {
+    # Newer editions (static.heritage.org)
+    2025: "https://static.heritage.org/index/data/2025/2025_indexofeconomicfreedom_data.xlsx",
+    2024: "https://static.heritage.org/index/data/2024/2024_indexofeconomicfreedom_data.xlsx",
+    # Older editions (indexdotnet.azurewebsites.net)
+    2023: "https://indexdotnet.azurewebsites.net/index/excel/2023/index2023_data.xlsx",
+    2022: "https://indexdotnet.azurewebsites.net/index/excel/2022/index2022_data.xls",
+    2021: "https://indexdotnet.azurewebsites.net/index/excel/2021/index2021_data.xls",
+    2020: "https://indexdotnet.azurewebsites.net/index/excel/2020/index2020_data.xls",
+}
+
+HERITAGE_DEFAULT_YEAR = 2025
+
+
+def get_freedom_index(use_cache: bool = True,
+                      year: int = None) -> pd.DataFrame:
     """
-    Get economic freedom index data.
-    
-    TODO: Implement fetching from Heritage Foundation or Fraser Institute
-    
+    Get Heritage Foundation Index of Economic Freedom.
+
+    Args:
+        use_cache: Use cached data if available.
+        year: Edition year (default: HERITAGE_DEFAULT_YEAR).
+              Each edition is cached independently.
+
+    Returns DataFrame with columns:
+        - country: Country name (as published by Heritage)
+        - isocode: ISO 3-letter country code (if available in source)
+        - year: Edition year
+        - freedom_score: Overall economic freedom score (0-100)
+        - property_rights through financial_freedom: Component scores
+    """
+    if year is None:
+        year = HERITAGE_DEFAULT_YEAR
+
+    cache_key = f"heritage_freedom_{year}"
+
+    if use_cache and cache.is_cached(cache_key):
+        logger.debug(f"Loading Heritage Freedom Index {year} from cache")
+        return pd.read_parquet(cache.get_cache_path(cache_key))
+
+    if year not in HERITAGE_URLS:
+        available = ", ".join(str(y) for y in sorted(HERITAGE_URLS.keys()))
+        raise ValueError(
+            f"No Heritage URL registered for {year}. Available: {available}"
+        )
+
+    url = HERITAGE_URLS[year]
+    logger.info(f"Fetching Heritage Foundation Index of Economic Freedom {year}")
+
+    for attempt in range(MAX_RETRIES):
+        try:
+            response = requests.get(url, timeout=REQUEST_TIMEOUT)
+            response.raise_for_status()
+
+            from io import BytesIO
+            # Heritage Excel files have a merged header row above the
+            # real column names; the actual headers are on row 1.
+            raw = pd.read_excel(BytesIO(response.content), sheet_name=0,
+                                header=1)
+            logger.info(f"  Received {len(raw)} rows, {len(raw.columns)} columns")
+
+            df = _normalize_heritage(raw, year)
+            df.to_parquet(cache.get_cache_path(cache_key))
+            cache.set_metadata(cache_key, source="Heritage Foundation",
+                               edition_year=year, url=url)
+            return df
+
+        except Exception as e:
+            logger.warning(f"  Attempt {attempt + 1} failed: {e}")
+            if attempt < MAX_RETRIES - 1:
+                time.sleep(RETRY_DELAY)
+            else:
+                raise RuntimeError(
+                    f"Heritage Freedom Index fetch failed after "
+                    f"{MAX_RETRIES} attempts: {e}"
+                )
+
+
+def _normalize_heritage(raw: pd.DataFrame, year: int) -> pd.DataFrame:
+    """
+    Normalize Heritage Foundation Excel data to standard columns.
+
+    Heritage Excel files vary slightly across editions but typically include:
+    - "Country Name" or "Name" — country label
+    - "Overall Score" — composite 0-100 score
+    - Component scores (Property Rights, Business Freedom, etc.)
+    - Sometimes an ISO code column ("Country Code" or similar)
+    """
+    cols_lower = {c: c.strip().lower() for c in raw.columns}
+    raw = raw.rename(columns={c: cols_lower[c] for c in raw.columns})
+
+    # Find the country name column
+    name_candidates = ["country name", "name", "country"]
+    name_col = next((c for c in name_candidates if c in raw.columns), None)
+    if name_col is None:
+        raise ValueError(
+            f"Cannot find country name column. "
+            f"Available: {list(raw.columns)}"
+        )
+
+    # Find the overall score column
+    score_candidates = ["overall score", "2025 score", "2024 score",
+                        f"{year} score", "overall", "world rank"]
+    score_col = next((c for c in score_candidates if c in raw.columns), None)
+    if score_col is None:
+        raise ValueError(
+            f"Cannot find overall score column. "
+            f"Available: {list(raw.columns)}"
+        )
+
+    # Find ISO code column if present
+    iso_candidates = ["country code", "iso code", "iso", "code"]
+    iso_col = next((c for c in iso_candidates if c in raw.columns), None)
+
+    # Build normalized DataFrame
+    result = pd.DataFrame({
+        "country": raw[name_col].astype(str).str.strip(),
+        "year": year,
+        "freedom_score": pd.to_numeric(raw[score_col], errors="coerce"),
+    })
+
+    if iso_col is not None:
+        result["isocode"] = raw[iso_col].astype(str).str.strip().str.upper()
+    else:
+        result["isocode"] = None
+
+    # Include region if available
+    region_candidates = ["region", "world region"]
+    region_col = next((c for c in region_candidates if c in raw.columns), None)
+    if region_col is not None:
+        result["region"] = raw[region_col].astype(str).str.strip()
+
+    # Include component scores if available
+    component_map = {
+        "property rights": "property_rights",
+        "judicial effectiveness": "judicial_effectiveness",
+        "government integrity": "government_integrity",
+        "tax burden": "tax_burden",
+        "government spending": "gov_spending",
+        "fiscal health": "fiscal_health",
+        "business freedom": "business_freedom",
+        "labor freedom": "labor_freedom",
+        "monetary freedom": "monetary_freedom",
+        "trade freedom": "trade_freedom",
+        "investment freedom": "investment_freedom",
+        "financial freedom": "financial_freedom",
+    }
+    for src, dst in component_map.items():
+        if src in raw.columns:
+            result[dst] = pd.to_numeric(raw[src], errors="coerce")
+
+    result = result.dropna(subset=["freedom_score"])
+    logger.info(f"  Normalized Heritage data: {len(result)} countries, "
+                f"year={year}, mean score={result['freedom_score'].mean():.1f}")
+
+    return result
+
+
+# =============================================================================
+# UNDP — Human Development Index (HDI)
+# =============================================================================
+# Direct CSV download, no API key required.
+# The composite indices CSV contains HDI values for all countries, 1990-2023.
+# Coverage: ~191 countries, scored 0-1, published annually.
+
+HDI_CSV_URL = (
+    "https://hdr.undp.org/sites/default/files/2025_HDR/"
+    "HDR25_Composite_indices_complete_time_series.csv"
+)
+
+
+def get_hdi(use_cache: bool = True) -> pd.DataFrame:
+    """
+    Get UNDP Human Development Index data (composite time series).
+
     Returns DataFrame with columns:
         - country: Country name
-        - year: Year
-        - freedom_score: Economic freedom score (0-100)
+        - isocode: ISO 3-letter country code
+        - year: Year (1990-2023)
+        - hdi: Human Development Index (0-1)
     """
-    raise NotImplementedError(
-        "Freedom index API not yet implemented. "
-        "Consider downloading from Heritage Foundation or Fraser Institute."
+    cache_key = "undp_hdi"
+
+    if use_cache and cache.is_cached(cache_key):
+        logger.debug("Loading UNDP HDI from cache")
+        return pd.read_parquet(cache.get_cache_path(cache_key))
+
+    logger.info("Fetching UNDP Human Development Index (composite time series)")
+
+    for attempt in range(MAX_RETRIES):
+        try:
+            response = requests.get(HDI_CSV_URL, timeout=REQUEST_TIMEOUT)
+            response.raise_for_status()
+
+            raw = pd.read_csv(StringIO(response.text), low_memory=False)
+            logger.info(f"  Received {len(raw)} rows, {len(raw.columns)} columns")
+
+            df = _normalize_hdi(raw)
+            df.to_parquet(cache.get_cache_path(cache_key))
+            cache.set_metadata(cache_key, source="UNDP HDR", url=HDI_CSV_URL)
+            return df
+
+        except Exception as e:
+            logger.warning(f"  Attempt {attempt + 1} failed: {e}")
+            if attempt < MAX_RETRIES - 1:
+                time.sleep(RETRY_DELAY)
+            else:
+                raise RuntimeError(
+                    f"UNDP HDI fetch failed after {MAX_RETRIES} attempts: {e}"
+                )
+
+
+def _normalize_hdi(raw: pd.DataFrame) -> pd.DataFrame:
+    """
+    Normalize UNDP HDI composite indices CSV to long format.
+
+    The CSV has one row per country and columns like:
+      "iso3", "country", "hdi_1990", "hdi_1991", ..., "hdi_2023"
+    We melt this to long format: (country, isocode, year, hdi).
+    """
+    cols_lower = {c: c.strip().lower() for c in raw.columns}
+    raw = raw.rename(columns={c: cols_lower[c] for c in raw.columns})
+
+    # Find country and ISO columns
+    iso_candidates = ["iso3", "iso_code", "iso", "country_code"]
+    iso_col = next((c for c in iso_candidates if c in raw.columns), None)
+
+    name_candidates = ["country", "country_name", "name"]
+    name_col = next((c for c in name_candidates if c in raw.columns), None)
+
+    if name_col is None:
+        raise ValueError(
+            f"Cannot find country name column. Available: {list(raw.columns)}"
+        )
+
+    # Find HDI year columns: "hdi_1990", "hdi_1991", etc.
+    hdi_year_cols = [c for c in raw.columns if c.startswith("hdi_")
+                     and c.replace("hdi_", "").isdigit()]
+
+    if not hdi_year_cols:
+        raise ValueError(
+            f"Cannot find HDI year columns (expected hdi_YYYY). "
+            f"Sample columns: {list(raw.columns)[:20]}"
+        )
+
+    # Melt to long format
+    id_vars = [c for c in [name_col, iso_col] if c is not None]
+    melted = raw.melt(
+        id_vars=id_vars,
+        value_vars=hdi_year_cols,
+        var_name="year_col",
+        value_name="hdi",
     )
+
+    melted["year"] = melted["year_col"].str.replace("hdi_", "").astype(int)
+    melted["hdi"] = pd.to_numeric(melted["hdi"], errors="coerce")
+    melted = melted.dropna(subset=["hdi"])
+
+    result = pd.DataFrame({
+        "country": melted[name_col].astype(str).str.strip(),
+        "year": melted["year"],
+        "hdi": melted["hdi"],
+    })
+
+    if iso_col is not None:
+        result["isocode"] = melted[iso_col].astype(str).str.strip().str.upper()
+    else:
+        result["isocode"] = None
+
+    result = result.sort_values(["country", "year"]).reset_index(drop=True)
+
+    n_countries = result["country"].nunique()
+    year_range = f"{result['year'].min()}-{result['year'].max()}"
+    logger.info(f"  Normalized HDI data: {n_countries} countries, "
+                f"{year_range}, {len(result)} observations")
+
+    return result
 
 
 # =============================================================================
