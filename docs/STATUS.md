@@ -139,17 +139,36 @@ Detailed tracking of completed and pending work items.
 
 ---
 
-## Phase 3: Production Estimates
+## Phase 3: Production Estimates & Deployment
 
 ### 3.1 Estimates Pipeline
 - [ ] Create `estimates/` folder (imports from `workbench/lib/`)
 - [ ] Implement recommended methodology from `production` study
 - [ ] Produce time series of annual nominal CHIP values
 - [ ] Validate against official inflation benchmarks
-- [ ] Establish annual update process for MyCHIPs
+- [ ] Publish country-specific multipliers (country CHIP / global CHIP)
 - [ ] Document methodology for external reviewers
 
-### 3.2 Documentation Updates
+### 3.2 Automated Publishing (Two-Tier Model)
+- [ ] **Daily/weekly extrapolation script** — applies latest CPI (or GDP
+      deflator) to the official base value, produces current nominal CHIP
+- [ ] **Annual recalculation** — full pipeline re-estimation when new source
+      data arrives (ILOSTAT, PWT); updates base parameters and records
+      correction magnitude
+- [ ] **API endpoint** — HTTP service returning current global CHIP and
+      per-country multipliers (replaces/evolves `updateCPI` cron on mychips.org)
+- [ ] **Snap-back mechanism** — when recalculation produces a new base value,
+      the daily script's parameters are updated automatically; the magnitude
+      and direction of the snap are logged for transparency
+- [ ] Integration testing: daily script → recalculation → snap → daily script
+
+### 3.3 Country-Specific Outputs
+- [ ] Per-country multiplier table (θ-derived or direct wage ratio)
+- [ ] Historical multiplier series per country
+- [ ] Publish alongside global CHIP via API endpoint (3.2)
+- [ ] Documentation: how to interpret and use country multipliers
+
+### 3.4 Documentation Updates
 - [ ] Complete `docs/weighting-analysis.md` Section 4 (requires weighting study)
 - [ ] Update `docs/inflation-tracking.md` with timeseries findings (deflation cancellation)
 - [ ] Write production methodology paper
@@ -179,10 +198,12 @@ Detailed tracking of completed and pending work items.
 ## Immediate Next Steps
 
 1. **Implement `stability` study** (2.8) — PWT 10.0 vs 11.0 vintage comparison, change decomposition
-2. **Implement `weighting` study** (2.9) — aggregation sensitivity analysis
+2. **Implement `weighting` study** (2.9) — aggregation sensitivity analysis, country multipliers
 3. **Create `estimates/` pipeline** (3.1) — official CHIP estimator using production study findings
-4. **Update chipcentral.net** — revised CHIP value from PWT 11.0 ($3.17 nominal 2022)
-5. **Write labor-value-future.md full paper** — convert outline to prose
+4. **Build automated publishing** (3.2) — two-tier extrapolation + recalculation, API endpoint
+5. **Publish country multipliers** (3.3) — per-country labor-valuation ratios
+6. **Update chipcentral.net** — revised CHIP value from PWT 11.0 ($3.17 nominal 2022)
+7. **Write labor-value-future.md full paper** — convert outline to prose
 
 ---
 

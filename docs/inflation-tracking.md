@@ -375,12 +375,21 @@ For scholarly work requiring time-series comparability:
 
 ### 7.3 For MyCHIPs Implementation
 
-For the user-facing software:
+For the user-facing software and infrastructure:
 
 1. Publish CHIP value with clear date stamp
-2. Update periodically (annually) with fresh data
+2. Operate a **two-tier update model**:
+   - A lightweight **daily/weekly script** extrapolates the latest official base
+     value using CPI (or GDP deflator), keeping the published figure current
+     without waiting for source data.
+   - An **annual recalculation** (or whenever new ILOSTAT/PWT data drops)
+     re-runs the full pipeline, updates the base parameters, and "snaps" the
+     published value to the more accurate estimate.
 3. Communicate that CHIP tracks labor costs, which includes inflation
-4. Optionally display trend information: "CHIP 2024: $3.15 (up 3% from 2023)"
+4. Publish **country-specific multipliers** alongside the global CHIP so users
+   can see how their country's labor valuation compares to the global norm
+5. Expose global CHIP and country multipliers via a queryable **API endpoint**
+6. Optionally display trend information: "CHIP 2024: $3.15 (up 3% from 2023)"
 
 ---
 

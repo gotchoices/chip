@@ -52,11 +52,17 @@ production pipeline.
    periodically (at least annually) using fresh data. The pipeline must be
    automated and deterministic — same data in, same number out.
 
-6. **Continuity between updates.** When new data arrives and the index is
-   recalculated, the update should not produce a large discontinuity. Between
-   official recalculations, the CHIP value can be extrapolated using CPI or a
-   similar price index, so the next official value is largely predictable and
-   requires only a small correction.
+6. **Two-tier update model.** The system operates at two cadences:
+   - **Daily/weekly extrapolation:** A lightweight script applies the latest
+     CPI (or GDP deflator) to the last official base value, publishing an
+     up-to-date nominal CHIP. This runs automatically on a server and
+     exposes an endpoint that MyCHIPs (and chipcentral.net) can query.
+   - **Annual (or on-data) recalculation:** When new source data arrives
+     (ILOSTAT wages, a new PWT release), the full pipeline re-estimates
+     CHIP from scratch. The recalculated base value replaces the parameters
+     used by the daily extrapolation script, "snapping" the published value
+     to the more accurate estimate. The correction magnitude is recorded
+     for transparency.
 
 7. **Stable methodology.** Changes to the estimation methodology should be
    rare and well-justified. Users and implementors need confidence that the
@@ -73,6 +79,23 @@ production pipeline.
 9. **Transparent and auditable.** The data sources, methodology, and code are
    open. Anyone can verify how the number was derived, reproduce it, or propose
    improvements.
+
+### Country-Level Outputs
+
+10. **Country-specific multipliers.** In addition to the global CHIP value,
+    the pipeline publishes per-country multipliers indicating how a country's
+    actual unskilled labor compensation compares to the global CHIP. A
+    multiplier of 0.6 means workers in that country are typically paid 60% of
+    the global rate; a multiplier of 2.5 means 250%. This gives users in any
+    country an intuitive sense of local labor valuation relative to the global
+    norm. (The distortion factor θ and country-level CHIP values needed for
+    this are already computed by the pipeline.)
+
+11. **Queryable API.** The published CHIP value — global and per-country —
+    should be available via a simple HTTP endpoint suitable for integration
+    by MyCHIPs nodes, wallet apps, and third-party services. The current
+    embodiment is the `updateCPI` cron script on mychips.org; the goal is to
+    evolve this into a proper API backed by the `estimates/` pipeline.
 
 ## Project Structure
 
