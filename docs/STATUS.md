@@ -131,16 +131,18 @@ Detailed tracking of completed and pending work items.
 - ~~CPI correction distribution~~ — answered by production study (std ~6.4%, mean-reverting)
 - See `studies/stability/README.md` for full design
 
-### 2.9 Study: Weighting
+### 2.9 Study: Weighting ✅
 - [x] Implement Heritage Foundation freedom index fetcher (tested, cached)
 - [x] Implement UNDP HDI fetcher (tested, cached)
 - [x] Add HDI-weighted scheme to `lib/aggregate.py`
-- [ ] Implement study: GDP, labor, freedom, HDI, and unweighted aggregation
-- [ ] Compare CHIP values across 5 weighting schemes
-- [ ] Analyze country contribution breakdown
-- [ ] Produce country-specific multipliers (Design Goal 10)
+- [x] Implement study: GDP, labor, freedom, HDI, and unweighted aggregation
+- [x] Compare CHIP values across 5 weighting schemes
+- [x] Analyze country contribution breakdown
+- [x] Produce country-specific multipliers (Design Goal 10) — 85 countries
 - [ ] Generate data for `docs/weighting-analysis.md` Section 4
-- See `studies/weighting/README.md` for full design
+- **Key finding:** Weighting is a first-order choice — $1.67 (labor) to $2.85 (freedom), CV 21%
+- **Recommendation:** Retain GDP-weighted ($2.68) as primary; publish full range for transparency
+- See `studies/weighting/FINDINGS.md` for full results
 
 ---
 
@@ -223,7 +225,7 @@ Detailed tracking of completed and pending work items.
 | Nominal | Absorbed into timeseries findings | N/A |
 | Production | 5yr window recommended, $3.17 nominal (2022), ~$3.50 est. 2026 | Complete |
 | Stability | — | Scaffold |
-| Weighting | — | Scaffold |
+| Weighting | $1.67–$2.85 range; GDP-weighted $2.68 recommended; 85 country multipliers | Complete |
 
 ---
 

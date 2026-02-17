@@ -1,0 +1,94 @@
+2026-02-16 22:07:25 | INFO     | weighting | Logging to: /Users/kyle/share/devel/chip/workbench/studies/weighting/output/logs/weighting_20260216_220725.log
+2026-02-16 22:07:25 | INFO     | weighting | Aggregation Weighting Method Comparison
+2026-02-16 22:07:25 | INFO     | weighting | PWT 11.0, 2000–2022
+2026-02-16 22:07:25 | INFO     | weighting | Logging to: /Users/kyle/share/devel/chip/workbench/studies/weighting/output/logs/weighting_20260216_220725.log
+2026-02-16 22:07:25 | INFO     | weighting | ============================================================
+2026-02-16 22:07:25 | INFO     | weighting | Starting: weighting
+2026-02-16 22:07:25 | INFO     | weighting | ============================================================
+2026-02-16 22:07:25 | INFO     | weighting | PWT version: 11.0
+2026-02-16 22:07:25 | INFO     | weighting | Year range: 2000–2022, focus: 2022
+2026-02-16 22:07:25 | INFO     | weighting | ======================================================================
+2026-02-16 22:07:25 | INFO     | weighting | Fetching data sources
+2026-02-16 22:07:25 | INFO     | weighting | ======================================================================
+2026-02-16 22:07:25 | INFO     | weighting | ======================================================================
+2026-02-16 22:07:25 | INFO     | weighting | PHASE 1: Running CHIP pipeline
+2026-02-16 22:07:25 | INFO     | weighting | ======================================================================
+2026-02-16 22:07:26 | INFO     | weighting | Pipeline: 746 obs, 102 countries, years 2000-2022
+2026-02-16 22:07:26 | INFO     | weighting | Aggregating over years 2018-2022: 258 obs, 85 countries
+2026-02-16 22:07:26 | INFO     | weighting | Aggregated to 85 countries
+2026-02-16 22:07:26 | INFO     | weighting | ======================================================================
+2026-02-16 22:07:26 | INFO     | weighting | PHASE 2: Merging freedom and HDI scores
+2026-02-16 22:07:26 | INFO     | weighting | ======================================================================
+2026-02-16 22:07:26 | INFO     | weighting | Freedom scores: matched 79/85 countries (93%)
+2026-02-16 22:07:26 | INFO     | weighting | HDI scores: matched 85/85 countries (100%)
+2026-02-16 22:07:26 | INFO     | weighting | Final country data: 85 countries
+2026-02-16 22:07:26 | INFO     | weighting |   gdp: 85/85 non-null
+2026-02-16 22:07:26 | INFO     | weighting |   employment: 85/85 non-null
+2026-02-16 22:07:26 | INFO     | weighting |   freedom_score: 79/85 non-null
+2026-02-16 22:07:26 | INFO     | weighting |   hdi: 85/85 non-null
+2026-02-16 22:07:26 | INFO     | weighting | ======================================================================
+2026-02-16 22:07:26 | INFO     | weighting | PHASE 3: Weighting comparison
+2026-02-16 22:07:26 | INFO     | weighting | ======================================================================
+2026-02-16 22:07:26 | INFO     | weighting | 
+Weighting comparison:
+2026-02-16 22:07:26 | INFO     | weighting |   freedom_weighted    : $2.85/hr (79 countries)
+2026-02-16 22:07:26 | INFO     | weighting |   gdp_weighted        : $2.68/hr (85 countries)
+2026-02-16 22:07:26 | INFO     | weighting |   hdi_weighted        : $2.20/hr (85 countries)
+2026-02-16 22:07:26 | INFO     | weighting |   unweighted          : $2.00/hr (85 countries)
+2026-02-16 22:07:26 | INFO     | weighting |   labor_weighted      : $1.67/hr (85 countries)
+2026-02-16 22:07:26 | INFO     | weighting | 
+  Spread: $1.17 (51.4%)
+2026-02-16 22:07:26 | INFO     | weighting |   CV: 21.2%
+2026-02-16 22:07:26 | INFO     | weighting | ======================================================================
+2026-02-16 22:07:26 | INFO     | weighting | PHASE 4: Country multipliers
+2026-02-16 22:07:26 | INFO     | weighting | ======================================================================
+2026-02-16 22:07:26 | INFO     | weighting | GDP-weighted global CHIP: $2.68/hr
+2026-02-16 22:07:26 | INFO     | weighting | Multiplier range: 0.04 – 2.39
+2026-02-16 22:07:26 | INFO     | weighting | Median multiplier: 0.64
+2026-02-16 22:07:26 | INFO     | weighting | 
+Top 5 multipliers:
+2026-02-16 22:07:26 | INFO     | weighting |   CHE                           : 2.39 ($6.39/hr)
+2026-02-16 22:07:26 | INFO     | weighting |   IRL                           : 2.01 ($5.38/hr)
+2026-02-16 22:07:26 | INFO     | weighting |   AUT                           : 1.92 ($5.13/hr)
+2026-02-16 22:07:26 | INFO     | weighting |   DEU                           : 1.86 ($4.99/hr)
+2026-02-16 22:07:26 | INFO     | weighting |   NOR                           : 1.83 ($4.90/hr)
+2026-02-16 22:07:26 | INFO     | weighting | Bottom 5 multipliers:
+2026-02-16 22:07:26 | INFO     | weighting |   UGA                           : 0.06 ($0.17/hr)
+2026-02-16 22:07:26 | INFO     | weighting |   TZA                           : 0.06 ($0.15/hr)
+2026-02-16 22:07:26 | INFO     | weighting |   MLI                           : 0.05 ($0.15/hr)
+2026-02-16 22:07:26 | INFO     | weighting |   PAK                           : 0.05 ($0.13/hr)
+2026-02-16 22:07:26 | INFO     | weighting |   EGY                           : 0.04 ($0.10/hr)
+2026-02-16 22:07:26 | INFO     | weighting | ======================================================================
+2026-02-16 22:07:26 | INFO     | weighting | Saving outputs
+2026-02-16 22:07:26 | INFO     | weighting | ======================================================================
+2026-02-16 22:07:26 | INFO     | weighting |   Saved CSVs to /Users/kyle/share/devel/chip/workbench/studies/weighting/output/csv
+2026-02-16 22:07:26 | INFO     | weighting | Generating plots
+2026-02-16 22:07:27 | INFO     | weighting |   Plot 1: chip_by_scheme.png
+2026-02-16 22:07:27 | INFO     | weighting |   Plot 2: top10_by_scheme.png
+2026-02-16 22:07:28 | INFO     | weighting |   Plot 3: multiplier_distribution.png
+2026-02-16 22:07:28 | INFO     | weighting |   Plot 4: multiplier_top_bottom.png
+2026-02-16 22:07:28 | INFO     | weighting |   Report: /Users/kyle/share/devel/chip/workbench/studies/weighting/output/reports/weighting_20260216_220728.md
+2026-02-16 22:07:28 | INFO     | weighting | ============================================================
+2026-02-16 22:07:28 | INFO     | weighting | SUMMARY
+2026-02-16 22:07:28 | INFO     | weighting | ============================================================
+2026-02-16 22:07:28 | INFO     | weighting |   freedom_weighted    : $2.85
+2026-02-16 22:07:28 | INFO     | weighting |   gdp_weighted        : $2.68
+2026-02-16 22:07:28 | INFO     | weighting |   hdi_weighted        : $2.20
+2026-02-16 22:07:28 | INFO     | weighting |   unweighted          : $2.00
+2026-02-16 22:07:28 | INFO     | weighting |   labor_weighted      : $1.67
+2026-02-16 22:07:28 | INFO     | weighting |   Countries with multipliers: 85
+2026-02-16 22:07:28 | INFO     | weighting |   Plots: 4
+2026-02-16 22:07:28 | INFO     | weighting | ============================================================
+2026-02-16 22:07:28 | INFO     | weighting | Result: n_schemes = 5
+2026-02-16 22:07:28 | INFO     | weighting | Result: n_countries = 85
+2026-02-16 22:07:28 | INFO     | weighting | Result: chip_freedom_weighted = 2.84724616733997
+2026-02-16 22:07:28 | INFO     | weighting | Result: chip_gdp_weighted = 2.6785102231200892
+2026-02-16 22:07:28 | INFO     | weighting | Result: chip_hdi_weighted = 2.19545967215879
+2026-02-16 22:07:28 | INFO     | weighting | Result: chip_unweighted = 2.0005505470789666
+2026-02-16 22:07:28 | INFO     | weighting | Result: chip_labor_weighted = 1.6748562382458645
+2026-02-16 22:07:28 | INFO     | weighting | ============================================================
+2026-02-16 22:07:28 | INFO     | weighting | Completed: weighting
+2026-02-16 22:07:28 | INFO     | weighting | Duration: 3.5s
+2026-02-16 22:07:28 | INFO     | weighting | Results: {'n_schemes': 5, 'n_countries': 85, 'chip_freedom_weighted': 2.84724616733997, 'chip_gdp_weighted': 2.6785102231200892, 'chip_hdi_weighted': 2.19545967215879, 'chip_unweighted': 2.0005505470789666, 'chip_labor_weighted': 1.6748562382458645}
+2026-02-16 22:07:28 | INFO     | weighting | ============================================================
+2026-02-16 22:07:28 | INFO     | weighting | Summary saved: /Users/kyle/share/devel/chip/workbench/studies/weighting/output/summaries/weighting_20260216_220728.json

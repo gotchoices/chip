@@ -1,0 +1,17 @@
+{
+  "script": "weighting",
+  "start_time": "2026-02-16T21:57:22.416637",
+  "end_time": "2026-02-16T21:57:26.371025",
+  "duration_seconds": 3.954388,
+  "steps": [],
+  "results": {
+    "n_schemes": 4,
+    "n_countries": 85,
+    "chip_gdp_weighted": 2.6785102231200892,
+    "chip_hdi_weighted": 2.1954596721587896,
+    "chip_unweighted": 2.0005505470789666,
+    "chip_labor_weighted": 1.6748562382458645
+  },
+  "errors": [],
+  "log_file": "/Users/kyle/share/devel/chip/workbench/studies/weighting/output/logs/weighting_20260216_215722.log"
+}
