@@ -437,19 +437,39 @@ Every link forces the worker toward the next, and the chain terminates at
 "accept whatever a large entity offers."  The worker has no exit, so they
 have no leverage.  Labor is priced by desperation, not negotiation.
 
-Distributed access to AI and technology breaks this linearity.  When a
-worker can use AI-amplified tools to partially provide for themselves —
-produce food, generate energy, build shelter, offer skilled services
-directly to peers — the chain becomes a **network** with multiple paths.
-The worker no longer depends on any single employer or platform.  They can
-walk away from a bad deal because they have other options.
+Notice that the chain embeds three centralized dependencies, each of which
+has historically been controlled by large institutions:
+
+- **Centralized supply chain** — "I must buy food" assumes the worker
+  depends on a global distribution system to meet basic needs.
+- **Centralized money** — "I need money" assumes a fiat currency system
+  controlled by central banks and intermediated by commercial banks.
+- **Centralized employment** — "I must work for an employer" assumes the
+  traditional job: selling labor to a large entity on the entity's terms.
+
+Each of these dependencies is now breakable.  AI and automation can help
+individuals manage much of their own supply chain — growing food,
+generating energy, fabricating goods — at scales that were previously
+impossible without industrial infrastructure.  A peer-to-peer credit
+network like [MyCHIPs](https://mychips.org) allows people to, in essence,
+create their own money: extending credit directly to each other,
+denominated in a labor-anchored unit, without routing through a central
+bank.  And distributed digital networks allow people to create their own
+work: offering services directly to peers, finding customers without a
+corporate intermediary, building livelihoods that no employer designed.
+
+When all three dependencies break simultaneously, the chain does not merely
+loosen — it dissolves into a **network** with multiple paths.  The worker
+no longer depends on any single employer, any single currency, or any
+single supply chain.  They can walk away from a bad deal because they have
+other options at every link.
 
 This is the reservation wage argument made structural.  The reservation
 wage is not just "I have savings so I can hold out for a better offer."
-It is "I have independent productive capacity, so I don't *need* your
-offer."  That is a fundamentally different bargaining position — and it is
-only possible when the tools of production are accessible at competitive
-prices.
+It is "I have independent productive capacity, my own medium of exchange,
+and direct access to the things I need — so I don't *need* your offer."
+That is a fundamentally different bargaining position, and it is only
+possible when the tools of production are accessible at competitive prices.
 
 This distributed, multi-path economic model is not hypothetical.  It is
 the founding premise of both [MyCHIPs](https://mychips.org) and
@@ -457,9 +477,14 @@ the founding premise of both [MyCHIPs](https://mychips.org) and
 where individuals extend value directly to each other, denominated in a
 labor-anchored unit of account, *is* the infrastructure for an economy
 that does not route through centralized gatekeepers.  CHIP as a unit of
-account and MyCHIPs as a network are both tools for enabling the
-multi-path economy this paper argues is necessary for labor value to
-thrive.
+account, MyCHIPs as a network, and open AI as a productivity amplifier are
+three pieces of the same vision: an economy where individuals transact
+freely, produce independently, and bargain from strength.
+
+Seen from this angle, the AI revolution is not the beginning of the end.
+It is, potentially, the dawn of an age in which human labor is more
+valuable, more voluntary, and more dignified than at any point in history —
+provided the tools remain open.
 
 In this path, the CHIP value rises because the same hour of human time
 commands a higher price.  The worker owns their own labor and can obtain
