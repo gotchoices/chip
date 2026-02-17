@@ -1,0 +1,16 @@
+{
+  "script": "stability",
+  "start_time": "2026-02-16T22:33:09.535030",
+  "end_time": "2026-02-16T22:33:13.345677",
+  "duration_seconds": 3.810647,
+  "steps": [],
+  "results": {
+    "n_overlap_years": 20,
+    "mean_abs_revision_pct": 6.912854646736628,
+    "max_abs_revision_pct": 37.569219184556886,
+    "mean_revision_pct": 5.857112579097525,
+    "n_countries_compared": 99
+  },
+  "errors": [],
+  "log_file": "/Users/kyle/share/devel/chip/workbench/studies/stability/output/logs/stability_20260216_223309.log"
+}

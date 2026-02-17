@@ -123,13 +123,15 @@ Detailed tracking of completed and pending work items.
 - [ ] Assemble recommended production pipeline in `estimates/` (Phase 3)
 - See `studies/production/README.md` and `FINDINGS.md` for full results
 
-### 2.8 Study: Stability (reduced scope)
-- [ ] Vintage comparison: PWT 10.0 vs 11.0 CHIP for 2000–2019 overlap
-- [ ] Country-level revision analysis (which countries shifted most?)
-- [ ] Summary statistics for Design Goal 6 validation
+### 2.8 Study: Stability ✅ (reduced scope)
+- [x] Vintage comparison: PWT 10.0 vs 11.0 CHIP for 2000–2019 overlap
+- [x] Country-level revision analysis (which countries shifted most?)
+- [x] Summary statistics for Design Goal 6 validation
 - ~~Decompose year-over-year changes~~ — deferred (practical response already implemented)
 - ~~CPI correction distribution~~ — answered by production study (std ~6.4%, mean-reverting)
-- See `studies/stability/README.md` for full design
+- **Key finding:** H1 not confirmed — mean |revision| 6.9%, max 37.6% (early years fragile);
+  2002–2019 mean |revision| 3.8%, max 7.0%. Revisions consistently upward (+5.9% mean).
+- See `studies/stability/FINDINGS.md` for full results
 
 ### 2.9 Study: Weighting ✅
 - [x] Implement Heritage Foundation freedom index fetcher (tested, cached)
@@ -204,8 +206,7 @@ Detailed tracking of completed and pending work items.
 
 ## Immediate Next Steps
 
-1. **Implement `stability` study** (2.8) — PWT 10.0 vs 11.0 vintage comparison (reduced scope)
-2. **Complete `weighting-analysis.md` Section 4** — empirical data now available from weighting study
+1. **Complete `weighting-analysis.md` Section 4** — empirical data now available from weighting study
 3. **Create `estimates/` pipeline** (3.1) — official CHIP estimator using production study findings
 4. **Build automated publishing** (3.2) — two-tier extrapolation + recalculation, API endpoint
 5. **Publish country multipliers** (3.3) — per-country labor-valuation ratios via API
@@ -224,7 +225,7 @@ Detailed tracking of completed and pending work items.
 | Timeseries | Real CHIP ~$3.50/hr (panel), deflation cancels in formula | Complete |
 | Nominal | Absorbed into timeseries findings | N/A |
 | Production | 5yr window recommended, $3.17 nominal (2022), ~$3.50 est. 2026 | Complete |
-| Stability | — | Scaffold |
+| Stability | H1 not confirmed: mean |rev| 6.9%; 2002–2019 mean 3.8%; upward bias +5.9% | Complete |
 | Weighting | $1.67–$2.85 range; GDP-weighted $2.68 recommended; 85 country multipliers | Complete |
 
 ---

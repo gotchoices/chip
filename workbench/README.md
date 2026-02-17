@@ -121,7 +121,7 @@ Each study is a self-contained directory under `studies/`. A study has:
 | **coverage** | Complete | Analyze country/year data coverage across sources | 2 |
 | **timeseries** | Complete | Year-by-year CHIP series, stable panel, inflation tracking | 1, 3, 4 |
 | **production** | Complete | Trailing-window methodology for current-year estimates | 2, 3, 5, 6, 8, 11 |
-| **stability** | Scaffold | Vintage stability, update continuity, change decomposition | 4, 6, 7 |
+| **stability** | Complete | PWT 10.0 vs 11.0 vintage comparison (reduced scope) | 4, 6, 7 |
 | **weighting** | Complete | Compare GDP, labor, freedom, HDI, and unweighted aggregation | 1, 7, 10 |
 | **nominal** | Absorbed | Nominal vs deflated CHIP — answered by timeseries study | 3 |
 

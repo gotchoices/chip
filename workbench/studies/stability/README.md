@@ -87,6 +87,6 @@ produced a PWT 11.0 series. This study compares them directly.
 
 ## Status
 
-**Scaffold — reduced scope.** The vintage comparison (H1) is the primary
-remaining deliverable. Change decomposition (H2) deferred. CPI correction
-analysis and real-CHIP stability were answered by the production study.
+**Complete.** H1 not confirmed — PWT revisions are larger than expected
+(mean |revision| 6.9%, max 37.6% in early years). See FINDINGS.md for
+detailed results and implications for the production pipeline.

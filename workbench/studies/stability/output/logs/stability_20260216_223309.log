@@ -1,0 +1,83 @@
+2026-02-16 22:33:09 | INFO     | stability | Logging to: /Users/kyle/share/devel/chip/workbench/studies/stability/output/logs/stability_20260216_223309.log
+2026-02-16 22:33:09 | INFO     | stability | Vintage Stability Study — PWT 10.0 vs 11.0
+2026-02-16 22:33:09 | INFO     | stability | Overlap period: 2000–2019
+2026-02-16 22:33:09 | INFO     | stability | Logging to: /Users/kyle/share/devel/chip/workbench/studies/stability/output/logs/stability_20260216_223309.log
+2026-02-16 22:33:09 | INFO     | stability | ============================================================
+2026-02-16 22:33:09 | INFO     | stability | Starting: stability
+2026-02-16 22:33:09 | INFO     | stability | ============================================================
+2026-02-16 22:33:09 | INFO     | stability | ======================================================================
+2026-02-16 22:33:09 | INFO     | stability | PHASE 1: Computing CHIP with PWT 10.0
+2026-02-16 22:33:09 | INFO     | stability | ======================================================================
+2026-02-16 22:33:09 | INFO     | stability | Running pipeline with PWT 10.0
+2026-02-16 22:33:10 | INFO     | stability |   PWT 10.0: 606 obs, 99 countries
+2026-02-16 22:33:10 | INFO     | stability |   Series: 20 years, mean CHIP $2.65
+2026-02-16 22:33:10 | INFO     | stability | ======================================================================
+2026-02-16 22:33:10 | INFO     | stability | PHASE 1b: Computing CHIP with PWT 11.0
+2026-02-16 22:33:10 | INFO     | stability | ======================================================================
+2026-02-16 22:33:10 | INFO     | stability | Running pipeline with PWT 11.0
+2026-02-16 22:33:11 | INFO     | stability |   PWT 11.0: 606 obs, 99 countries
+2026-02-16 22:33:11 | INFO     | stability |   Series: 20 years, mean CHIP $2.78
+2026-02-16 22:33:11 | INFO     | stability | ======================================================================
+2026-02-16 22:33:11 | INFO     | stability | PHASE 2: Vintage comparison
+2026-02-16 22:33:11 | INFO     | stability | ======================================================================
+2026-02-16 22:33:11 | INFO     | stability | Overlapping years: 20
+2026-02-16 22:33:11 | INFO     | stability | Mean CHIP (10.0): $2.65
+2026-02-16 22:33:11 | INFO     | stability | Mean CHIP (11.0): $2.78
+2026-02-16 22:33:11 | INFO     | stability | Mean revision: +5.9%
+2026-02-16 22:33:11 | INFO     | stability | Mean |revision|: 6.9%
+2026-02-16 22:33:11 | INFO     | stability | Max |revision|: 37.6%
+2026-02-16 22:33:11 | INFO     | stability | Std of revision: 10.5%
+2026-02-16 22:33:11 | INFO     | stability | Within ±3%: 4/20 years
+2026-02-16 22:33:11 | INFO     | stability | Within ±5%: 13/20 years
+2026-02-16 22:33:11 | INFO     | stability | 
+H1 assessment:
+2026-02-16 22:33:11 | INFO     | stability |   Individual years < 5%? False (max=37.6%)
+2026-02-16 22:33:11 | INFO     | stability |   Overall mean < 3%? False (diff=4.9%)
+2026-02-16 22:33:11 | INFO     | stability | ======================================================================
+2026-02-16 22:33:11 | INFO     | stability | PHASE 3: Country-level revision analysis
+2026-02-16 22:33:11 | INFO     | stability | ======================================================================
+2026-02-16 22:33:11 | INFO     | stability | Countries in both vintages: 99
+2026-02-16 22:33:11 | INFO     | stability | Mean country revision: +40.7%
+2026-02-16 22:33:11 | INFO     | stability | Std of country revisions: 179.9%
+2026-02-16 22:33:11 | INFO     | stability | 
+Largest upward revisions:
+2026-02-16 22:33:11 | INFO     | stability |   SEN   : $0.04 → $0.68 (+1668.1%)
+2026-02-16 22:33:11 | INFO     | stability |   ZAF   : $0.25 → $0.97 (+285.9%)
+2026-02-16 22:33:11 | INFO     | stability |   BWA   : $0.22 → $0.79 (+266.7%)
+2026-02-16 22:33:11 | INFO     | stability |   CYP   : $0.71 → $2.54 (+260.1%)
+2026-02-16 22:33:11 | INFO     | stability |   ROU   : $0.60 → $2.11 (+251.4%)
+2026-02-16 22:33:11 | INFO     | stability | Largest downward revisions:
+2026-02-16 22:33:11 | INFO     | stability |   COD   : $0.17 → $0.07 (-59.1%)
+2026-02-16 22:33:11 | INFO     | stability |   BEL   : $5.83 → $2.33 (-60.1%)
+2026-02-16 22:33:11 | INFO     | stability |   DOM   : $1.62 → $0.33 (-79.5%)
+2026-02-16 22:33:11 | INFO     | stability |   MWI   : $0.08 → $0.01 (-83.1%)
+2026-02-16 22:33:11 | INFO     | stability |   EGY   : $0.73 → $0.06 (-91.9%)
+2026-02-16 22:33:11 | INFO     | stability | ======================================================================
+2026-02-16 22:33:11 | INFO     | stability | Saving outputs
+2026-02-16 22:33:11 | INFO     | stability | ======================================================================
+2026-02-16 22:33:11 | INFO     | stability |   Saved CSVs to /Users/kyle/share/devel/chip/workbench/studies/stability/output/csv
+2026-02-16 22:33:11 | INFO     | stability | Generating plots
+2026-02-16 22:33:12 | INFO     | stability |   Plot 1: vintage_overlay.png
+2026-02-16 22:33:12 | INFO     | stability |   Plot 2: vintage_scatter.png
+2026-02-16 22:33:13 | INFO     | stability |   Plot 3: vintage_pct_diff.png
+2026-02-16 22:33:13 | INFO     | stability |   Plot 4: country_revision_dist.png
+2026-02-16 22:33:13 | INFO     | stability | ============================================================
+2026-02-16 22:33:13 | INFO     | stability | SUMMARY
+2026-02-16 22:33:13 | INFO     | stability | ============================================================
+2026-02-16 22:33:13 | INFO     | stability |   Overlapping years: 20
+2026-02-16 22:33:13 | INFO     | stability |   Mean |revision|: 6.9%
+2026-02-16 22:33:13 | INFO     | stability |   Max |revision|:  37.6%
+2026-02-16 22:33:13 | INFO     | stability |   Countries compared: 99
+2026-02-16 22:33:13 | INFO     | stability |   Plots: 4
+2026-02-16 22:33:13 | INFO     | stability | ============================================================
+2026-02-16 22:33:13 | INFO     | stability | Result: n_overlap_years = 20
+2026-02-16 22:33:13 | INFO     | stability | Result: mean_abs_revision_pct = 6.912854646736628
+2026-02-16 22:33:13 | INFO     | stability | Result: max_abs_revision_pct = 37.569219184556886
+2026-02-16 22:33:13 | INFO     | stability | Result: mean_revision_pct = 5.857112579097525
+2026-02-16 22:33:13 | INFO     | stability | Result: n_countries_compared = 99
+2026-02-16 22:33:13 | INFO     | stability | ============================================================
+2026-02-16 22:33:13 | INFO     | stability | Completed: stability
+2026-02-16 22:33:13 | INFO     | stability | Duration: 3.8s
+2026-02-16 22:33:13 | INFO     | stability | Results: {'n_overlap_years': 20, 'mean_abs_revision_pct': 6.912854646736628, 'max_abs_revision_pct': 37.569219184556886, 'mean_revision_pct': 5.857112579097525, 'n_countries_compared': 99}
+2026-02-16 22:33:13 | INFO     | stability | ============================================================
+2026-02-16 22:33:13 | INFO     | stability | Summary saved: /Users/kyle/share/devel/chip/workbench/studies/stability/output/summaries/stability_20260216_223313.json

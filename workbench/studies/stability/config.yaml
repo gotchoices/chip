@@ -1,0 +1,3 @@
+# Stability study — compares PWT 10.0 vs 11.0 for overlapping years.
+# No version pin needed; the study fetches both versions explicitly.
+data: {}
