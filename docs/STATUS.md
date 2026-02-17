@@ -123,11 +123,12 @@ Detailed tracking of completed and pending work items.
 - [ ] Assemble recommended production pipeline in `estimates/` (Phase 3)
 - See `studies/production/README.md` and `FINDINGS.md` for full results
 
-### 2.8 Study: Stability
-- [ ] Simulate vintage changes (compute CHIP with truncated data, compare)
-- [ ] Decompose year-over-year CHIP changes (inflation / composition / real)
-- [ ] Measure CPI-extrapolation correction distribution
-- [ ] Establish confidence bounds for update continuity
+### 2.8 Study: Stability (reduced scope)
+- [ ] Vintage comparison: PWT 10.0 vs 11.0 CHIP for 2000–2019 overlap
+- [ ] Country-level revision analysis (which countries shifted most?)
+- [ ] Summary statistics for Design Goal 6 validation
+- ~~Decompose year-over-year changes~~ — deferred (practical response already implemented)
+- ~~CPI correction distribution~~ — answered by production study (std ~6.4%, mean-reverting)
 - See `studies/stability/README.md` for full design
 
 ### 2.9 Study: Weighting
