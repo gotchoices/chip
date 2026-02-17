@@ -22,7 +22,7 @@ If CHIP naturally tracks inflation—rising as currencies lose purchasing power�
 
 ### 1.3 Scope of This Analysis
 
-This paper proceeds as follows: Section 2 establishes the philosophical foundation for using labor as a value index. Section 3 examines the original study's methodology, including its use of a GDP deflator. Section 4 identifies the mismatch between academic and practical goals. Section 5 describes expected behavior without deflation, including the natural deflationary baseline, Baumol's cost disease, and what prices should do when denominated in CHIPs. Section 6 proposes alternative methodological approaches. Section 7 offers recommendations. Section 8 presents empirical evidence from the workbench studies. Section 9 concludes.
+This paper proceeds as follows: Section 2 establishes the philosophical foundation for using labor as a value index. Section 3 examines the original study's methodology, including its use of a GDP deflator. Section 4 identifies the mismatch between academic and practical goals. Section 5 describes expected behavior without deflation, including the natural deflationary baseline, Baumol's cost disease, and what prices should do when denominated in CHIPs. Section 6 proposes alternative methodological approaches. Section 7 offers recommendations for production use, implementation, and market dynamics around recalculations. Section 8 presents empirical evidence from the workbench studies. Section 9 concludes.
 
 ---
 
@@ -390,6 +390,65 @@ For the user-facing software and infrastructure:
    can see how their country's labor valuation compares to the global norm
 5. Expose global CHIP and country multipliers via a queryable **API endpoint**
 6. Optionally display trend information: "CHIP 2024: $3.15 (up 3% from 2023)"
+
+### 7.4 Market Dynamics Around Recalculations
+
+The two-tier update model (Section 7.3) implies periodic "snaps" when the
+recalculated base value replaces the CPI-extrapolated estimate.  The
+production study (Section 8.5) shows these corrections are typically in the
+±5–10% range.  A natural question arises: can market participants game
+the snap?
+
+**The CHIP index is an estimate, not a price.**  The published CHIP value is
+a reference point — a best-effort estimate of the global cost of one hour of
+unskilled labor.  It is not a binding exchange rate, a peg, or a settlement
+obligation.  Individual buyers and sellers of CHIPs (or dollars) always set
+their own rate based on their own judgment and natural market forces.  The
+index is a guideline that helps participants calibrate, not a price they are
+compelled to accept.
+
+**Anticipated adjustments should be priced in.**  If market participants
+broadly expect the next recalculation to revise CHIP upward (e.g., because
+CPI is known to understate inflation), rational actors will begin adjusting
+their asking prices in advance.  The "market CHIP" drifts toward the expected
+post-snap value before the official number catches up.  On recalculation day,
+the published rate simply ratifies what the market had already discovered.
+This is the same dynamic that governs exchange rates around anticipated
+central bank actions: the announcement becomes a non-event because the
+information was already reflected in prices.
+
+**Practical arbitrage is difficult.**  Classical arbitrage requires liquid
+markets with low transaction costs.  MyCHIPs is a *credit network* —
+positions are trust relationships, not anonymous spot trades.  To "go long"
+CHIPs you need willing counterparties, and the friction of establishing and
+settling credit lines vastly exceeds the few-percent gain from a predictable
+snap.  Combined with the small correction magnitude and the uncertainty in
+its direction (COVID years produced both positive and negative surprises),
+the theoretical arbitrage opportunity is negligible in practice.
+
+**Design implications.**  Even though gaming risk is low, several design
+choices further reduce it:
+
+1. **Recalculate on data availability, not on a calendar date.**  New
+   ILOSTAT or PWT releases arrive at irregular times (typically mid-year).
+   Processing and publishing the correction promptly eliminates any
+   fixed-date anticipation effect.
+2. **Publish correction estimates continuously.**  If the daily extrapolation
+   script can estimate the likely snap magnitude (e.g., by watching
+   preliminary data releases), publishing that estimate removes the
+   information asymmetry that arbitrage requires.
+3. **Phase in corrections gradually.**  Transitioning the base value
+   linearly over 30 days rather than as a step function reduces the
+   incentive to time transactions around the cutover.
+4. **Keep corrections small.**  More frequent recalculations (quarterly when
+   data permits) mechanically reduce snap magnitude, making any remaining
+   gaming opportunity even less significant.
+
+The overarching principle is that **the CHIP index follows economic reality;
+it does not create it.**  When the index moves, it is because the underlying
+data moved.  Participants who adjust their expectations ahead of the official
+number are not exploiting the system — they are contributing to efficient
+price discovery.
 
 ---
 
