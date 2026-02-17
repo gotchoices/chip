@@ -39,10 +39,11 @@ Detailed tracking of completed and pending work items.
 - [x] Write full paper `docs/inflation-tracking.md`
 - [x] Formulate testable hypotheses (H1-H4)
 
-### 1.7 Documentation — Future Labor Value
+### 1.7 Documentation — Future Labor Value ✅
 - [x] Create outline for `docs/labor-value-future.md`
 - [x] Added Section 3.4: Cross-country evidence (US labor rates)
-- [ ] Write full paper from outline
+- [x] Full paper written: thesis (open AI → rising labor value), access fork,
+      regulatory paradox, CHIP Phase 1→2 evolution, tethered market
 
 ### 1.8 Python Reproduction ✅
 - [x] Implement full pipeline (`fetch.py`, `clean.py`, `estimate.py`, `aggregate.py`)
@@ -211,7 +212,7 @@ Detailed tracking of completed and pending work items.
 4. **Build automated publishing** (3.2) — two-tier extrapolation + recalculation, API endpoint
 5. **Publish country multipliers** (3.3) — per-country labor-valuation ratios via API
 6. **Update chipcentral.net** — revised CHIP value from PWT 11.0 ($3.17 nominal 2022)
-7. **Write labor-value-future.md full paper** — convert outline to prose
+7. ~~Write labor-value-future.md full paper~~ — done
 
 ---
 
