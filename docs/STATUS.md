@@ -2,7 +2,7 @@
 
 Detailed tracking of completed and pending work items.
 
-**Last updated:** 2026-02-16
+**Last updated:** 2026-02-17
 
 ---
 
@@ -66,7 +66,7 @@ Detailed tracking of completed and pending work items.
 ### 2.2 Library Implementation ✅
 
 **Data Layer:**
-- [x] `lib/fetcher.py` — ILOSTAT, PWT (rug.nl Excel), FRED with retries and caching
+- [x] `lib/fetcher.py` — ILOSTAT, PWT, FRED, Heritage Freedom Index, UNDP HDI with retries and caching
 - [x] `lib/cache.py` — Parquet cache, metadata, invalidation
 - [x] `lib/normalize.py` — Format detection, ILOSTAT/PWT/deflator standardization
 - [x] `lib/logging_config.py` — Structured logging, ScriptContext, JSON summaries
@@ -81,7 +81,7 @@ Detailed tracking of completed and pending work items.
 **Estimation & Output:**
 - [x] `lib/pipeline.py` — Shared CHIP estimation pipeline (prepare_labor_data, estimate_chip)
 - [x] `lib/models.py` — Cobb-Douglas, direct wage, ModelResult dataclass
-- [x] `lib/aggregate.py` — GDP/labor/freedom/unweighted, compare_weightings()
+- [x] `lib/aggregate.py` — GDP/labor/freedom/HDI/unweighted, compare_weightings()
 - [x] `lib/output.py` — Markdown reports, CSV/JSON export, matplotlib plots
 
 ### 2.3 Study: Baseline ✅
@@ -176,8 +176,8 @@ Detailed tracking of completed and pending work items.
 - [ ] Documentation: how to interpret and use country multipliers
 
 ### 3.4 Documentation Updates
-- [ ] Complete `docs/weighting-analysis.md` Section 4 (requires weighting study)
-- [ ] Update `docs/inflation-tracking.md` with timeseries findings (deflation cancellation)
+- [ ] Complete `docs/weighting-analysis.md` Section 4 (data now available from weighting study)
+- [x] Update `docs/inflation-tracking.md` — empirical evidence (Sec 8), market dynamics (Sec 7.4), two-tier model (Sec 7.3)
 - [ ] Write production methodology paper
 
 ---
@@ -204,11 +204,11 @@ Detailed tracking of completed and pending work items.
 
 ## Immediate Next Steps
 
-1. **Implement `stability` study** (2.8) — PWT 10.0 vs 11.0 vintage comparison, change decomposition
-2. **Implement `weighting` study** (2.9) — aggregation sensitivity analysis, country multipliers
+1. **Implement `stability` study** (2.8) — PWT 10.0 vs 11.0 vintage comparison (reduced scope)
+2. **Complete `weighting-analysis.md` Section 4** — empirical data now available from weighting study
 3. **Create `estimates/` pipeline** (3.1) — official CHIP estimator using production study findings
 4. **Build automated publishing** (3.2) — two-tier extrapolation + recalculation, API endpoint
-5. **Publish country multipliers** (3.3) — per-country labor-valuation ratios
+5. **Publish country multipliers** (3.3) — per-country labor-valuation ratios via API
 6. **Update chipcentral.net** — revised CHIP value from PWT 11.0 ($3.17 nominal 2022)
 7. **Write labor-value-future.md full paper** — convert outline to prose
 
