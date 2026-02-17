@@ -25,10 +25,11 @@ Detailed tracking of completed and pending work items.
 - [x] Create and write `docs/original-review.md` (Sections 1-11)
 - [ ] Review and refine draft
 
-### 1.4 Documentation — Weighting Analysis
+### 1.4 Documentation — Weighting Analysis ✅
 - [x] Create outline for `docs/weighting-analysis.md`
 - [x] Write Sections 1-3, 5 (Introduction, Schemes, Philosophy, Recommendations)
-- [ ] Write Section 4: Empirical Comparison — requires `weighting` study output
+- [x] Write Section 4: Empirical Comparison — five-scheme analysis, elimination reasoning, GDP recommendation
+- [x] Revise Section 5: Recommendations updated with empirical evidence
 
 ### 1.5 Documentation — Alternative Models
 - [x] Create outline for `docs/alternative-models.md`
@@ -141,7 +142,7 @@ Detailed tracking of completed and pending work items.
 - [x] Compare CHIP values across 5 weighting schemes
 - [x] Analyze country contribution breakdown
 - [x] Produce country-specific multipliers (Design Goal 10) — 85 countries
-- [ ] Generate data for `docs/weighting-analysis.md` Section 4
+- [x] Generate data for `docs/weighting-analysis.md` Section 4
 - **Key finding:** Weighting is a first-order choice — $1.67 (labor) to $2.85 (freedom), CV 21%
 - **Recommendation:** Retain GDP-weighted ($2.68) as primary; publish full range for transparency
 - See `studies/weighting/FINDINGS.md` for full results
@@ -178,7 +179,7 @@ Detailed tracking of completed and pending work items.
 - [ ] Documentation: how to interpret and use country multipliers
 
 ### 3.4 Documentation Updates
-- [ ] Complete `docs/weighting-analysis.md` Section 4 (data now available from weighting study)
+- [x] Complete `docs/weighting-analysis.md` — Section 4 empirical comparison, revised Section 5 recommendations
 - [x] Update `docs/inflation-tracking.md` — empirical evidence (Sec 8), market dynamics (Sec 7.4), two-tier model (Sec 7.3)
 - [ ] Write production methodology paper
 
@@ -206,8 +207,7 @@ Detailed tracking of completed and pending work items.
 
 ## Immediate Next Steps
 
-1. **Complete `weighting-analysis.md` Section 4** — empirical data now available from weighting study
-3. **Create `estimates/` pipeline** (3.1) — official CHIP estimator using production study findings
+1. **Create `estimates/` pipeline** (3.1) — official CHIP estimator using production study findings
 4. **Build automated publishing** (3.2) — two-tier extrapolation + recalculation, API endpoint
 5. **Publish country multipliers** (3.3) — per-country labor-valuation ratios via API
 6. **Update chipcentral.net** — revised CHIP value from PWT 11.0 ($3.17 nominal 2022)
