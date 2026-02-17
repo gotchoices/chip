@@ -20,8 +20,7 @@ viability of labor-anchored value systems like CHIP.
    - 2.1 The Supply/Demand Argument
    - 2.2 Historical Precedent
    - 2.3 Why AI Might Be Different
-   - 2.4 A Deeper Cut, Not a Different Pattern
-   - 2.5 Where the Pessimistic Narrative Goes Wrong
+   - 2.4 Where the Narrative Goes Wrong
 3. [The Productivity-Amplification Argument](#3-the-productivity-amplification-argument)
    - 3.1 Tools Amplify Labor; They Don't Replace It
    - 3.2 The Reservation Wage Mechanism
@@ -36,10 +35,9 @@ viability of labor-anchored value systems like CHIP.
 5. [Why Concentration Happens: The Regulatory Paradox](#5-why-concentration-happens)
    - 5.1 Technology Naturally Trends Toward Open and Cheap
    - 5.2 Heavy Regulation Favors Concentration
-   - 5.3 Open Environments Distribute Capability
-   - 5.4 Historical Evidence: Internet vs. Telecom
-   - 5.5 Guardrails vs. Barriers
-   - 5.6 The Advocacy Conclusion
+   - 5.3 Historical Evidence: Open vs. Regulated
+   - 5.4 Guardrails vs. Barriers
+   - 5.5 The Advocacy Conclusion
 6. [CHIP's Evolution: From Index to Market Price](#6-chips-evolution)
    - 6.1 Phase 1: The Measured Index (Present)
    - 6.2 Phase 2: The Market-Discovered Price (Future)
@@ -147,7 +145,7 @@ move to.  Every sector is simultaneously automated.
 This is the strongest version of the pessimistic case.  It deserves a
 serious answer.
 
-### 2.4 A Deeper Cut, Not a Different Pattern
+### 2.4 Where the Narrative Goes Wrong
 
 A more useful framing: AI is not different in *kind* from previous
 automation waves — it is different in *depth*.
@@ -166,12 +164,11 @@ The pattern is consistent: technology automates the bottom of the current
 hierarchy, and people move up.  The pessimistic claim is that AI breaks
 this pattern because there is no "up" left — it automates everything.
 
-But the historical pattern suggests otherwise.  Each previous wave *also*
-appeared to leave no room above.  Factory workers in 1890 could not
-imagine "white collar" jobs — the category barely existed.  Clerical
-workers in 1980 could not imagine "data scientist" or "UX designer" as
-careers.  The next tier of work is, almost by definition, invisible from
-the current one.
+But each previous wave *also* appeared to leave no room above.  Factory
+workers in 1890 could not imagine "white collar" jobs — the category
+barely existed.  Clerical workers in 1980 could not imagine "data
+scientist" or "UX designer" as careers.  The next tier of work is,
+almost by definition, invisible from the current one.
 
 We might call the emerging tier **"no-collar"** — not in the sense of
 unemployment, but in the sense that work becomes so integrated with
@@ -182,10 +179,8 @@ caregiving, mentorship, or curating experiences.  These activities were
 not "jobs" a generation ago.  They are becoming jobs now — and AI
 amplification (Section 3) accelerates the trend.
 
-### 2.5 Where the Pessimistic Narrative Goes Wrong
-
-The supply/demand argument treats labor as a commodity whose demand can
-fall to zero.  But it ignores three forces:
+Beyond upward displacement, the pessimistic narrative ignores two further
+forces:
 
 1. **Productivity amplification** — AI doesn't just replace workers; it
    makes remaining workers vastly more productive.  A farmer with a tractor
@@ -197,11 +192,6 @@ fall to zero.  But it ignores three forces:
    alternatives (savings, leisure, other opportunities) have a floor below
    which they refuse to work.  If productivity gains raise living
    standards, that floor rises.  Section 3.2 develops this.
-
-3. **Upward displacement** — Every previous automation wave pushed workers
-   into categories of work that didn't previously exist.  The pessimistic
-   narrative assumes the current hierarchy is the final one.  History
-   suggests it is not.
 
 The pessimistic narrative correctly identifies that *demand for unaugmented
 human labor at current skill tiers* may fall.  But it incorrectly
@@ -552,29 +542,12 @@ Historical parallels:
   Only large pharma companies can play.  Generic manufacturers are delayed
   by years through regulatory and legal maneuvering.
 
-### 5.3 Open Environments Distribute Capability
+### 5.3 Historical Evidence: Open vs. Regulated
 
-When technology is freely available:
-
-- **Competitive advantage shifts** from *owning* the tools to *applying*
-  them creatively.  Everyone has the same hammer; the best carpenter wins.
-- **Low barriers to entry** enable many small players, each serving
-  niches that large corporations ignore.
-- **Innovation accelerates** because experimentation is cheap and failure
-  is affordable.
-
-Historical parallel:
-- **The internet's open protocols** (TCP/IP, HTTP, SMTP) enabled the most
-  distributed economic opportunity in history.  No one needed permission
-  to build a website, start a business, or publish content.  The result
-  was an explosion of economic activity that no central planner could
-  have designed.
-- **Open-source software** (Linux, Apache, Python, TensorFlow) powers the
-  majority of the world's computing infrastructure.  It is maintained by
-  distributed communities, free to use, and has outcompeted proprietary
-  alternatives in most domains.
-
-### 5.4 Historical Evidence: Internet vs. Telecom
+When technology is freely available, competitive advantage shifts from
+*owning* the tools to *applying* them creatively.  Low barriers to entry
+enable many small players.  Innovation accelerates because experimentation
+is cheap and failure is affordable.
 
 The internet and the telephone network are the cleanest natural experiment:
 
@@ -591,10 +564,15 @@ Both technologies transmit information.  The difference is regulatory
 structure.  The regulated version produced a monopoly.  The open version
 produced the largest expansion of economic opportunity in history.
 
+Open-source software tells the same story: Linux, Apache, Python, and
+TensorFlow power the majority of the world's computing infrastructure.
+They are maintained by distributed communities, free to use, and have
+outcompeted proprietary alternatives in most domains.
+
 AI is at the same fork today.  The technology is capable of either outcome.
 The regulatory environment will determine which path we follow.
 
-### 5.5 Guardrails vs. Barriers
+### 5.4 Guardrails vs. Barriers
 
 This is not an argument against all regulation.  Some regulation is
 sensible:
@@ -612,7 +590,7 @@ it.  The test is simple: **does this regulation make it harder for a small
 player to compete with a large one?**  If yes, it is a barrier, not a
 guardrail — regardless of how it is labeled.
 
-### 5.6 The Advocacy Conclusion
+### 5.5 The Advocacy Conclusion
 
 **Logical chain:**
 1. CHIP is anchored to the value of human labor.
@@ -685,6 +663,12 @@ The abstract concept of "one hour of unskilled labor" persists as the
 unit's definition, just as "one troy ounce of gold" persists even though
 nobody weighs gold at the general store.  What changes is not the utility
 of the unit but our method of determining its price.
+
+This is the economy in which "no-collar" work (Section 2.4) flourishes.
+When people trade directly in a labor-anchored unit, through a
+peer-to-peer network, denominated in a currency whose definition they
+understand — the dependency chain dissolves.  The CHIP itself becomes part
+of the distributed infrastructure that makes labor valuable.
 
 ### 6.3 The Tethered Market: Why CHIP Is Not Gold
 
@@ -845,25 +829,28 @@ how long the current transition might take.
 
 ### 8.1 Summary of the Argument
 
-The chain of reasoning:
+The paper makes three claims:
 
-1. **AI amplifies labor productivity** — this is happening regardless of
-   policy choices.
-2. **If tools are accessible to workers**, each worker captures the
-   productivity gain → meets needs with fewer hours → reservation wage
-   rises → labor value increases.
-3. **If tools are concentrated**, platform owners capture the gain →
-   workers are excluded → must compete at whatever rate is offered →
-   labor value falls.
-4. **Technology naturally trends toward open and cheap** (Moore's Law,
-   open source, commoditization).
-5. **The primary mechanism of concentration is regulatory capture**, not
-   market dynamics.
-6. **Therefore**, the trajectory of labor value — and of CHIP — depends
-   on whether AI remains open and accessible.
+1. **Labor value rises under distributed access** (Sections 3–4).
+   AI amplifies productivity.  If workers can obtain the tools at
+   competitive prices, they capture the gains, work fewer hours, and
+   demand more for their remaining time.  The reservation wage rises.
+   Baumol's cost disease provides a long-run tailwind.
 
-This is not utopian speculation.  Each link in the chain has historical
-precedent and, where possible, empirical support from our own analysis.
+2. **The primary threat is regulatory concentration, not technology**
+   (Section 5).  AI naturally trends toward open and cheap.  The only
+   force that sustainably concentrates it is regulatory capture —
+   barriers to entry that entrench incumbents and enable monopoly
+   pricing.
+
+3. **CHIP survives the transition regardless** (Section 6).  Even if the
+   reference category of labor changes, CHIP evolves from a measured
+   index to a market-discovered price, tethered to real labor
+   transactions and structurally resistant to speculation.
+
+Each claim has historical precedent and, where possible, empirical support
+from our own analysis.  Section 7 proposes further studies to strengthen
+the evidence base.
 
 ### 8.2 The Case for Labor-Anchoring Despite Uncertainty
 
