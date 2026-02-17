@@ -199,7 +199,7 @@ def write_latest(entry, output_dir):
 
 def write_summary_report(chip_nominal, chip_constant, target_year,
                          n_countries, multipliers_df, prev_chip,
-                         output_dir):
+                         pwt_base_year, output_dir):
     """Write human-readable summary of the recalculation."""
     lines = [
         f"# CHIP Recalculation — {date.today().isoformat()}",
@@ -209,7 +209,7 @@ def write_summary_report(chip_nominal, chip_constant, target_year,
         f"| Metric | Value |",
         f"|--------|-------|",
         f"| Nominal CHIP ({target_year}) | **${chip_nominal:.2f}/hr** |",
-        f"| Constant CHIP (2017$) | ${chip_constant:.2f}/hr |",
+        f"| Constant CHIP ({pwt_base_year}$) | ${chip_constant:.2f}/hr |",
         f"| Countries | {n_countries} |",
         f"| Method | GDP-weighted, 5-year trailing window |",
         "",
@@ -275,12 +275,11 @@ def recalculate(force_refresh=False, notes=""):
     cfg = load_estimates_config()
     pipe_cfg = cfg.get("pipeline", {})
     data_cfg = cfg.get("data", {})
-    extrap_cfg = cfg.get("extrapolation", {})
 
     pwt_version = data_cfg.get("pwt_version", "11.0")
+    pwt_base_year = data_cfg.get("pwt_base_year", 2017)
     window_years = pipe_cfg.get("window_years", 5)
     year_end = pipe_cfg.get("year_end", 2023)
-    deflator_base_year = extrap_cfg.get("deflator_base_year", 2017)
 
     # ------------------------------------------------------------------
     # Step 1: Fetch data
@@ -300,7 +299,7 @@ def recalculate(force_refresh=False, notes=""):
         logger.info(f"  {name}: {len(df):,} rows")
 
     deflator_df = normalize.normalize_deflator(
-        data["deflator"], base_year=deflator_base_year
+        data["deflator"], base_year=pwt_base_year
     )
 
     # ------------------------------------------------------------------
@@ -353,7 +352,7 @@ def recalculate(force_refresh=False, notes=""):
     n_countries = int(ts_constant[ts_constant["year"] == target_year]["n_countries"].iloc[0])
 
     logger.info(f"Target year: {target_year}")
-    logger.info(f"Constant CHIP (2017$): ${chip_constant:.2f}")
+    logger.info(f"Constant CHIP ({pwt_base_year}$): ${chip_constant:.2f}")
     logger.info(f"Nominal CHIP ({target_year}$): ${chip_nominal:.2f}")
     logger.info(f"Countries: {n_countries}")
 
@@ -400,8 +399,9 @@ def recalculate(force_refresh=False, notes=""):
         "date": date.today().isoformat(),
         "method": "recalculation",
         "chip_usd": round(chip_nominal, 4),
-        "chip_constant_2017": round(chip_constant, 4),
+        "chip_constant": round(chip_constant, 4),
         "base_year": target_year,
+        "pwt_base_year": pwt_base_year,
         "pwt_version": pwt_version,
         "window_years": window_years,
         "n_countries": n_countries,
@@ -418,10 +418,10 @@ def recalculate(force_refresh=False, notes=""):
 
     # Base params for extrapolator
     base_params = {
-        "chip_constant_2017": round(chip_constant, 4),
+        "chip_constant": round(chip_constant, 4),
         "chip_nominal": round(chip_nominal, 4),
         "base_year": target_year,
-        "deflator_base_year": deflator_base_year,
+        "pwt_base_year": pwt_base_year,
         "cpi_reference_date": cpi_ref["date"],
         "cpi_reference_value": round(cpi_ref["value"], 3),
         "pwt_version": pwt_version,
@@ -451,7 +451,7 @@ def recalculate(force_refresh=False, notes=""):
     # Human-readable summary
     write_summary_report(
         chip_nominal, chip_constant, target_year, n_countries,
-        multipliers_df, prev_chip, OUTPUT_DIR
+        multipliers_df, prev_chip, pwt_base_year, OUTPUT_DIR
     )
 
     # ------------------------------------------------------------------

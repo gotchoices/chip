@@ -3,6 +3,9 @@
 
 data:
   pwt_version: "11.0"
+  # PWT's constant-dollar reference year.  PWT 11.0 uses 2017.
+  # Update this only when switching to a new PWT version that rebases.
+  pwt_base_year: 2017
 
 pipeline:
   year_start: 1992
@@ -16,4 +19,3 @@ pipeline:
 
 extrapolation:
   index: "cpi_u"            # FRED series CPIAUCSL
-  deflator_base_year: 2017  # PWT base year for constant dollars
