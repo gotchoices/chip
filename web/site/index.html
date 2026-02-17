@@ -7,6 +7,89 @@
   <meta name="description" content="CHIP Central is dedicated to estimating the value of a CHIP: an independent measure of value based on human productivity that transcends national currencies, borders, and cultures.">
   <link rel="stylesheet" href="css/base.css">
   <script src="js/theme.js"></script>
+  <style>
+    /* Featured paper section */
+    .featured {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .featured-text h2 {
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 16px;
+      color: var(--color-heading);
+    }
+    .featured-text .kicker {
+      display: inline-block;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--color-primary);
+      margin-bottom: 12px;
+    }
+    .featured-text p {
+      font-size: 17px;
+      color: var(--color-muted);
+      margin-bottom: 16px;
+      line-height: 1.7;
+    }
+    .featured-text blockquote {
+      border-left: 3px solid var(--color-primary);
+      padding: 12px 20px;
+      margin: 20px 0;
+      background: var(--color-primary-light, #eff6ff);
+      border-radius: 0 8px 8px 0;
+    }
+    .featured-text blockquote p {
+      font-size: 16px;
+      font-style: italic;
+      color: var(--color-text);
+      margin: 0;
+    }
+    .featured-visual {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .fork-card {
+      padding: 28px;
+      border-radius: var(--card-radius, 12px);
+      border: 1px solid var(--border-color, #e8eaed);
+      background: var(--card-bg, #fff);
+    }
+    .fork-card h4 {
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .fork-card p {
+      font-size: 15px;
+      color: var(--color-muted);
+      margin: 0;
+      line-height: 1.6;
+    }
+    .fork-card.path-a {
+      border-left: 4px solid #16a34a;
+    }
+    .fork-card.path-a h4 { color: #16a34a; }
+    .fork-card.path-b {
+      border-left: 4px solid #dc2626;
+    }
+    .fork-card.path-b h4 { color: #dc2626; }
+    .fork-card.path-hinge {
+      border-left: 4px solid var(--color-primary);
+      background: var(--color-primary-light, #eff6ff);
+    }
+    .fork-card.path-hinge h4 { color: var(--color-primary); }
+
+    @media (max-width: 768px) {
+      .featured { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
 
@@ -21,10 +104,11 @@
         <div class="hero-content">
           <div class="hero-tag">Estimating the CHIP Value</div>
           <h2>How Valuable is One Hour of Human Work?</h2>
-          <p>CHIP Central is dedicated to quantifying the value of a CHIP &mdash; an independent measure anchored to human productivity, transcending national currencies and borders.</p>
+          <p>CHIP Central quantifies the value of a CHIP &mdash; an independent measure
+             anchored to human productivity, transcending national currencies and borders.</p>
           <div class="hero-actions">
-            <a href="chip.html" class="btn btn-primary">Learn More</a>
-            <a href="publications.html" class="btn btn-outline">View Publications</a>
+            <a href="chip.html" class="btn btn-primary">What's a CHIP?</a>
+            <a href="#future" class="btn btn-outline">The Future of Labor Value</a>
           </div>
         </div>
         <div class="value-card">
@@ -37,44 +121,56 @@
     </div>
   </div>
 
-  <!-- Publications Preview -->
-  <div class="section bg-alt">
+  <!-- Featured Paper: The Future of Labor Value -->
+  <div class="section" id="future">
     <div class="container">
-      <div class="section-header">
-        <h2>Publications</h2>
-        <p>Research papers and algorithms for estimating the CHIP value</p>
-      </div>
-      <div class="pub-list">
-        <a href="https://github.com/gotchoices/chip/tree/main/original" class="pub-item">
-          <img src="assets/img/ICT_PIC.jpg" alt="ICT Capital study">
-          <div>
-            <h3>A Look at ICT Capital</h3>
-            <p>Follow-up study evaluating the robustness of the original CHIP value computation with ICT capital data.</p>
+      <div class="featured">
+        <div class="featured-text">
+          <div class="kicker">Featured Paper</div>
+          <h2>Will AI Make Your Time More Valuable &mdash; or Worthless?</h2>
+          <p>The popular narrative says AI will take all the jobs and drive wages to zero.
+             We argue the opposite: AI and automation will <strong>raise</strong> the real
+             value of human labor &mdash; but only if the tools remain open and accessible
+             at competitive prices.</p>
+          <blockquote>
+            <p>The fork in the road is competitive access, not technology. And the primary
+               threat to competitive access is regulatory capture that entrenches
+               incumbents.</p>
+          </blockquote>
+          <p>The paper traces the argument from historical precedent through Baumol's cost
+             disease to CHIP's evolution from a measured index to a market-discovered price
+             &mdash; and makes the case that open AI is an economic prerequisite for the
+             value of human time.</p>
+          <div class="hero-actions" style="margin-top:24px;">
+            <a href="https://github.com/gotchoices/chip/blob/main/docs/labor-value-future.md"
+               class="btn btn-primary" target="_blank">Read the Paper</a>
           </div>
-          <div class="date">Feb 2024</div>
-        </a>
-        <a href="value.html" class="pub-item">
-          <img src="assets/img/chip-value-screenshot.png" alt="CHIP Value chart">
-          <div>
-            <h3>CHIP Value Today</h3>
-            <p>Extrapolating the CHIP valuation over time using US Dollar inflation rates.</p>
+        </div>
+        <div class="featured-visual">
+          <div class="fork-card path-a">
+            <h4>Path A: Open Access &rarr; Labor Value Rises</h4>
+            <p>Workers access AI tools at competitive prices. Each hour of labor becomes
+               vastly more productive. Reservation wages rise. New forms of "no-collar"
+               work emerge.</p>
           </div>
-          <div class="date">Apr 2023</div>
-        </a>
-        <a href="https://github.com/gotchoices/chip/blob/main/original/writeup/chips_note.pdf" class="pub-item">
-          <img src="assets/img/economics-graph-28403893.jpeg" alt="White paper">
-          <div>
-            <h3>CHIPs Valuation Theory White Paper</h3>
-            <p>A conceptual framework using panel data from 89 countries over 1992&ndash;2019.</p>
+          <div class="fork-card path-b">
+            <h4>Path B: Concentrated Access &rarr; Labor Value Falls</h4>
+            <p>AI tools are controlled by a few entities at monopoly prices. Workers are
+               excluded from productivity gains and compete for whatever remains.</p>
           </div>
-          <div class="date">Jan 2023</div>
-        </a>
+          <div class="fork-card path-hinge">
+            <h4>The Hinge Variable Is Access, Not Technology</h4>
+            <p>The same technology produces opposite outcomes. The question isn't "will AI
+               take jobs?" &mdash; it's "will workers have access to AI at competitive
+               prices?"</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- What is a CHIP — Brief -->
-  <div class="section">
+  <div class="section bg-alt">
     <div class="container">
       <div class="section-header">
         <h2>What's a CHIP?</h2>
@@ -100,8 +196,47 @@
     </div>
   </div>
 
+  <!-- Publications Preview -->
+  <div class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Research &amp; Publications</h2>
+        <p>Algorithms, studies, and white papers behind the CHIP estimate</p>
+      </div>
+      <div class="pub-list">
+        <a href="https://github.com/gotchoices/chip/tree/main/original" class="pub-item">
+          <img src="assets/img/ICT_PIC.jpg" alt="ICT Capital study">
+          <div>
+            <h3>A Look at ICT Capital</h3>
+            <p>Follow-up study testing the impact of ICT capital on the CHIP estimate.</p>
+          </div>
+          <div class="date">Feb 2024</div>
+        </a>
+        <a href="value.html" class="pub-item">
+          <img src="assets/img/chip-value-screenshot.png" alt="CHIP Value chart">
+          <div>
+            <h3>CHIP Value Today</h3>
+            <p>Interactive chart tracking the CHIP value in US Dollars over time.</p>
+          </div>
+          <div class="date">Apr 2023</div>
+        </a>
+        <a href="https://github.com/gotchoices/chip/blob/main/original/writeup/chips_note.pdf" class="pub-item">
+          <img src="assets/img/economics-graph-28403893.jpeg" alt="White paper">
+          <div>
+            <h3>CHIPs Valuation Theory</h3>
+            <p>The original white paper: panel data from 89 countries, 1992&ndash;2019.</p>
+          </div>
+          <div class="date">Jan 2023</div>
+        </a>
+      </div>
+      <p style="text-align:center; margin-top:32px;">
+        <a href="publications.html" class="btn btn-outline">All publications &amp; workbench studies &rarr;</a>
+      </p>
+    </div>
+  </div>
+
   <!-- Research Invitation / CTA -->
-  <div class="section" style="padding-top:0;">
+  <div class="section bg-alt" style="padding-top:0;">
     <div class="container">
       <div class="cta-banner">
         <h2>Interested in CHIP Research?</h2>
@@ -113,7 +248,7 @@
   </div>
 
   <!-- FAQ Preview -->
-  <div class="section bg-alt">
+  <div class="section">
     <div class="container">
       <div class="section-header">
         <h2>Frequently Asked Questions</h2>
@@ -133,10 +268,11 @@
              adjusted for inflation to produce a current value.</p>
         </details>
         <details class="faq-item">
-          <summary>How can I get involved in CHIP research?</summary>
-          <p>We welcome researchers interested in contributing to CHIP valuation methodology.
-             <a href="contact.html">Contact us</a> to discuss collaboration opportunities.
-             Funding may be available for bona fide research participants.</p>
+          <summary>Won't AI make human labor worthless?</summary>
+          <p>We argue the opposite. AI amplifies labor productivity &mdash; each hour of human
+             work becomes more valuable, not less. But this outcome depends on open access to
+             AI tools at competitive prices. Read our
+             <a href="https://github.com/gotchoices/chip/blob/main/docs/labor-value-future.md">full analysis</a>.</p>
         </details>
         <details class="faq-item">
           <summary>Where is the source code?</summary>
@@ -144,6 +280,9 @@
              available at <a href="https://github.com/gotchoices/chip">github.com/gotchoices/chip</a>.</p>
         </details>
       </div>
+      <p style="text-align:center; margin-top:24px;">
+        <a href="faq.html" style="font-weight:600;">See all FAQs &rarr;</a>
+      </p>
     </div>
   </div>
 
