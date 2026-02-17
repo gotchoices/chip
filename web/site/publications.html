@@ -47,6 +47,80 @@
 
       <div class="pub-detail">
 
+        <div class="pub-entry" style="border-left: 4px solid var(--color-primary);">
+          <h3>The Future of Labor Value in an Age of Automation</h3>
+          <div class="pub-meta">February 2026 &middot; Featured Paper</div>
+          <p>Will AI and automation raise or lower the real value of human labor? This
+             paper argues that the answer depends not on the technology itself but on
+             <strong>who has access</strong> to it and at what price. Under distributed
+             access, each hour of human work becomes more productive, reservation wages
+             rise, and new forms of "no-collar" work emerge. Under concentrated access
+             &mdash; enforced by regulatory capture &mdash; workers are excluded from
+             the gains.</p>
+          <p>The paper traces the argument from historical precedent through Baumol's
+             cost disease to CHIP's evolution from a measured index to a market-discovered
+             price, and makes the case that <strong>open AI is an economic prerequisite
+             for the value of human time</strong>.</p>
+          <div class="pub-links">
+            <a href="https://github.com/gotchoices/chip/blob/main/docs/labor-value-future.md" target="_blank">Read the Paper</a>
+          </div>
+        </div>
+
+        <div class="pub-entry">
+          <h3>CHIP Value and Currency Inflation</h3>
+          <div class="pub-meta">2025&ndash;2026 &middot; Analysis Paper</div>
+          <p>Should CHIP track currency inflation over time? This paper examines the
+             original study's deflation methodology, reveals that deflation cancels
+             algebraically in the CHIP formula, and develops the concept of a "deflationary
+             baseline" &mdash; the expectation that in a free economy, technology should
+             make goods cheaper over time. Proposes a trailing-window production methodology
+             that publishes CHIP in nominal current-year dollars.</p>
+          <p><strong>Key result:</strong> Real CHIP is approximately stable at
+             $2.80&ndash;$3.15/hr (2005&ndash;2022). Nominal CHIP rises with inflation,
+             automatically hedging against currency devaluation &mdash; exactly the
+             behavior a labor-anchored unit should exhibit.</p>
+          <div class="pub-links">
+            <a href="https://github.com/gotchoices/chip/blob/main/docs/inflation-tracking.md" target="_blank">Read the Paper</a>
+          </div>
+        </div>
+
+        <div class="pub-entry">
+          <h3>Global Aggregation and Weighting Schemes</h3>
+          <div class="pub-meta">2025&ndash;2026 &middot; Analysis Paper</div>
+          <p>How should country-level CHIP values combine into a single global rate?
+             This paper evaluates five weighting schemes &mdash; GDP, labor-force,
+             unweighted, freedom-weighted, and HDI-weighted &mdash; through both
+             philosophical analysis and empirical comparison. It addresses the
+             circularity concern (does GDP-weighting just measure rich-country wages?)
+             and publishes per-country multipliers from 0.04&times; to 2.39&times;.</p>
+          <p><strong>Recommendation:</strong> GDP-weighting ($2.68/hr) is defensible:
+             it accounts for population, aligns with the CHIP definition's emphasis on
+             productive efficiency, and its circularity is broken by the distortion
+             factor. HDI-weighting ($2.20/hr) brackets the value from below.</p>
+          <div class="pub-links">
+            <a href="https://github.com/gotchoices/chip/blob/main/docs/weighting-analysis.md" target="_blank">Read the Paper</a>
+          </div>
+        </div>
+
+        <div class="pub-entry">
+          <h3>Critical Review of the Original Study</h3>
+          <div class="pub-meta">2025&ndash;2026 &middot; Review Paper</div>
+          <p>A focused evaluation of the original CHIP valuation methodology: its
+             theoretical framework (Solow-Swan / Cobb-Douglas), data sources (ILOSTAT,
+             PWT, FRED), the innovative distortion factor approach, and how well each
+             design choice aligns with the canonical CHIP definition. Identifies
+             strengths (theoretically grounded, reproducible, strong definition
+             alignment) and limitations (informal economy bias, weighting sensitivity,
+             approximate capital separation).</p>
+          <p><strong>Verdict:</strong> The $2.53 estimate is a credible first
+             approximation. Post-review updates summarize how workbench studies have
+             since addressed several of the open questions identified.</p>
+          <div class="pub-links">
+            <a href="https://github.com/gotchoices/chip/blob/main/docs/original-review.md" target="_blank">Read the Review</a>
+            <a href="https://github.com/gotchoices/chip/blob/main/original/writeup/chips_note.pdf" target="_blank">Original White Paper (PDF)</a>
+          </div>
+        </div>
+
         <div class="pub-entry">
           <h3>A Look at ICT Capital</h3>
           <div class="pub-meta">February 8, 2024</div>
@@ -75,13 +149,12 @@
         <div class="pub-entry">
           <h3>CHIPs Valuation Theory White Paper</h3>
           <div class="pub-meta">January 19, 2023 &middot; Updated October 14, 2023</div>
-          <p>This note presents a conceptual framework to quantify the baseline value of the
-             CHIP currency tied to the global average of one hour of unskilled work. Econometric
-             estimates using panel data from 89 world countries over the period 1992&ndash;2019
-             suggest the CHIP value of $2.53 per hour.</p>
-          <p><strong>October 2023 update:</strong> Improved R code that accesses public APIs
-             (ILO, FRED, Penn World Tables) to produce updated CHIP valuations and time series
-             without manual data downloads.</p>
+          <p>The foundational white paper: a conceptual framework to quantify the baseline
+             value of the CHIP currency using econometric estimates from panel data across
+             89 countries over 1992&ndash;2019. Establishes the $2.53/hour result that
+             anchors all subsequent work.</p>
+          <p><strong>October 2023 update:</strong> Improved R code accessing public APIs
+             (ILO, FRED, Penn World Tables) for reproducible, up-to-date CHIP valuations.</p>
           <div class="pub-links">
             <a href="https://github.com/gotchoices/chip/blob/main/original/writeup/chips_note.pdf" target="_blank">White Paper (PDF)</a>
             <a href="https://github.com/gotchoices/chip/tree/main/original" target="_blank">Source Code &amp; Data</a>
@@ -131,6 +204,7 @@
              as a reliable bridge method between full recalculations.</p>
           <div class="pub-links">
             <a href="https://github.com/gotchoices/chip/tree/main/workbench/studies/production" target="_blank">Study &amp; Findings</a>
+            <a href="https://github.com/gotchoices/chip/blob/main/docs/inflation-tracking.md" target="_blank">Analysis Paper</a>
           </div>
         </div>
 
@@ -147,6 +221,7 @@
              (USA = 24% weight). HDI-weighting is the most balanced alternative.</p>
           <div class="pub-links">
             <a href="https://github.com/gotchoices/chip/tree/main/workbench/studies/weighting" target="_blank">Study &amp; Findings</a>
+            <a href="https://github.com/gotchoices/chip/blob/main/docs/weighting-analysis.md" target="_blank">Analysis Paper</a>
           </div>
         </div>
 
@@ -180,6 +255,7 @@
              and nominal CHIP tracks the GDP deflator closely.</p>
           <div class="pub-links">
             <a href="https://github.com/gotchoices/chip/tree/main/workbench/studies/timeseries" target="_blank">Study &amp; Findings</a>
+            <a href="https://github.com/gotchoices/chip/blob/main/docs/inflation-tracking.md" target="_blank">Analysis Paper</a>
           </div>
         </div>
 
@@ -195,6 +271,7 @@
              Recommended common analysis range: 2000&ndash;2019.</p>
           <div class="pub-links">
             <a href="https://github.com/gotchoices/chip/tree/main/workbench/studies/coverage" target="_blank">Study &amp; Findings</a>
+            <a href="https://github.com/gotchoices/chip/blob/main/docs/data-sources.md" target="_blank">Data Sources Reference</a>
           </div>
         </div>
 
@@ -206,6 +283,55 @@
              The workbench studies are fully reproducible from the
              <a href="https://github.com/gotchoices/chip/tree/main/workbench">workbench</a>
              directory.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Research Opportunities -->
+  <div class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Open Research Questions</h2>
+        <p>Areas where further investigation could strengthen the CHIP methodology</p>
+      </div>
+
+      <div class="pub-detail">
+
+        <div class="pub-entry" style="border-left: 4px solid #d97706; background: linear-gradient(135deg, var(--card-bg), rgba(217,119,6,0.04));">
+          <h3>Alternative Valuation Models</h3>
+          <div class="pub-meta">Research Opportunity &middot; Outline Available</div>
+          <p>The current CHIP estimate relies on a single theoretical framework:
+             the Cobb-Douglas production function with a distortion factor. How sensitive
+             is the result to this choice? We have outlined &mdash; but not yet implemented
+             &mdash; several alternative approaches:</p>
+          <ul style="margin: 12px 0 16px 20px; color: var(--color-muted); font-size: 15px; line-height: 1.8; list-style: disc;">
+            <li><strong>CES production functions</strong> &mdash; relax the unit-elasticity
+                assumption of Cobb-Douglas to allow variable substitution between capital
+                and labor</li>
+            <li><strong>Stochastic frontier analysis</strong> &mdash; model country-level
+                inefficiency directly rather than through a distortion ratio</li>
+            <li><strong>Direct wage comparison methods</strong> &mdash; bypass the production
+                function entirely and estimate CHIP from PPP-adjusted global wage
+                distributions</li>
+            <li><strong>Machine learning approaches</strong> &mdash; use nonparametric
+                models to estimate the labor value surface, with interpretability constraints</li>
+          </ul>
+          <p>If any of these alternatives yields a materially different CHIP value, that
+             would be important to know. If they converge on the same range, it strengthens
+             confidence in the current estimate. Either outcome advances the research.</p>
+          <p style="margin-top: 16px;">
+            <strong>Interested in contributing?</strong> The outline, evaluation criteria,
+            and model comparison framework are ready. The
+            <a href="https://github.com/gotchoices/chip/tree/main/workbench">workbench</a>
+            provides the data pipeline and infrastructure &mdash; a new study can be
+            scaffolded in minutes. Funding may be available for bona fide research
+            participants. <a href="contact.html">Get in touch</a>.</p>
+          <div class="pub-links">
+            <a href="https://github.com/gotchoices/chip/blob/main/docs/alternative-models.md" target="_blank">View the Outline</a>
+            <a href="contact.html">Contact Us</a>
+          </div>
         </div>
 
       </div>
