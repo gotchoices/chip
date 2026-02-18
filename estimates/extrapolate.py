@@ -115,7 +115,73 @@ def load_base_params():
         return json.load(f)
 
 
-def extrapolate(notes=""):
+def upsert_history(entry, output_dir, replace=False):
+    """
+    Insert an entry into chip_history.json if not already present.
+
+    Dedup key: (effective_date, method).  If a matching entry exists:
+      - replace=False (default): skip, return False.
+      - replace=True: overwrite the existing entry, return True.
+
+    Entries are kept sorted by effective_date.
+    """
+    history_path = output_dir / "chip_history.json"
+    if history_path.exists():
+        with open(history_path) as f:
+            history = json.load(f)
+    else:
+        history = []
+
+    key = (entry.get("effective_date"), entry.get("method"))
+
+    existing_idx = None
+    for i, h in enumerate(history):
+        if (h.get("effective_date"), h.get("method")) == key:
+            existing_idx = i
+            break
+
+    if existing_idx is not None:
+        if not replace:
+            logger.info(
+                f"Entry already exists for {key[1]} on {key[0]} — skipping. "
+                f"Use --replace to overwrite."
+            )
+            return False
+        logger.info(f"Replacing existing entry for {key[1]} on {key[0]}")
+        history[existing_idx] = entry
+    else:
+        history.append(entry)
+
+    history.sort(key=lambda h: h.get("effective_date", ""))
+
+    with open(history_path, "w") as f:
+        json.dump(history, f, indent=2, default=str)
+
+    action = "Replaced" if existing_idx is not None else "Added"
+    logger.info(f"{action} entry in {history_path} (now {len(history)} entries)")
+    return True
+
+
+def _last_extrapolation_cpi_date():
+    """
+    Return the cpi_date from the most recent extrapolation entry in
+    chip_history.json, or None if no extrapolation entries exist.
+    """
+    history_path = OUTPUT_DIR / "chip_history.json"
+    if not history_path.exists():
+        return None
+    try:
+        with open(history_path) as f:
+            history = json.load(f)
+        for entry in reversed(history):
+            if entry.get("method") == "extrapolation":
+                return entry.get("cpi_date")
+    except Exception:
+        pass
+    return None
+
+
+def extrapolate(effective_date=None, replace=False, notes=""):
     """
     Compute current nominal CHIP via CPI extrapolation.
 
@@ -123,20 +189,40 @@ def extrapolate(notes=""):
         CHIP_now = CHIP_base × (CPI_now / CPI_base)
 
     where CHIP_base and CPI_base are from the last recalculation.
+
+    Args:
+        effective_date: The date this estimate is "for" (YYYY-MM-DD string).
+                        If None, defaults to today.
+        replace: If True, overwrite an existing history entry with the same
+                 (effective_date, method) key.
+        notes: Free-text annotation for the history entry.
     """
+    eff_date = effective_date or date.today().isoformat()
+    calc_date = date.today().isoformat()
+
     # Load base
     params = load_base_params()
     base_chip = params["chip_nominal"]
     base_cpi_value = params["cpi_reference_value"]
     base_cpi_date = params["cpi_reference_date"]
-    base_date = params["recalculation_date"]
+    base_eff_date = params.get("effective_date", params.get("recalculation_date"))
 
-    logger.info(f"Base CHIP: ${base_chip:.4f} (from {base_date})")
+    logger.info(f"Base CHIP: ${base_chip:.4f} (effective {base_eff_date})")
     logger.info(f"Base CPI: {base_cpi_value:.3f} ({base_cpi_date})")
 
     # Fetch current CPI
     cpi_now = fetch_latest_cpi()
     logger.info(f"Current CPI: {cpi_now['value']:.3f} ({cpi_now['date']})")
+
+    # Check if CPI has actually updated since last extrapolation
+    if not replace:
+        last_cpi_date = _last_extrapolation_cpi_date()
+        if last_cpi_date and cpi_now["date"] == last_cpi_date:
+            logger.info(
+                f"No new CPI data (still {cpi_now['date']}). "
+                f"Nothing to do. Use --replace to force."
+            )
+            return None
 
     # Extrapolate
     cpi_ratio = cpi_now["value"] / base_cpi_value
@@ -145,13 +231,6 @@ def extrapolate(notes=""):
     logger.info(f"CPI ratio: {cpi_ratio:.6f}")
     logger.info(f"Extrapolated CHIP: ${chip_now:.4f}")
 
-    # Check for stale CPI (same as base — no new data yet)
-    if cpi_now["date"] == base_cpi_date:
-        logger.warning(
-            "CPI date matches base — no new data since last recalculation.  "
-            "Writing entry anyway (value unchanged)."
-        )
-
     # ------------------------------------------------------------------
     # Write outputs
     # ------------------------------------------------------------------
@@ -159,36 +238,32 @@ def extrapolate(notes=""):
 
     # Append to history
     history_entry = {
-        "date": date.today().isoformat(),
+        "effective_date": eff_date,
+        "calculated_date": calc_date,
         "method": "extrapolation",
         "chip_usd": round(chip_now, 4),
         "base_chip": round(base_chip, 4),
-        "base_date": base_date,
+        "base_effective_date": base_eff_date,
         "cpi_ratio": round(cpi_ratio, 6),
         "cpi_date": cpi_now["date"],
         "cpi_value": round(cpi_now["value"], 3),
         "notes": notes or "Monthly CPI extrapolation",
     }
 
-    history_path = OUTPUT_DIR / "chip_history.json"
-    if history_path.exists():
-        with open(history_path) as f:
-            history = json.load(f)
-    else:
-        history = []
+    inserted = upsert_history(history_entry, OUTPUT_DIR, replace=replace)
 
-    history.append(history_entry)
-    with open(history_path, "w") as f:
-        json.dump(history, f, indent=2, default=str)
-    logger.info(f"Appended to {history_path} (now {len(history)} entries)")
+    if not inserted:
+        logger.info("History entry skipped (duplicate). "
+                     "latest.json still updated.")
 
     # Overwrite latest.json
     latest = {
         "chip_usd": round(chip_now, 4),
-        "date": date.today().isoformat(),
+        "effective_date": eff_date,
+        "calculated_date": calc_date,
         "method": "extrapolation",
         "base_chip": round(base_chip, 4),
-        "base_date": base_date,
+        "base_effective_date": base_eff_date,
         "cpi_ratio": round(cpi_ratio, 6),
         "cpi_date": cpi_now["date"],
         "next_recalculation": "When new ILOSTAT/PWT data is available",
@@ -224,6 +299,16 @@ def main():
         description="CHIP Monthly CPI Extrapolation"
     )
     parser.add_argument(
+        "--effective-date", type=str, default=None,
+        help="Effective date for this estimate (YYYY-MM-DD). "
+             "Defaults to today."
+    )
+    parser.add_argument(
+        "--replace", action="store_true",
+        help="Overwrite an existing history entry with the same "
+             "effective date. Without this flag, duplicates are skipped."
+    )
+    parser.add_argument(
         "--notes", type=str, default="",
         help="Notes to include in the history entry"
     )
@@ -236,8 +321,15 @@ def main():
     logger.info(f"Date: {date.today().isoformat()}")
 
     try:
-        result = extrapolate(notes=args.notes)
-        logger.info("Success")
+        result = extrapolate(
+            effective_date=args.effective_date,
+            replace=args.replace,
+            notes=args.notes,
+        )
+        if result is None:
+            logger.info("No update needed")
+        else:
+            logger.info("Success")
     except Exception as e:
         logger.error(f"Extrapolation failed: {e}", exc_info=True)
         sys.exit(1)

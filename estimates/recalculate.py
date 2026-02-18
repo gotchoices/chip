@@ -13,8 +13,17 @@ from the workbench studies.  Produces:
 Intended to be run by a human operator when new source data is available
 (typically annually, or when a new PWT version releases).
 
+For backfilling historical data, use --target-year and --effective-date:
+
+    for year in $(seq 2005 2023); do
+        python recalculate.py --target-year $year \
+            --effective-date "$((year+1))-01-01" \
+            --notes "Backfill for data year $year"
+    done
+
 Usage:
-    python recalculate.py [--force-refresh] [--notes "reason for run"]
+    python recalculate.py [--force-refresh] [--notes "..."]
+    python recalculate.py --target-year 2018 --effective-date 2019-01-01
 """
 
 import argparse
@@ -164,8 +173,16 @@ def compute_country_multipliers(est_data, global_chip, target_year):
 # OUTPUT HELPERS
 # =============================================================================
 
-def append_history(entry, output_dir):
-    """Append an entry to chip_history.json."""
+def upsert_history(entry, output_dir, replace=False):
+    """
+    Insert an entry into chip_history.json if not already present.
+
+    Dedup key: (effective_date, method).  If a matching entry exists:
+      - replace=False (default): skip, log a message, return False.
+      - replace=True: overwrite the existing entry, return True.
+
+    Entries are kept sorted by effective_date after any mutation.
+    """
     history_path = output_dir / "chip_history.json"
     if history_path.exists():
         with open(history_path) as f:
@@ -173,12 +190,34 @@ def append_history(entry, output_dir):
     else:
         history = []
 
-    history.append(entry)
+    key = (entry.get("effective_date"), entry.get("method"))
+
+    existing_idx = None
+    for i, h in enumerate(history):
+        if (h.get("effective_date"), h.get("method")) == key:
+            existing_idx = i
+            break
+
+    if existing_idx is not None:
+        if not replace:
+            logger.info(
+                f"Entry already exists for {key[1]} on {key[0]} — skipping. "
+                f"Use --replace to overwrite."
+            )
+            return False
+        logger.info(f"Replacing existing entry for {key[1]} on {key[0]}")
+        history[existing_idx] = entry
+    else:
+        history.append(entry)
+
+    history.sort(key=lambda h: h.get("effective_date", ""))
 
     with open(history_path, "w") as f:
         json.dump(history, f, indent=2, default=str)
 
-    logger.info(f"Appended to {history_path} (now {len(history)} entries)")
+    action = "Replaced" if existing_idx is not None else "Added"
+    logger.info(f"{action} entry in {history_path} (now {len(history)} entries)")
+    return True
 
 
 def write_base_params(params, output_dir):
@@ -270,8 +309,21 @@ def write_summary_report(chip_nominal, chip_constant, target_year,
 # MAIN
 # =============================================================================
 
-def recalculate(force_refresh=False, notes=""):
-    """Run the full CHIP recalculation."""
+def recalculate(force_refresh=False, target_year=None, effective_date=None,
+                replace=False, notes=""):
+    """
+    Run the full CHIP recalculation.
+
+    Args:
+        force_refresh: Bypass data cache.
+        target_year: Override the trailing-window target year (for backfill).
+                     If None, uses the latest year with sufficient data.
+        effective_date: The date this estimate is "for" (YYYY-MM-DD string).
+                        If None, defaults to today.
+        replace: If True, overwrite an existing history entry with the same
+                 (effective_date, method) key.  If False, skip if duplicate.
+        notes: Free-text annotation for the history entry.
+    """
     cfg = load_estimates_config()
     pipe_cfg = cfg.get("pipeline", {})
     data_cfg = cfg.get("data", {})
@@ -280,6 +332,9 @@ def recalculate(force_refresh=False, notes=""):
     pwt_base_year = data_cfg.get("pwt_base_year", 2017)
     window_years = pipe_cfg.get("window_years", 5)
     year_end = pipe_cfg.get("year_end", 2023)
+
+    eff_date = effective_date or date.today().isoformat()
+    calc_date = date.today().isoformat()
 
     # ------------------------------------------------------------------
     # Step 1: Fetch data
@@ -337,12 +392,20 @@ def recalculate(force_refresh=False, notes=""):
     logger.info(f"Step 4: Computing {window_years}-year trailing-window CHIP")
     logger.info("=" * 60)
 
-    target_year = max(valid_years)
+    if target_year is not None:
+        if target_year not in valid_years:
+            raise ValueError(
+                f"--target-year {target_year} not in available years "
+                f"({min(valid_years)}–{max(valid_years)})"
+            )
+        logger.info(f"Using explicit target year: {target_year}")
+    else:
+        target_year = max(valid_years)
+
     chip_nominal = trailing_window_chip(
         ts_constant, deflator_df, window_years, target_year
     )
 
-    # Also get the constant-dollar value for base_params
     chip_by_year = dict(zip(ts_constant["year"], ts_constant["chip_value"]))
     window_vals = [chip_by_year[y] for y in valid_years
                    if target_year - window_years + 1 <= y <= target_year
@@ -396,7 +459,8 @@ def recalculate(force_refresh=False, notes=""):
 
     # History entry
     history_entry = {
-        "date": date.today().isoformat(),
+        "effective_date": eff_date,
+        "calculated_date": calc_date,
         "method": "recalculation",
         "chip_usd": round(chip_nominal, 4),
         "chip_constant": round(chip_constant, 4),
@@ -414,7 +478,11 @@ def recalculate(force_refresh=False, notes=""):
         history_entry["snap_from"] = round(prev_chip, 4)
         history_entry["snap_pct"] = round(snap_pct, 2)
 
-    append_history(history_entry, OUTPUT_DIR)
+    inserted = upsert_history(history_entry, OUTPUT_DIR, replace=replace)
+
+    if not inserted:
+        logger.info("History entry skipped (duplicate). "
+                     "Other output files still updated.")
 
     # Base params for extrapolator
     base_params = {
@@ -427,14 +495,16 @@ def recalculate(force_refresh=False, notes=""):
         "pwt_version": pwt_version,
         "window_years": window_years,
         "n_countries": n_countries,
-        "recalculation_date": date.today().isoformat(),
+        "effective_date": eff_date,
+        "calculated_date": calc_date,
     }
     write_base_params(base_params, OUTPUT_DIR)
 
     # Latest value
     latest = {
         "chip_usd": round(chip_nominal, 4),
-        "date": date.today().isoformat(),
+        "effective_date": eff_date,
+        "calculated_date": calc_date,
         "method": "recalculation",
         "base_year": target_year,
         "pwt_version": pwt_version,
@@ -544,11 +614,36 @@ def _get_previous_chip():
 
 def main():
     parser = argparse.ArgumentParser(
-        description="CHIP Annual Recalculation"
+        description="CHIP Annual Recalculation",
+        epilog=(
+            "Backfill example:\n"
+            "  for year in $(seq 2005 2023); do\n"
+            '    python recalculate.py --target-year $year '
+            '--effective-date "$((year+1))-01-01"\n'
+            "  done"
+        ),
+        formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     parser.add_argument(
         "--force-refresh", action="store_true",
         help="Bypass data cache and fetch fresh from all sources"
+    )
+    parser.add_argument(
+        "--target-year", type=int, default=None,
+        help="Override trailing-window target year (for backfill). "
+             "If omitted, uses latest year with sufficient data."
+    )
+    parser.add_argument(
+        "--effective-date", type=str, default=None,
+        help="Effective date for this estimate (YYYY-MM-DD). "
+             "Defaults to today. For backfill, set to when this "
+             "estimate would have been published."
+    )
+    parser.add_argument(
+        "--replace", action="store_true",
+        help="Overwrite an existing history entry with the same "
+             "effective date and method. Without this flag, "
+             "duplicates are skipped."
     )
     parser.add_argument(
         "--notes", type=str, default="",
@@ -561,10 +656,17 @@ def main():
 
     logger.info("CHIP Recalculation Pipeline")
     logger.info(f"Date: {date.today().isoformat()}")
+    if args.target_year:
+        logger.info(f"Target year override: {args.target_year}")
+    if args.effective_date:
+        logger.info(f"Effective date override: {args.effective_date}")
 
     try:
         result = recalculate(
             force_refresh=args.force_refresh,
+            target_year=args.target_year,
+            effective_date=args.effective_date,
+            replace=args.replace,
             notes=args.notes,
         )
         logger.info("Success")

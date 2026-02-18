@@ -20,10 +20,16 @@ The pipeline operates on a **two-tier model**:
 | **Recalculation** | `recalculate.py` | Annual | Human-initiated | Full pipeline: fetch latest data, estimate CHIP, produce multipliers, update base parameters |
 | **Extrapolation** | `extrapolate.py` | Monthly | Cron job on server | Lightweight: apply latest CPI to the base value, update nominal CHIP |
 
-Both scripts **append** to `output/chip_history.json` — a cumulative
-ledger of every estimate.  The file `output/latest.json` always contains
-the most current value.  The `publish.py` script formats these into
+Both scripts write to `output/chip_history.json` — a cumulative ledger
+of every estimate.  The file `output/latest.json` always contains the
+most current value.  The `publish.py` script formats these into
 API-ready JSON under `output/api/`.
+
+**Idempotent by default:** Runs are deduplicated by `(effective_date,
+method)`.  If a matching entry already exists in the history, it is
+skipped.  Use `--replace` to overwrite an existing entry.  To fix a
+bad entry: delete it from `chip_history.json`, re-run, and the gap is
+filled automatically.
 
 **Deployment model:** The `output/` directory is tracked in git.
 The production server hosts a checkout of this repo, and the website
@@ -126,16 +132,17 @@ exclude a problematic country) and re-run before committing.
 A cron job on the production server runs the extrapolator monthly.  It
 fetches the latest CPI-U from FRED and applies it to the base CHIP value.
 
-**Cron entry** (run on the 16th of each month — BLS typically releases
-CPI mid-month for the prior month):
+**Cron entry** (weekly is fine — the script is a no-op when CPI hasn't
+updated.  BLS typically releases new CPI mid-month):
 
 ```cron
-0 10 16 * * cd /srv/chip/estimates && python extrapolate.py && python publish.py
+0 10 * * 1 cd /srv/chip/estimates && python extrapolate.py && python publish.py
 ```
 
-This updates `output/latest.json` and `output/api/current.json` in place
-on the server.  The website picks up the change immediately (it reads
-from the local filesystem).
+When new CPI data is available, the script writes a new entry and
+updates `output/latest.json` and `output/api/current.json` in place.
+The website picks up the change immediately (it reads from the local
+filesystem).  When no new CPI data exists, the run is a silent no-op.
 
 **Git sync:** The monthly extrapolation outputs accumulate on the server
 between annual recalculations.  They are captured in git at the next
@@ -157,6 +164,37 @@ Alternatively, a second cron entry can auto-commit monthly if desired:
 ```cron
 30 10 16 * * cd /srv/chip && git add estimates/output/ && git commit -m "Monthly CHIP extrapolation" && git push
 ```
+
+### Backfilling Historical Data
+
+To populate the history ledger with retrospective estimates (as if the
+pipeline had been running for years), use `--target-year` and
+`--effective-date`:
+
+```bash
+# Backfill annual recalculations for 2005–2023
+for year in $(seq 2005 2023); do
+    python recalculate.py \
+        --target-year $year \
+        --effective-date "$((year+1))-01-01" \
+        --notes "Backfill for data year $year"
+done
+
+# Then publish
+python publish.py
+```
+
+Each entry gets `effective_date` set to the historical date and
+`calculated_date` set to today.  The two dates make it transparent
+which entries were produced in real time vs. reconstructed.
+
+**Note:** This uses PWT 11.0 for all years (the best data available now).
+Historical entries from before PWT 11.0 existed (pre-2024) would have
+been slightly different if calculated live with PWT 10.0.  The stability
+study found ~4% mean revision between PWT versions for mature years.
+
+The pipeline only needs to fetch data once — subsequent `--target-year`
+runs reuse the cache.
 
 ### When a New PWT Version Releases
 
@@ -215,6 +253,7 @@ require re-running the relevant study and documenting the justification.
 **CLI:**
 ```
 python recalculate.py [--force-refresh] [--notes "reason for run"]
+python recalculate.py --target-year 2018 --effective-date 2019-01-01
 ```
 
 ### `extrapolate.py` — Monthly CPI Extrapolation
@@ -229,8 +268,14 @@ python recalculate.py [--force-refresh] [--notes "reason for run"]
 
 **CLI:**
 ```
-python extrapolate.py [--notes "optional note"]
+python extrapolate.py [--effective-date YYYY-MM-DD] [--notes "optional note"]
 ```
+
+**No-op when nothing changed:** If the latest CPI observation date is
+the same as the last extrapolation's, the script exits cleanly without
+writing.  This means the cron can run daily or weekly — it only produces
+a new entry when BLS publishes fresh CPI data (typically mid-month).
+Use `--replace` to force a write regardless.
 
 **No human review needed** unless the CPI data itself is anomalous.
 
@@ -276,7 +321,8 @@ The history ledger is an array of entries, each recording one estimate:
 ```json
 [
   {
-    "date": "2026-03-15",
+    "effective_date": "2026-03-15",
+    "calculated_date": "2026-03-15",
     "method": "recalculation",
     "chip_usd": 3.17,
     "base_year": 2022,
@@ -287,14 +333,23 @@ The history ledger is an array of entries, each recording one estimate:
     "notes": "Annual recalculation with PWT 11.0 data through 2022"
   },
   {
-    "date": "2026-04-15",
+    "effective_date": "2026-04-15",
+    "calculated_date": "2026-04-15",
     "method": "extrapolation",
     "chip_usd": 3.21,
     "base_chip": 3.17,
-    "base_date": "2026-03-15",
+    "base_effective_date": "2026-03-15",
     "cpi_ratio": 1.0126,
     "cpi_date": "2026-03-01",
     "notes": "Monthly CPI extrapolation"
+  },
+  {
+    "effective_date": "2011-01-01",
+    "calculated_date": "2026-02-17",
+    "method": "recalculation",
+    "chip_usd": 2.14,
+    "base_year": 2010,
+    "notes": "Backfill for data year 2010"
   }
 ]
 ```
@@ -306,10 +361,11 @@ A single object, always overwritten with the most current estimate:
 ```json
 {
   "chip_usd": 3.21,
-  "date": "2026-04-15",
+  "effective_date": "2026-04-15",
+  "calculated_date": "2026-04-15",
   "method": "extrapolation",
   "base_chip": 3.17,
-  "base_date": "2026-03-15",
+  "base_effective_date": "2026-03-15",
   "next_recalculation": "When new ILOSTAT/PWT data is available"
 }
 ```
@@ -329,7 +385,8 @@ Written by `recalculate.py`, read by `extrapolate.py`:
   "pwt_version": "11.0",
   "window_years": 5,
   "n_countries": 85,
-  "recalculation_date": "2026-03-15"
+  "effective_date": "2026-03-15",
+  "calculated_date": "2026-03-15"
 }
 ```
 

@@ -76,7 +76,8 @@ def publish_current():
 
     current = {
         "chip_usd": latest["chip_usd"],
-        "date": latest["date"],
+        "effective_date": latest.get("effective_date", latest.get("date")),
+        "calculated_date": latest.get("calculated_date", latest.get("date")),
         "method": latest["method"],
         "currency": "USD",
         "unit": "per hour",
@@ -85,7 +86,8 @@ def publish_current():
             "chip_usd": params.get("chip_nominal"),
             "year": params.get("base_year"),
             "pwt_version": params.get("pwt_version"),
-            "recalculation_date": params.get("recalculation_date"),
+            "effective_date": params.get("effective_date",
+                                         params.get("recalculation_date")),
             "n_countries": params.get("n_countries"),
             "window_years": params.get("window_years"),
         },
@@ -139,7 +141,8 @@ def publish_multipliers():
         "global_chip_usd": params.get("chip_nominal"),
         "base_year": params.get("base_year"),
         "pwt_version": params.get("pwt_version"),
-        "recalculation_date": params.get("recalculation_date"),
+        "effective_date": params.get("effective_date",
+                                     params.get("recalculation_date")),
         "n_countries": len(rows),
         "countries": rows,
         "published": date.today().isoformat(),
@@ -171,7 +174,8 @@ def publish_history():
     entries = []
     for entry in raw:
         entries.append({
-            "date": entry["date"],
+            "effective_date": entry.get("effective_date", entry.get("date")),
+            "calculated_date": entry.get("calculated_date", entry.get("date")),
             "chip_usd": entry["chip_usd"],
             "method": entry["method"],
         })
@@ -179,8 +183,8 @@ def publish_history():
     history = {
         "entries": entries,
         "count": len(entries),
-        "first_date": entries[0]["date"] if entries else None,
-        "last_date": entries[-1]["date"] if entries else None,
+        "first_date": entries[0]["effective_date"] if entries else None,
+        "last_date": entries[-1]["effective_date"] if entries else None,
         "published": date.today().isoformat(),
     }
 
