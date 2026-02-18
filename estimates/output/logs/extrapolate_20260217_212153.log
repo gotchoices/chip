@@ -1,0 +1,17 @@
+2026-02-17 21:21:53 | INFO     | extrapolate | Logging to: /Users/kyle/share/devel/chip/estimates/output/logs/extrapolate_20260217_212153.log
+2026-02-17 21:21:53 | INFO     | extrapolate | CHIP CPI Extrapolation
+2026-02-17 21:21:53 | INFO     | extrapolate | Date: 2026-02-17
+2026-02-17 21:21:53 | INFO     | extrapolate | Base CHIP: $3.2688 (effective 2023-01-01)
+2026-02-17 21:21:53 | INFO     | extrapolate | Base CPI: 326.588 (2026-01-01)
+2026-02-17 21:21:54 | INFO     | extrapolate | Current CPI: 326.588 (2026-01-01)
+2026-02-17 21:21:54 | INFO     | extrapolate | CPI ratio: 1.000000
+2026-02-17 21:21:54 | INFO     | extrapolate | Extrapolated CHIP: $3.2688
+2026-02-17 21:21:54 | INFO     | extrapolate | Added entry in /Users/kyle/share/devel/chip/estimates/output/chip_history.json (now 24 entries)
+2026-02-17 21:21:54 | INFO     | extrapolate | Wrote /Users/kyle/share/devel/chip/estimates/output/latest.json
+2026-02-17 21:21:54 | INFO     | extrapolate | ============================================================
+2026-02-17 21:21:54 | INFO     | extrapolate | EXTRAPOLATION COMPLETE
+2026-02-17 21:21:54 | INFO     | extrapolate |   CHIP: $3.2688/hr
+2026-02-17 21:21:54 | INFO     | extrapolate |   CPI: 326.588 (2026-01-01)
+2026-02-17 21:21:54 | INFO     | extrapolate |   Ratio vs base: 1.000000
+2026-02-17 21:21:54 | INFO     | extrapolate | ============================================================
+2026-02-17 21:21:54 | INFO     | extrapolate | Success

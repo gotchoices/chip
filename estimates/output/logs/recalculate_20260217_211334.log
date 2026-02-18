@@ -1,0 +1,53 @@
+2026-02-17 21:13:34 | INFO     | recalculate | Logging to: /Users/kyle/share/devel/chip/estimates/output/logs/recalculate_20260217_211334.log
+2026-02-17 21:13:34 | INFO     | recalculate | CHIP Recalculation Pipeline
+2026-02-17 21:13:34 | INFO     | recalculate | Date: 2026-02-17
+2026-02-17 21:13:34 | INFO     | recalculate | Target year override: 2022
+2026-02-17 21:13:34 | INFO     | recalculate | Effective date override: 2023-01-01
+2026-02-17 21:13:34 | INFO     | recalculate | ============================================================
+2026-02-17 21:13:34 | INFO     | recalculate | Step 1: Fetching data
+2026-02-17 21:13:34 | INFO     | recalculate | ============================================================
+2026-02-17 21:13:35 | INFO     | recalculate |   employment: 165,262 rows
+2026-02-17 21:13:35 | INFO     | recalculate |   wages: 126,987 rows
+2026-02-17 21:13:35 | INFO     | recalculate |   hours: 98,814 rows
+2026-02-17 21:13:35 | INFO     | recalculate |   pwt: 13,690 rows
+2026-02-17 21:13:35 | INFO     | recalculate |   deflator: 63 rows
+2026-02-17 21:13:35 | INFO     | recalculate | ============================================================
+2026-02-17 21:13:35 | INFO     | recalculate | Step 2: Running CHIP estimation pipeline
+2026-02-17 21:13:35 | INFO     | recalculate | ============================================================
+2026-02-17 21:13:35 | INFO     | recalculate | Pipeline: 758 obs, 102 countries
+2026-02-17 21:13:35 | INFO     | recalculate | ============================================================
+2026-02-17 21:13:35 | INFO     | recalculate | Step 3: Aggregating to annual series
+2026-02-17 21:13:35 | INFO     | recalculate | ============================================================
+2026-02-17 21:13:35 | INFO     | recalculate | Series: 23 years (2000–2022)
+2026-02-17 21:13:35 | INFO     | recalculate | ============================================================
+2026-02-17 21:13:35 | INFO     | recalculate | Step 4: Computing 5-year trailing-window CHIP
+2026-02-17 21:13:35 | INFO     | recalculate | ============================================================
+2026-02-17 21:13:35 | INFO     | recalculate | Using explicit target year: 2022
+2026-02-17 21:13:35 | INFO     | recalculate | Target year: 2022
+2026-02-17 21:13:35 | INFO     | recalculate | Constant CHIP (2017$): $2.77
+2026-02-17 21:13:35 | INFO     | recalculate | Nominal CHIP (2022$): $3.27
+2026-02-17 21:13:35 | INFO     | recalculate | Countries: 46
+2026-02-17 21:13:35 | INFO     | recalculate | ============================================================
+2026-02-17 21:13:35 | INFO     | recalculate | Step 5: Computing country multipliers
+2026-02-17 21:13:35 | INFO     | recalculate | ============================================================
+2026-02-17 21:13:35 | INFO     | recalculate | Multipliers for 46 countries
+2026-02-17 21:13:35 | INFO     | recalculate |   Range: 0.05x to 2.17x
+2026-02-17 21:13:35 | INFO     | recalculate | ============================================================
+2026-02-17 21:13:35 | INFO     | recalculate | Step 6: Fetching CPI reference for extrapolator
+2026-02-17 21:13:35 | INFO     | recalculate | ============================================================
+2026-02-17 21:13:36 | INFO     | recalculate | CPI reference: 326.588 as of 2026-01-01
+2026-02-17 21:13:36 | INFO     | recalculate | ============================================================
+2026-02-17 21:13:36 | INFO     | recalculate | Step 7: Writing outputs
+2026-02-17 21:13:36 | INFO     | recalculate | ============================================================
+2026-02-17 21:13:36 | INFO     | recalculate | Added entry in /Users/kyle/share/devel/chip/estimates/output/chip_history.json (now 1 entries)
+2026-02-17 21:13:36 | INFO     | recalculate | Wrote /Users/kyle/share/devel/chip/estimates/output/base_params.json
+2026-02-17 21:13:36 | INFO     | recalculate | Wrote /Users/kyle/share/devel/chip/estimates/output/latest.json
+2026-02-17 21:13:36 | INFO     | recalculate | Wrote /Users/kyle/share/devel/chip/estimates/output/multipliers.csv
+2026-02-17 21:13:36 | INFO     | recalculate | Wrote /Users/kyle/share/devel/chip/estimates/output/latest_recalculation.md
+2026-02-17 21:13:36 | INFO     | recalculate | ============================================================
+2026-02-17 21:13:36 | INFO     | recalculate | RECALCULATION COMPLETE
+2026-02-17 21:13:36 | INFO     | recalculate |   Global CHIP: $3.27/hr (2022 nominal)
+2026-02-17 21:13:36 | INFO     | recalculate |   Countries: 46
+2026-02-17 21:13:36 | INFO     | recalculate |   Base params written for extrapolator
+2026-02-17 21:13:36 | INFO     | recalculate | ============================================================
+2026-02-17 21:13:36 | INFO     | recalculate | Success

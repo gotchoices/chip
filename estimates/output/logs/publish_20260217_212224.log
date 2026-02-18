@@ -1,0 +1,11 @@
+2026-02-17 21:22:24 | INFO     | publish | Logging to: /Users/kyle/share/devel/chip/estimates/output/logs/publish_20260217_212224.log
+2026-02-17 21:22:24 | INFO     | publish | CHIP Publish
+2026-02-17 21:22:24 | INFO     | publish | Date: 2026-02-17
+2026-02-17 21:22:24 | INFO     | publish | Publishing API files
+2026-02-17 21:22:24 | INFO     | publish | Wrote /Users/kyle/share/devel/chip/estimates/output/api/current.json
+2026-02-17 21:22:24 | INFO     | publish |   current.json: CHIP = $3.2688
+2026-02-17 21:22:24 | INFO     | publish | Wrote /Users/kyle/share/devel/chip/estimates/output/api/multipliers.json (46 countries)
+2026-02-17 21:22:24 | INFO     | publish |   multipliers.json: 46 countries
+2026-02-17 21:22:24 | INFO     | publish | Wrote /Users/kyle/share/devel/chip/estimates/output/api/history.json (24 entries)
+2026-02-17 21:22:24 | INFO     | publish |   history.json: 24 entries
+2026-02-17 21:22:24 | INFO     | publish | Publish complete

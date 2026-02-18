@@ -18,12 +18,15 @@ The pipeline operates on a **two-tier model**:
 | Tier | Script | Cadence | Trigger | What it does |
 |------|--------|---------|---------|--------------|
 | **Recalculation** | `recalculate.py` | Annual | Human-initiated | Full pipeline: fetch latest data, estimate CHIP, produce multipliers, update base parameters |
-| **Extrapolation** | `extrapolate.py` | Monthly | Cron job on server | Lightweight: apply latest CPI to the base value, update nominal CHIP |
+| **Extrapolation** | `extrapolate.py` | Weekly cron | Automated | Lightweight: apply latest CPI to the base value, update nominal CHIP |
 
-Both scripts write to `output/chip_history.json` — a cumulative ledger
-of every estimate.  The file `output/latest.json` always contains the
-most current value.  The `publish.py` script formats these into
-API-ready JSON under `output/api/`.
+Both scripts write directly to `output/`.  Consumers (the website, API
+clients) read these files in place:
+
+- **`latest.json`** — current CHIP value (the primary endpoint)
+- **`chip_history.json`** — full chronological ledger of all estimates
+- **`multipliers.csv`** — per-country multipliers from the latest recalculation
+- **`base_params.json`** — parameters linking recalculation to extrapolation
 
 **Idempotent by default:** Runs are deduplicated by `(effective_date,
 method)`.  If a matching entry already exists in the history, it is
@@ -33,16 +36,14 @@ filled automatically.
 
 **Deployment model:** The `output/` directory is tracked in git.
 The production server hosts a checkout of this repo, and the website
-serves files directly from `output/api/`.  Updates reach the server
-via `git pull`.
+reads files directly from `output/`.  Updates reach the server via
+`git pull`.
 
 ---
 
 ## Operational Runbook
 
 ### Initial Setup (Once)
-
-These steps establish the pipeline on a new server.
 
 1. Clone the repo to the production server:
    ```
@@ -64,7 +65,6 @@ These steps establish the pipeline on a new server.
    ```
    cd estimates
    python recalculate.py --force-refresh --notes "Initial pipeline run"
-   python publish.py
    ```
 
 5. Review `output/latest_recalculation.md`.  If results look right,
@@ -80,10 +80,10 @@ These steps establish the pipeline on a new server.
    cd /srv/chip && git pull
    ```
 
-7. Point your web server at `estimates/output/api/current.json` (e.g.,
-   an nginx alias or symlink).
+7. Point your web server at the output files (e.g., nginx alias to
+   `estimates/output/latest.json`).
 
-8. Set up the monthly cron job (see below).
+8. Set up the weekly cron job (see below).
 
 ### Annual Recalculation (Human-Initiated)
 
@@ -93,7 +93,7 @@ PWT version), or at least once per year.
 ```
 # On your dev machine:
 
-# 1. Pull latest
+# 1. Pull latest (captures any extrapolations from the server)
 git pull
 
 # 2. Run recalculation (--force-refresh fetches fresh data)
@@ -105,9 +105,7 @@ python recalculate.py --force-refresh --notes "Annual 2026 recalculation"
 cat output/latest_recalculation.md
 
 # 4. If something looks wrong, adjust config.yaml and re-run.
-#    If it looks right, publish and commit:
-python publish.py
-
+#    If it looks right, commit:
 git add output/
 git commit -m "Annual CHIP recalculation — PWT 11.0, $X.XX nominal"
 git push
@@ -129,24 +127,23 @@ exclude a problematic country) and re-run before committing.
 
 ### Monthly Extrapolation (Automated via Cron)
 
-A cron job on the production server runs the extrapolator monthly.  It
-fetches the latest CPI-U from FRED and applies it to the base CHIP value.
+A cron job on the production server runs the extrapolator.  It fetches
+the latest CPI-U from FRED and applies it to the base CHIP value.
 
 **Cron entry** (weekly is fine — the script is a no-op when CPI hasn't
 updated.  BLS typically releases new CPI mid-month):
 
 ```cron
-0 10 * * 1 cd /srv/chip/estimates && python extrapolate.py && python publish.py
+0 10 * * 1 cd /srv/chip/estimates && python extrapolate.py
 ```
 
-When new CPI data is available, the script writes a new entry and
-updates `output/latest.json` and `output/api/current.json` in place.
-The website picks up the change immediately (it reads from the local
-filesystem).  When no new CPI data exists, the run is a silent no-op.
+When new CPI data is available, the script writes a new history entry
+and updates `latest.json`.  The website picks up the change immediately.
+When no new CPI data exists, the run is a silent no-op.
 
-**Git sync:** The monthly extrapolation outputs accumulate on the server
-between annual recalculations.  They are captured in git at the next
-annual pull:
+**Git sync:** Extrapolation outputs accumulate on the server between
+annual recalculations.  They are captured in git at the next annual
+cycle:
 
 ```
 # At the next annual recalculation, on the server first:
@@ -159,39 +156,23 @@ git push
 git pull
 ```
 
-Alternatively, a second cron entry can auto-commit monthly if desired:
-
-```cron
-30 10 16 * * cd /srv/chip && git add estimates/output/ && git commit -m "Monthly CHIP extrapolation" && git push
-```
-
 ### Backfilling Historical Data
 
-To populate the history ledger with retrospective estimates (as if the
-pipeline had been running for years), use `--target-year` and
-`--effective-date`:
+To populate the history ledger with retrospective estimates, use
+`--target-year` and `--effective-date`:
 
 ```bash
-# Backfill annual recalculations for 2005–2023
-for year in $(seq 2005 2023); do
+for year in $(seq 2000 2022); do
     python recalculate.py \
         --target-year $year \
         --effective-date "$((year+1))-01-01" \
         --notes "Backfill for data year $year"
 done
-
-# Then publish
-python publish.py
 ```
 
 Each entry gets `effective_date` set to the historical date and
-`calculated_date` set to today.  The two dates make it transparent
-which entries were produced in real time vs. reconstructed.
-
-**Note:** This uses PWT 11.0 for all years (the best data available now).
-Historical entries from before PWT 11.0 existed (pre-2024) would have
-been slightly different if calculated live with PWT 10.0.  The stability
-study found ~4% mean revision between PWT versions for mature years.
+`calculated_date` set to today.  Existing entries are skipped
+automatically.
 
 The pipeline only needs to fetch data once — subsequent `--target-year`
 runs reuse the cache.
@@ -248,11 +229,11 @@ require re-running the relevant study and documenting the justification.
 4. Computes per-country multipliers (country CHIP / global CHIP).
 5. Fetches the latest CPI-U value as a reference point for the
    extrapolator.
-6. Writes all output files (see Output Files below).
+6. Updates all output files directly.
 
 **CLI:**
 ```
-python recalculate.py [--force-refresh] [--notes "reason for run"]
+python recalculate.py [--force-refresh] [--replace] [--notes "reason"]
 python recalculate.py --target-year 2018 --effective-date 2019-01-01
 ```
 
@@ -262,132 +243,113 @@ python recalculate.py --target-year 2018 --effective-date 2019-01-01
 
 1. Reads `output/base_params.json` (produced by the last recalculation).
 2. Fetches the latest US CPI-U from FRED.
-3. Computes: `CHIP_now = CHIP_base × (CPI_now / CPI_base)`.
-4. Appends an entry to `output/chip_history.json`.
-5. Overwrites `output/latest.json`.
+3. If the CPI observation date hasn't changed since the last
+   extrapolation, exits without writing (no-op).
+4. Computes: `CHIP_now = CHIP_base × (CPI_now / CPI_base)`.
+5. Updates `chip_history.json` and `latest.json`.
 
 **CLI:**
 ```
-python extrapolate.py [--effective-date YYYY-MM-DD] [--notes "optional note"]
-```
-
-**No-op when nothing changed:** If the latest CPI observation date is
-the same as the last extrapolation's, the script exits cleanly without
-writing.  This means the cron can run daily or weekly — it only produces
-a new entry when BLS publishes fresh CPI data (typically mid-month).
-Use `--replace` to force a write regardless.
-
-**No human review needed** unless the CPI data itself is anomalous.
-
-### `publish.py` — Format for API Consumption
-
-**What it does:**
-
-1. Reads the internal output files.
-2. Produces API-ready JSON under `output/api/`:
-   - `current.json` — current global CHIP and date
-   - `multipliers.json` — per-country multipliers
-   - `history.json` — full time series
-
-**CLI:**
-```
-python publish.py
+python extrapolate.py [--effective-date YYYY-MM-DD] [--replace] [--notes "..."]
 ```
 
 ---
 
 ## Output Files
 
-All outputs are written to `output/`.  These are **tracked in git** and
-served directly by the production web server.
+All outputs live in `output/` and are **tracked in git**.  The production
+web server reads them directly — no separate publish step.
 
 ```
 output/
-├── chip_history.json        # Cumulative ledger (append-only)
+├── chip_history.json        # Chronological ledger of all estimates
 ├── base_params.json         # Parameters from last recalculation
-├── latest.json              # Current CHIP value (overwritten each run)
-├── latest_recalculation.md  # Human-readable summary of last recalculation
-├── multipliers.csv          # Per-country multipliers (latest)
-└── api/                     # API-ready formatted output
-    ├── current.json         # ← Primary endpoint for MyCHIPs / chipcentral
-    ├── multipliers.json     # ← Per-country multipliers
-    └── history.json         # ← Full estimate time series
+├── latest.json              # Current CHIP value (primary endpoint)
+├── latest_recalculation.md  # Human-readable review summary
+└── multipliers.csv          # Per-country multipliers (latest only)
 ```
 
-### `chip_history.json` Format
+### `chip_history.json`
 
-The history ledger is an array of entries, each recording one estimate:
+Chronological array of every recalculation and extrapolation:
 
 ```json
 [
   {
-    "effective_date": "2026-03-15",
-    "calculated_date": "2026-03-15",
-    "method": "recalculation",
-    "chip_usd": 3.17,
-    "base_year": 2022,
-    "pwt_base_year": 2017,
-    "pwt_version": "11.0",
-    "window_years": 5,
-    "n_countries": 85,
-    "notes": "Annual recalculation with PWT 11.0 data through 2022"
-  },
-  {
-    "effective_date": "2026-04-15",
-    "calculated_date": "2026-04-15",
-    "method": "extrapolation",
-    "chip_usd": 3.21,
-    "base_chip": 3.17,
-    "base_effective_date": "2026-03-15",
-    "cpi_ratio": 1.0126,
-    "cpi_date": "2026-03-01",
-    "notes": "Monthly CPI extrapolation"
-  },
-  {
-    "effective_date": "2011-01-01",
+    "effective_date": "2023-01-01",
     "calculated_date": "2026-02-17",
     "method": "recalculation",
-    "chip_usd": 2.14,
-    "base_year": 2010,
-    "notes": "Backfill for data year 2010"
+    "chip_usd": 3.27,
+    "chip_constant": 2.77,
+    "base_year": 2022,
+    "pwt_version": "11.0",
+    "window_years": 5,
+    "n_countries": 46,
+    "notes": "Backfill for data year 2022"
+  },
+  {
+    "effective_date": "2026-02-17",
+    "calculated_date": "2026-02-17",
+    "method": "extrapolation",
+    "chip_usd": 3.27,
+    "base_chip": 3.27,
+    "base_effective_date": "2023-01-01",
+    "cpi_ratio": 1.0,
+    "cpi_date": "2026-01-01",
+    "notes": "First extrapolation from 2022 base"
   }
 ]
 ```
 
-### `latest.json` Format
+### `latest.json`
 
-A single object, always overwritten with the most current estimate:
+The primary endpoint.  Always contains the most current CHIP value:
 
 ```json
 {
-  "chip_usd": 3.21,
-  "effective_date": "2026-04-15",
-  "calculated_date": "2026-04-15",
+  "chip_usd": 3.27,
+  "effective_date": "2026-02-17",
+  "calculated_date": "2026-02-17",
   "method": "extrapolation",
-  "base_chip": 3.17,
-  "base_effective_date": "2026-03-15",
+  "base_chip": 3.27,
+  "base_effective_date": "2023-01-01",
   "next_recalculation": "When new ILOSTAT/PWT data is available"
 }
 ```
 
-### `base_params.json` Format
+### `base_params.json`
 
 Written by `recalculate.py`, read by `extrapolate.py`:
 
 ```json
 {
-  "chip_constant": 2.68,
-  "chip_nominal": 3.17,
+  "chip_constant": 2.77,
+  "chip_nominal": 3.27,
   "base_year": 2022,
   "pwt_base_year": 2017,
-  "cpi_reference_date": "2022-12-01",
-  "cpi_reference_value": 296.797,
+  "cpi_reference_date": "2026-01-01",
+  "cpi_reference_value": 326.588,
   "pwt_version": "11.0",
   "window_years": 5,
-  "n_countries": 85,
-  "effective_date": "2026-03-15",
-  "calculated_date": "2026-03-15"
+  "n_countries": 46,
+  "effective_date": "2023-01-01",
+  "calculated_date": "2026-02-17"
 }
+```
+
+### `multipliers.csv`
+
+Per-country CHIP multipliers from the latest recalculation.
+A multiplier of 1.0 means the country matches the global CHIP:
+
+```
+country,chip_value,multiplier
+PAN,6.01,2.17
+CHE,5.96,2.15
+...
+USA,3.56,1.28
+...
+BOL,0.14,0.05
 ```
 
 ---
@@ -442,8 +404,7 @@ these corrections are typically ±5–10%.  Design choices to manage snaps:
    calendar date).  This reduces anticipation effects.
 2. **Log the snap magnitude** in `chip_history.json` for transparency.
 3. **No phase-in** by default — the new base value takes effect
-   immediately.  A gradual phase-in (linear over 30 days) can be
-   implemented in `publish.py` if market feedback warrants it.
+   immediately.
 
 See `docs/inflation-tracking.md` Section 7.4 for analysis of market
 dynamics around recalculations.

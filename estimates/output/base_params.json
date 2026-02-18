@@ -1,0 +1,13 @@
+{
+  "chip_constant": 2.7708,
+  "chip_nominal": 3.2688,
+  "base_year": 2022,
+  "pwt_base_year": 2017,
+  "cpi_reference_date": "2026-01-01",
+  "cpi_reference_value": 326.588,
+  "pwt_version": "11.0",
+  "window_years": 5,
+  "n_countries": 46,
+  "effective_date": "2023-01-01",
+  "calculated_date": "2026-02-17"
+}

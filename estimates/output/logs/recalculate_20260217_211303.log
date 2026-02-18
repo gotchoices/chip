@@ -1,0 +1,37 @@
+2026-02-17 21:13:03 | INFO     | recalculate | Logging to: /Users/kyle/share/devel/chip/estimates/output/logs/recalculate_20260217_211303.log
+2026-02-17 21:13:03 | INFO     | recalculate | CHIP Recalculation Pipeline
+2026-02-17 21:13:03 | INFO     | recalculate | Date: 2026-02-17
+2026-02-17 21:13:03 | INFO     | recalculate | Target year override: 2023
+2026-02-17 21:13:03 | INFO     | recalculate | Effective date override: 2024-01-01
+2026-02-17 21:13:03 | INFO     | recalculate | ============================================================
+2026-02-17 21:13:03 | INFO     | recalculate | Step 1: Fetching data
+2026-02-17 21:13:03 | INFO     | recalculate | ============================================================
+2026-02-17 21:13:03 | INFO     | recalculate |   employment: 165,262 rows
+2026-02-17 21:13:03 | INFO     | recalculate |   wages: 126,987 rows
+2026-02-17 21:13:03 | INFO     | recalculate |   hours: 98,814 rows
+2026-02-17 21:13:03 | INFO     | recalculate |   pwt: 13,690 rows
+2026-02-17 21:13:03 | INFO     | recalculate |   deflator: 63 rows
+2026-02-17 21:13:03 | INFO     | recalculate | ============================================================
+2026-02-17 21:13:03 | INFO     | recalculate | Step 2: Running CHIP estimation pipeline
+2026-02-17 21:13:03 | INFO     | recalculate | ============================================================
+2026-02-17 21:13:05 | INFO     | recalculate | Pipeline: 758 obs, 102 countries
+2026-02-17 21:13:05 | INFO     | recalculate | ============================================================
+2026-02-17 21:13:05 | INFO     | recalculate | Step 3: Aggregating to annual series
+2026-02-17 21:13:05 | INFO     | recalculate | ============================================================
+2026-02-17 21:13:05 | INFO     | recalculate | Series: 23 years (2000–2022)
+2026-02-17 21:13:05 | INFO     | recalculate | ============================================================
+2026-02-17 21:13:05 | INFO     | recalculate | Step 4: Computing 5-year trailing-window CHIP
+2026-02-17 21:13:05 | INFO     | recalculate | ============================================================
+2026-02-17 21:13:05 | ERROR    | recalculate | Recalculation failed: --target-year 2023 not in available years (2000–2022)
+Traceback (most recent call last):
+  File "/Users/kyle/share/devel/chip/estimates/recalculate.py", line 665, in main
+    result = recalculate(
+        force_refresh=args.force_refresh,
+    ...<3 lines>...
+        notes=args.notes,
+    )
+  File "/Users/kyle/share/devel/chip/estimates/recalculate.py", line 397, in recalculate
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: --target-year 2023 not in available years (2000–2022)

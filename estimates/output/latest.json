@@ -1,0 +1,11 @@
+{
+  "chip_usd": 3.2688,
+  "effective_date": "2026-02-17",
+  "calculated_date": "2026-02-17",
+  "method": "extrapolation",
+  "base_chip": 3.2688,
+  "base_effective_date": "2023-01-01",
+  "cpi_ratio": 1.0,
+  "cpi_date": "2026-01-01",
+  "next_recalculation": "When new ILOSTAT/PWT data is available"
+}
