@@ -107,7 +107,7 @@ chip/
 │   ├── lib/           # Modular Python library
 │   ├── studies/       # Individual research investigations
 │   └── data/          # Cached data (gitignored, self-healing)
-├── estimates/         # Production estimates (to be created)
+├── estimates/         # Production estimates pipeline
 └── docs/              # Methodology reviews, papers, formal analysis
 ```
 
@@ -184,7 +184,7 @@ Created a modular exploratory analysis environment:
 - **Modular library** (`workbench/lib/`) — 11 modules: fetcher, normalize, clean, impute, pipeline, models, aggregate, output, config, cache, logging
 - **Self-healing cache** — delete data, it auto-fetches on next run
 - **Study-based structure** — each investigation lives in `studies/<name>/` with its own `study.py`, `README.md`, `FINDINGS.md`, and `output/`
-- **Reusable by future projects** — `estimates/` will import from `workbench.lib`
+- **Reusable by production** — `estimates/` imports from `workbench.lib`
 
 Completed studies:
 - `baseline` ✅ — reproduces original methodology ($2.33/hr, within 1% of target)
@@ -194,14 +194,16 @@ Completed studies:
 - `stability` ✅ — PWT vintage comparison (10.0 vs 11.0); mean |revision| 3.8% for mature years, upward bias
 - `weighting` ✅ — five schemes (GDP, labor, unweighted, freedom, HDI); $1.67–$2.85 range; GDP-weighted ($2.68) recommended; 85 country multipliers
 
-### Step 7: Production Estimates & Deployment (Next)
-**Folder**: `estimates/` (to be created)
+### Step 7: Production Estimates & Deployment ✅
+**Folder**: `estimates/`
 
-Build the operational CHIP pipeline using findings from completed studies:
-- Implement 5-year trailing-window methodology (from `production` study)
-- GDP-weighted aggregation (from `weighting` study)
-- Two-tier update model: daily CPI extrapolation + annual recalculation (Design Goal 6)
-- Publish country-specific multipliers via API endpoint (Design Goals 10–11)
+Operational CHIP pipeline built from workbench study findings:
+- 5-year trailing-window GDP-weighted methodology (`recalculate.py`)
+- CPI extrapolation between annual updates (`extrapolate.py`)
+- Two-tier model: `chip_estimates.json` (git-tracked annual record with
+  embedded country multipliers) + `extrapolation.json` (server-local cache)
+- Backfilled 23 annual estimates (2000–2022), $1.94–$3.27 nominal
+- See `estimates/README.md` for operational runbook
 - Snap-back mechanism when new source data arrives
 
 ### Future: Alternative Models
@@ -260,7 +262,7 @@ The papers in `docs/` build on each other. For readers new to this project:
 |-------|-------|--------|
 | **1. Foundation** | Understand & validate original study | ✅ Complete |
 | **2. Workbench** | Build modular analysis environment & studies | ✅ Complete (6 studies, 5 papers) |
-| **3. Production** | Estimates pipeline, automated publishing, API | Next |
+| **3. Production** | Estimates pipeline, automated publishing | ✅ Pipeline built, deployment pending |
 | **4. Alternatives** | Explore other economic models | Planned |
 
 ## Platform & Tooling
@@ -285,17 +287,19 @@ The papers in `docs/` build on each other. For readers new to this project:
 
 ## Current Status
 
-**Phase 2 (Workbench) complete. All six studies finished, all documentation papers written. Transitioning to Phase 3 (production pipeline and deployment).**
+**Phases 1-3 substantially complete. Six studies finished, five papers written, production pipeline operational with 23 years of backfilled estimates. Deployment to chipcentral.net pending.**
 
 Research milestones:
-- ✅ Reproduction validated at $2.56/hour (original data) and $2.35/hour (fresh API)
-- ✅ Workbench baseline validated at $2.33/hour (matches reproduction within 1%)
-- ✅ All 11 library modules implemented (including Heritage and HDI fetchers)
-- ✅ Production study complete — **$3.17/hr nominal (2022), ~$3.50 est. 2026** (PWT 11.0, 5-year trailing window)
-- ✅ Stability study complete — PWT vintage revisions quantified (mean 3.8% for mature years)
-- ✅ Weighting study complete — five schemes compared, GDP-weighted ($2.68) recommended, 85 country multipliers produced
-- ✅ All five documentation papers written (original-review, weighting-analysis, inflation-tracking, labor-value-future, data-sources)
-- 🔜 Next: Build `estimates/` pipeline, automated publishing (two-tier model), and API endpoint
+- Reproduction validated at $2.56/hour (original data) and $2.35/hour (fresh API)
+- Workbench baseline validated at $2.33/hour (matches reproduction within 1%)
+- All 11 library modules implemented (including Heritage and HDI fetchers)
+- Production study complete — **$3.17/hr nominal (2022), ~$3.50 est. 2026** (PWT 11.0, 5-year trailing window)
+- Stability study complete — PWT vintage revisions quantified (mean 3.8% for mature years)
+- Weighting study complete — five schemes compared, GDP-weighted ($2.68) recommended, 85 country multipliers
+- All five documentation papers written (original-review, weighting-analysis, inflation-tracking, labor-value-future, data-sources)
+- Estimates pipeline built — 23 annual estimates (2000-2022), **$3.27/hr nominal (2022)**; server extrapolation ready
+
+Next: Deploy cron job and point chipcentral.net at `extrapolation.json`.
 
 See [`docs/STATUS.md`](docs/STATUS.md) for detailed tracking.
 

@@ -1,0 +1,48 @@
+2026-02-24 16:24:32 | INFO     | recalculate | Logging to: /Users/kyle/share/devel/chip/estimates/output/logs/recalculate_20260224_162432.log
+2026-02-24 16:24:32 | INFO     | recalculate | CHIP Recalculation Pipeline
+2026-02-24 16:24:32 | INFO     | recalculate | Date: 2026-02-24
+2026-02-24 16:24:32 | INFO     | recalculate | Target year override: 2008
+2026-02-24 16:24:32 | INFO     | recalculate | Effective date override: 2009-01-01
+2026-02-24 16:24:32 | INFO     | recalculate | ============================================================
+2026-02-24 16:24:32 | INFO     | recalculate | Step 1: Fetching data
+2026-02-24 16:24:32 | INFO     | recalculate | ============================================================
+2026-02-24 16:24:32 | INFO     | recalculate |   employment: 165,262 rows
+2026-02-24 16:24:32 | INFO     | recalculate |   wages: 126,987 rows
+2026-02-24 16:24:32 | INFO     | recalculate |   hours: 98,814 rows
+2026-02-24 16:24:32 | INFO     | recalculate |   pwt: 13,690 rows
+2026-02-24 16:24:32 | INFO     | recalculate |   deflator: 63 rows
+2026-02-24 16:24:32 | INFO     | recalculate | ============================================================
+2026-02-24 16:24:32 | INFO     | recalculate | Step 2: Running CHIP estimation pipeline
+2026-02-24 16:24:32 | INFO     | recalculate | ============================================================
+2026-02-24 16:24:33 | INFO     | recalculate | Pipeline: 758 obs, 102 countries
+2026-02-24 16:24:33 | INFO     | recalculate | ============================================================
+2026-02-24 16:24:33 | INFO     | recalculate | Step 3: Aggregating to annual series
+2026-02-24 16:24:33 | INFO     | recalculate | ============================================================
+2026-02-24 16:24:33 | INFO     | recalculate | Series: 23 years (2000–2022)
+2026-02-24 16:24:33 | INFO     | recalculate | ============================================================
+2026-02-24 16:24:33 | INFO     | recalculate | Step 4: Computing 5-year trailing-window CHIP
+2026-02-24 16:24:33 | INFO     | recalculate | ============================================================
+2026-02-24 16:24:33 | INFO     | recalculate | Using explicit target year: 2008
+2026-02-24 16:24:33 | INFO     | recalculate | Target year: 2008
+2026-02-24 16:24:33 | INFO     | recalculate | Constant CHIP (2017$): $3.04
+2026-02-24 16:24:33 | INFO     | recalculate | Nominal CHIP (2008$): $2.68
+2026-02-24 16:24:33 | INFO     | recalculate | Countries: 19
+2026-02-24 16:24:33 | INFO     | recalculate | ============================================================
+2026-02-24 16:24:33 | INFO     | recalculate | Step 5: Computing country multipliers
+2026-02-24 16:24:33 | INFO     | recalculate | ============================================================
+2026-02-24 16:24:33 | INFO     | recalculate | Multipliers for 19 countries
+2026-02-24 16:24:33 | INFO     | recalculate | ============================================================
+2026-02-24 16:24:33 | INFO     | recalculate | Step 6: Fetching CPI reference for extrapolator
+2026-02-24 16:24:33 | INFO     | recalculate | ============================================================
+2026-02-24 16:24:33 | INFO     | recalculate | CPI reference: 326.588 as of 2026-01-01
+2026-02-24 16:24:33 | INFO     | recalculate | ============================================================
+2026-02-24 16:24:33 | INFO     | recalculate | Step 7: Writing estimate
+2026-02-24 16:24:33 | INFO     | recalculate | ============================================================
+2026-02-24 16:24:33 | INFO     | recalculate | Wrote /Users/kyle/share/devel/chip/estimates/output/chip_estimates.json (9 entries)
+2026-02-24 16:24:33 | INFO     | recalculate | Wrote /Users/kyle/share/devel/chip/estimates/output/latest_recalculation.md
+2026-02-24 16:24:33 | INFO     | recalculate | ============================================================
+2026-02-24 16:24:33 | INFO     | recalculate | RECALCULATION COMPLETE
+2026-02-24 16:24:33 | INFO     | recalculate |   Global CHIP: $2.68/hr (2008 nominal)
+2026-02-24 16:24:33 | INFO     | recalculate |   Countries: 19, Multipliers: 19
+2026-02-24 16:24:33 | INFO     | recalculate | ============================================================
+2026-02-24 16:24:33 | INFO     | recalculate | Success

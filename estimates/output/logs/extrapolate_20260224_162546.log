@@ -1,0 +1,8 @@
+2026-02-24 16:25:46 | INFO     | extrapolate | Logging to: /Users/kyle/share/devel/chip/estimates/output/logs/extrapolate_20260224_162546.log
+2026-02-24 16:25:46 | INFO     | extrapolate | CHIP CPI Extrapolation
+2026-02-24 16:25:46 | INFO     | extrapolate | Date: 2026-02-24
+2026-02-24 16:25:46 | INFO     | extrapolate | Base estimate: $3.2688 (effective 2023-01-01)
+2026-02-24 16:25:46 | INFO     | extrapolate | Base CPI: 326.588 (2026-01-01)
+2026-02-24 16:25:47 | INFO     | extrapolate | Current CPI: 326.588 (2026-01-01)
+2026-02-24 16:25:47 | INFO     | extrapolate | No change: CPI still 2026-01-01, base still 2023-01-01. Nothing to do.
+2026-02-24 16:25:47 | INFO     | extrapolate | No update needed

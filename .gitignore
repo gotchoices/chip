@@ -33,6 +33,11 @@ web/wp3.tgz
 .RData
 .Rproj.user/
 
-# Estimates pipeline — logs are transient, data files are tracked
+# Estimates pipeline
+# chip_estimates.json is tracked (annual estimates, the source of truth)
+# extrapolation.json is local-only (server-side CPI extrapolation cache)
+# latest_recalculation.md is tracked (human review of latest run)
+# Logs are transient
 estimates/output/*.log
 estimates/output/log/
+estimates/output/extrapolation.json

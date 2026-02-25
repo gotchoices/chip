@@ -1,0 +1,4100 @@
+[
+  {
+    "effective_date": "2001-01-01",
+    "calculated_date": "2026-02-24",
+    "chip_usd": 1.9444,
+    "chip_constant": 2.6737,
+    "base_year": 2000,
+    "pwt_base_year": 2017,
+    "pwt_version": "11.0",
+    "window_years": 5,
+    "n_countries": 5,
+    "cpi_reference_date": "2026-01-01",
+    "cpi_reference_value": 326.588,
+    "multipliers": [
+      {
+        "country": "CHE",
+        "chip_usd": 5.3042,
+        "multiplier": 1.9838
+      },
+      {
+        "country": "ZAF",
+        "chip_usd": 1.5887,
+        "multiplier": 0.5942
+      },
+      {
+        "country": "PER",
+        "chip_usd": 1.1028,
+        "multiplier": 0.4125
+      },
+      {
+        "country": "CHL",
+        "chip_usd": 0.9267,
+        "multiplier": 0.3466
+      },
+      {
+        "country": "BOL",
+        "chip_usd": 0.0459,
+        "multiplier": 0.0172
+      }
+    ],
+    "notes": "Backfill for data year 2000"
+  },
+  {
+    "effective_date": "2002-01-01",
+    "calculated_date": "2026-02-24",
+    "chip_usd": 1.9316,
+    "chip_constant": 2.5977,
+    "base_year": 2001,
+    "pwt_base_year": 2017,
+    "pwt_version": "11.0",
+    "window_years": 5,
+    "n_countries": 7,
+    "cpi_reference_date": "2026-01-01",
+    "cpi_reference_value": 326.588,
+    "multipliers": [
+      {
+        "country": "CHE",
+        "chip_usd": 5.498,
+        "multiplier": 2.1165
+      },
+      {
+        "country": "MUS",
+        "chip_usd": 1.3119,
+        "multiplier": 0.505
+      },
+      {
+        "country": "PER",
+        "chip_usd": 0.9242,
+        "multiplier": 0.3558
+      },
+      {
+        "country": "PRY",
+        "chip_usd": 0.8271,
+        "multiplier": 0.3184
+      },
+      {
+        "country": "ZAF",
+        "chip_usd": 0.6778,
+        "multiplier": 0.2609
+      },
+      {
+        "country": "BOL",
+        "chip_usd": 0.0654,
+        "multiplier": 0.0252
+      },
+      {
+        "country": "TZA",
+        "chip_usd": 0.0246,
+        "multiplier": 0.0095
+      }
+    ],
+    "notes": "Backfill for data year 2001"
+  },
+  {
+    "effective_date": "2003-01-01",
+    "calculated_date": "2026-02-24",
+    "chip_usd": 1.7043,
+    "chip_constant": 2.2569,
+    "base_year": 2002,
+    "pwt_base_year": 2017,
+    "pwt_version": "11.0",
+    "window_years": 5,
+    "n_countries": 11,
+    "cpi_reference_date": "2026-01-01",
+    "cpi_reference_value": 326.588,
+    "multipliers": [
+      {
+        "country": "CHE",
+        "chip_usd": 5.4733,
+        "multiplier": 2.4251
+      },
+      {
+        "country": "FIN",
+        "chip_usd": 3.0451,
+        "multiplier": 1.3492
+      },
+      {
+        "country": "MUS",
+        "chip_usd": 1.4129,
+        "multiplier": 0.626
+      },
+      {
+        "country": "MEX",
+        "chip_usd": 1.3429,
+        "multiplier": 0.595
+      },
+      {
+        "country": "ESP",
+        "chip_usd": 1.1729,
+        "multiplier": 0.5197
+      },
+      {
+        "country": "PRT",
+        "chip_usd": 1.1293,
+        "multiplier": 0.5004
+      },
+      {
+        "country": "PRY",
+        "chip_usd": 0.7621,
+        "multiplier": 0.3377
+      },
+      {
+        "country": "PER",
+        "chip_usd": 0.6863,
+        "multiplier": 0.3041
+      },
+      {
+        "country": "ZAF",
+        "chip_usd": 0.6457,
+        "multiplier": 0.2861
+      },
+      {
+        "country": "COL",
+        "chip_usd": 0.6114,
+        "multiplier": 0.2709
+      },
+      {
+        "country": "BOL",
+        "chip_usd": 0.0638,
+        "multiplier": 0.0283
+      }
+    ],
+    "notes": "Backfill for data year 2002"
+  },
+  {
+    "effective_date": "2004-01-01",
+    "calculated_date": "2026-02-24",
+    "chip_usd": 1.8397,
+    "chip_constant": 2.389,
+    "base_year": 2003,
+    "pwt_base_year": 2017,
+    "pwt_version": "11.0",
+    "window_years": 5,
+    "n_countries": 11,
+    "cpi_reference_date": "2026-01-01",
+    "cpi_reference_value": 326.588,
+    "multipliers": [
+      {
+        "country": "CHE",
+        "chip_usd": 5.5603,
+        "multiplier": 2.3274
+      },
+      {
+        "country": "USA",
+        "chip_usd": 3.058,
+        "multiplier": 1.28
+      },
+      {
+        "country": "TJK",
+        "chip_usd": 2.0398,
+        "multiplier": 0.8538
+      },
+      {
+        "country": "MEX",
+        "chip_usd": 1.3899,
+        "multiplier": 0.5818
+      },
+      {
+        "country": "MUS",
+        "chip_usd": 1.3898,
+        "multiplier": 0.5818
+      },
+      {
+        "country": "PRT",
+        "chip_usd": 1.1665,
+        "multiplier": 0.4883
+      },
+      {
+        "country": "PAN",
+        "chip_usd": 0.954,
+        "multiplier": 0.3993
+      },
+      {
+        "country": "PRY",
+        "chip_usd": 0.7062,
+        "multiplier": 0.2956
+      },
+      {
+        "country": "ZAF",
+        "chip_usd": 0.6508,
+        "multiplier": 0.2724
+      },
+      {
+        "country": "COL",
+        "chip_usd": 0.6284,
+        "multiplier": 0.263
+      },
+      {
+        "country": "PER",
+        "chip_usd": 0.6257,
+        "multiplier": 0.2619
+      }
+    ],
+    "notes": "Backfill for data year 2003"
+  },
+  {
+    "effective_date": "2005-01-01",
+    "calculated_date": "2026-02-24",
+    "chip_usd": 1.9526,
+    "chip_constant": 2.4693,
+    "base_year": 2004,
+    "pwt_base_year": 2017,
+    "pwt_version": "11.0",
+    "window_years": 5,
+    "n_countries": 9,
+    "cpi_reference_date": "2026-01-01",
+    "cpi_reference_value": 326.588,
+    "multipliers": [
+      {
+        "country": "CHE",
+        "chip_usd": 5.345,
+        "multiplier": 2.1646
+      },
+      {
+        "country": "USA",
+        "chip_usd": 3.0572,
+        "multiplier": 1.2381
+      },
+      {
+        "country": "MEX",
+        "chip_usd": 1.4463,
+        "multiplier": 0.5857
+      },
+      {
+        "country": "MUS",
+        "chip_usd": 1.3022,
+        "multiplier": 0.5274
+      },
+      {
+        "country": "PRT",
+        "chip_usd": 1.1304,
+        "multiplier": 0.4578
+      },
+      {
+        "country": "PRY",
+        "chip_usd": 0.7532,
+        "multiplier": 0.305
+      },
+      {
+        "country": "ZAF",
+        "chip_usd": 0.7292,
+        "multiplier": 0.2953
+      },
+      {
+        "country": "PER",
+        "chip_usd": 0.7191,
+        "multiplier": 0.2912
+      },
+      {
+        "country": "COL",
+        "chip_usd": 0.6217,
+        "multiplier": 0.2518
+      }
+    ],
+    "notes": "Backfill for data year 2004"
+  },
+  {
+    "effective_date": "2006-01-01",
+    "calculated_date": "2026-02-24",
+    "chip_usd": 2.0924,
+    "chip_constant": 2.5656,
+    "base_year": 2005,
+    "pwt_base_year": 2017,
+    "pwt_version": "11.0",
+    "window_years": 5,
+    "n_countries": 13,
+    "cpi_reference_date": "2026-01-01",
+    "cpi_reference_value": 326.588,
+    "multipliers": [
+      {
+        "country": "CHE",
+        "chip_usd": 5.4317,
+        "multiplier": 2.1171
+      },
+      {
+        "country": "FRA",
+        "chip_usd": 4.9122,
+        "multiplier": 1.9147
+      },
+      {
+        "country": "GBR",
+        "chip_usd": 3.2154,
+        "multiplier": 1.2533
+      },
+      {
+        "country": "USA",
+        "chip_usd": 3.0479,
+        "multiplier": 1.188
+      },
+      {
+        "country": "MUS",
+        "chip_usd": 1.3364,
+        "multiplier": 0.5209
+      },
+      {
+        "country": "PRT",
+        "chip_usd": 1.162,
+        "multiplier": 0.4529
+      },
+      {
+        "country": "PER",
+        "chip_usd": 0.7804,
+        "multiplier": 0.3042
+      },
+      {
+        "country": "ZAF",
+        "chip_usd": 0.7336,
+        "multiplier": 0.2859
+      },
+      {
+        "country": "PRY",
+        "chip_usd": 0.724,
+        "multiplier": 0.2822
+      },
+      {
+        "country": "COL",
+        "chip_usd": 0.6493,
+        "multiplier": 0.2531
+      },
+      {
+        "country": "HND",
+        "chip_usd": 0.4894,
+        "multiplier": 0.1908
+      },
+      {
+        "country": "KEN",
+        "chip_usd": 0.3771,
+        "multiplier": 0.147
+      },
+      {
+        "country": "ETH",
+        "chip_usd": 0.0592,
+        "multiplier": 0.0231
+      }
+    ],
+    "notes": "Backfill for data year 2005"
+  },
+  {
+    "effective_date": "2007-01-01",
+    "calculated_date": "2026-02-24",
+    "chip_usd": 2.2508,
+    "chip_constant": 2.6773,
+    "base_year": 2006,
+    "pwt_base_year": 2017,
+    "pwt_version": "11.0",
+    "window_years": 5,
+    "n_countries": 15,
+    "cpi_reference_date": "2026-01-01",
+    "cpi_reference_value": 326.588,
+    "multipliers": [
+      {
+        "country": "CHE",
+        "chip_usd": 5.8176,
+        "multiplier": 2.173
+      },
+      {
+        "country": "FRA",
+        "chip_usd": 5.0754,
+        "multiplier": 1.8957
+      },
+      {
+        "country": "GBR",
+        "chip_usd": 3.2086,
+        "multiplier": 1.1985
+      },
+      {
+        "country": "USA",
+        "chip_usd": 3.1623,
+        "multiplier": 1.1812
+      },
+      {
+        "country": "FIN",
+        "chip_usd": 3.066,
+        "multiplier": 1.1452
+      },
+      {
+        "country": "MUS",
+        "chip_usd": 1.4356,
+        "multiplier": 0.5362
+      },
+      {
+        "country": "ESP",
+        "chip_usd": 1.2949,
+        "multiplier": 0.4837
+      },
+      {
+        "country": "PRT",
+        "chip_usd": 1.1975,
+        "multiplier": 0.4473
+      },
+      {
+        "country": "CHL",
+        "chip_usd": 1.057,
+        "multiplier": 0.3948
+      },
+      {
+        "country": "ZAF",
+        "chip_usd": 0.8051,
+        "multiplier": 0.3007
+      },
+      {
+        "country": "PER",
+        "chip_usd": 0.801,
+        "multiplier": 0.2992
+      },
+      {
+        "country": "PRY",
+        "chip_usd": 0.6743,
+        "multiplier": 0.2519
+      },
+      {
+        "country": "HND",
+        "chip_usd": 0.4975,
+        "multiplier": 0.1858
+      },
+      {
+        "country": "PAK",
+        "chip_usd": 0.0786,
+        "multiplier": 0.0294
+      },
+      {
+        "country": "TZA",
+        "chip_usd": 0.0356,
+        "multiplier": 0.0133
+      }
+    ],
+    "notes": "Backfill for data year 2006"
+  },
+  {
+    "effective_date": "2008-01-01",
+    "calculated_date": "2026-02-24",
+    "chip_usd": 2.5639,
+    "chip_constant": 2.9693,
+    "base_year": 2007,
+    "pwt_base_year": 2017,
+    "pwt_version": "11.0",
+    "window_years": 5,
+    "n_countries": 17,
+    "cpi_reference_date": "2026-01-01",
+    "cpi_reference_value": 326.588,
+    "multipliers": [
+      {
+        "country": "CHE",
+        "chip_usd": 5.4315,
+        "multiplier": 1.8292
+      },
+      {
+        "country": "FRA",
+        "chip_usd": 5.1963,
+        "multiplier": 1.75
+      },
+      {
+        "country": "USA",
+        "chip_usd": 3.2377,
+        "multiplier": 1.0904
+      },
+      {
+        "country": "GBR",
+        "chip_usd": 3.2236,
+        "multiplier": 1.0856
+      },
+      {
+        "country": "TJK",
+        "chip_usd": 2.53,
+        "multiplier": 0.8521
+      },
+      {
+        "country": "MUS",
+        "chip_usd": 1.5846,
+        "multiplier": 0.5337
+      },
+      {
+        "country": "IDN",
+        "chip_usd": 1.2492,
+        "multiplier": 0.4207
+      },
+      {
+        "country": "PRT",
+        "chip_usd": 1.1785,
+        "multiplier": 0.3969
+      },
+      {
+        "country": "MDA",
+        "chip_usd": 0.9302,
+        "multiplier": 0.3133
+      },
+      {
+        "country": "PER",
+        "chip_usd": 0.8184,
+        "multiplier": 0.2756
+      },
+      {
+        "country": "ZAF",
+        "chip_usd": 0.8013,
+        "multiplier": 0.2699
+      },
+      {
+        "country": "PRY",
+        "chip_usd": 0.7667,
+        "multiplier": 0.2582
+      },
+      {
+        "country": "COL",
+        "chip_usd": 0.7469,
+        "multiplier": 0.2515
+      },
+      {
+        "country": "PHL",
+        "chip_usd": 0.5983,
+        "multiplier": 0.2015
+      },
+      {
+        "country": "HND",
+        "chip_usd": 0.5055,
+        "multiplier": 0.1702
+      },
+      {
+        "country": "VNM",
+        "chip_usd": 0.4616,
+        "multiplier": 0.1555
+      },
+      {
+        "country": "PAK",
+        "chip_usd": 0.0847,
+        "multiplier": 0.0285
+      }
+    ],
+    "notes": "Backfill for data year 2007"
+  },
+  {
+    "effective_date": "2009-01-01",
+    "calculated_date": "2026-02-24",
+    "chip_usd": 2.677,
+    "chip_constant": 3.0416,
+    "base_year": 2008,
+    "pwt_base_year": 2017,
+    "pwt_version": "11.0",
+    "window_years": 5,
+    "n_countries": 19,
+    "cpi_reference_date": "2026-01-01",
+    "cpi_reference_value": 326.588,
+    "multipliers": [
+      {
+        "country": "CHE",
+        "chip_usd": 5.5403,
+        "multiplier": 1.8215
+      },
+      {
+        "country": "FRA",
+        "chip_usd": 5.1575,
+        "multiplier": 1.6956
+      },
+      {
+        "country": "ITA",
+        "chip_usd": 3.59,
+        "multiplier": 1.1803
+      },
+      {
+        "country": "GBR",
+        "chip_usd": 3.2988,
+        "multiplier": 1.0846
+      },
+      {
+        "country": "USA",
+        "chip_usd": 3.2306,
+        "multiplier": 1.0621
+      },
+      {
+        "country": "MNG",
+        "chip_usd": 1.5762,
+        "multiplier": 0.5182
+      },
+      {
+        "country": "MUS",
+        "chip_usd": 1.4894,
+        "multiplier": 0.4897
+      },
+      {
+        "country": "IDN",
+        "chip_usd": 1.2738,
+        "multiplier": 0.4188
+      },
+      {
+        "country": "PRT",
+        "chip_usd": 1.2476,
+        "multiplier": 0.4102
+      },
+      {
+        "country": "PAN",
+        "chip_usd": 1.2245,
+        "multiplier": 0.4026
+      },
+      {
+        "country": "JAM",
+        "chip_usd": 1.0726,
+        "multiplier": 0.3526
+      },
+      {
+        "country": "MDA",
+        "chip_usd": 0.9511,
+        "multiplier": 0.3127
+      },
+      {
+        "country": "PER",
+        "chip_usd": 0.8597,
+        "multiplier": 0.2826
+      },
+      {
+        "country": "PRY",
+        "chip_usd": 0.7883,
+        "multiplier": 0.2592
+      },
+      {
+        "country": "COL",
+        "chip_usd": 0.7244,
+        "multiplier": 0.2382
+      },
+      {
+        "country": "PHL",
+        "chip_usd": 0.6211,
+        "multiplier": 0.2042
+      },
+      {
+        "country": "HND",
+        "chip_usd": 0.5633,
+        "multiplier": 0.1852
+      },
+      {
+        "country": "NPL",
+        "chip_usd": 0.1494,
+        "multiplier": 0.0491
+      },
+      {
+        "country": "PAK",
+        "chip_usd": 0.1018,
+        "multiplier": 0.0335
+      }
+    ],
+    "notes": "Backfill for data year 2008"
+  },
+  {
+    "effective_date": "2010-01-01",
+    "calculated_date": "2026-02-24",
+    "chip_usd": 2.7626,
+    "chip_constant": 3.1197,
+    "base_year": 2009,
+    "pwt_base_year": 2017,
+    "pwt_version": "11.0",
+    "window_years": 5,
+    "n_countries": 22,
+    "cpi_reference_date": "2026-01-01",
+    "cpi_reference_value": 326.588,
+    "multipliers": [
+      {
+        "country": "CHE",
+        "chip_usd": 5.8938,
+        "multiplier": 1.8892
+      },
+      {
+        "country": "FRA",
+        "chip_usd": 5.398,
+        "multiplier": 1.7303
+      },
+      {
+        "country": "ITA",
+        "chip_usd": 3.7124,
+        "multiplier": 1.19
+      },
+      {
+        "country": "USA",
+        "chip_usd": 3.3807,
+        "multiplier": 1.0837
+      },
+      {
+        "country": "GBR",
+        "chip_usd": 3.2947,
+        "multiplier": 1.0561
+      },
+      {
+        "country": "KOR",
+        "chip_usd": 2.9087,
+        "multiplier": 0.9324
+      },
+      {
+        "country": "TJK",
+        "chip_usd": 2.5972,
+        "multiplier": 0.8325
+      },
+      {
+        "country": "CHL",
+        "chip_usd": 1.5167,
+        "multiplier": 0.4862
+      },
+      {
+        "country": "MNG",
+        "chip_usd": 1.4648,
+        "multiplier": 0.4695
+      },
+      {
+        "country": "MUS",
+        "chip_usd": 1.4221,
+        "multiplier": 0.4558
+      },
+      {
+        "country": "IDN",
+        "chip_usd": 1.2979,
+        "multiplier": 0.416
+      },
+      {
+        "country": "PRT",
+        "chip_usd": 1.2509,
+        "multiplier": 0.401
+      },
+      {
+        "country": "JAM",
+        "chip_usd": 1.1434,
+        "multiplier": 0.3665
+      },
+      {
+        "country": "MDA",
+        "chip_usd": 0.95,
+        "multiplier": 0.3045
+      },
+      {
+        "country": "COG",
+        "chip_usd": 0.8797,
+        "multiplier": 0.282
+      },
+      {
+        "country": "PRY",
+        "chip_usd": 0.8032,
+        "multiplier": 0.2575
+      },
+      {
+        "country": "PER",
+        "chip_usd": 0.8004,
+        "multiplier": 0.2566
+      },
+      {
+        "country": "COL",
+        "chip_usd": 0.7728,
+        "multiplier": 0.2477
+      },
+      {
+        "country": "HND",
+        "chip_usd": 0.6308,
+        "multiplier": 0.2022
+      },
+      {
+        "country": "PHL",
+        "chip_usd": 0.6258,
+        "multiplier": 0.2006
+      },
+      {
+        "country": "VNM",
+        "chip_usd": 0.5195,
+        "multiplier": 0.1665
+      },
+      {
+        "country": "PAK",
+        "chip_usd": 0.1015,
+        "multiplier": 0.0325
+      }
+    ],
+    "notes": "Backfill for data year 2009"
+  },
+  {
+    "effective_date": "2011-01-01",
+    "calculated_date": "2026-02-24",
+    "chip_usd": 2.7776,
+    "chip_constant": 3.0989,
+    "base_year": 2010,
+    "pwt_base_year": 2017,
+    "pwt_version": "11.0",
+    "window_years": 5,
+    "n_countries": 50,
+    "cpi_reference_date": "2026-01-01",
+    "cpi_reference_value": 326.588,
+    "multipliers": [
+      {
+        "country": "DNK",
+        "chip_usd": 5.8064,
+        "multiplier": 1.8737
+      },
+      {
+        "country": "CHE",
+        "chip_usd": 5.7078,
+        "multiplier": 1.8419
+      },
+      {
+        "country": "FRA",
+        "chip_usd": 5.4547,
+        "multiplier": 1.7602
+      },
+      {
+        "country": "AUT",
+        "chip_usd": 5.2316,
+        "multiplier": 1.6882
+      },
+      {
+        "country": "DEU",
+        "chip_usd": 4.4167,
+        "multiplier": 1.4253
+      },
+      {
+        "country": "NLD",
+        "chip_usd": 4.3991,
+        "multiplier": 1.4196
+      },
+      {
+        "country": "IRL",
+        "chip_usd": 4.0147,
+        "multiplier": 1.2956
+      },
+      {
+        "country": "SWE",
+        "chip_usd": 3.7814,
+        "multiplier": 1.2203
+      },
+      {
+        "country": "ITA",
+        "chip_usd": 3.6422,
+        "multiplier": 1.1753
+      },
+      {
+        "country": "LUX",
+        "chip_usd": 3.4829,
+        "multiplier": 1.1239
+      },
+      {
+        "country": "GBR",
+        "chip_usd": 3.3621,
+        "multiplier": 1.085
+      },
+      {
+        "country": "USA",
+        "chip_usd": 3.3291,
+        "multiplier": 1.0743
+      },
+      {
+        "country": "FIN",
+        "chip_usd": 3.1167,
+        "multiplier": 1.0058
+      },
+      {
+        "country": "SVN",
+        "chip_usd": 3.07,
+        "multiplier": 0.9907
+      },
+      {
+        "country": "BEL",
+        "chip_usd": 3.034,
+        "multiplier": 0.9791
+      },
+      {
+        "country": "KOR",
+        "chip_usd": 2.9449,
+        "multiplier": 0.9503
+      },
+      {
+        "country": "LVA",
+        "chip_usd": 2.8505,
+        "multiplier": 0.9199
+      },
+      {
+        "country": "EST",
+        "chip_usd": 2.443,
+        "multiplier": 0.7884
+      },
+      {
+        "country": "CYP",
+        "chip_usd": 2.401,
+        "multiplier": 0.7748
+      },
+      {
+        "country": "LTU",
+        "chip_usd": 2.3052,
+        "multiplier": 0.7439
+      },
+      {
+        "country": "HUN",
+        "chip_usd": 2.2406,
+        "multiplier": 0.723
+      },
+      {
+        "country": "ROU",
+        "chip_usd": 1.8802,
+        "multiplier": 0.6067
+      },
+      {
+        "country": "POL",
+        "chip_usd": 1.7284,
+        "multiplier": 0.5577
+      },
+      {
+        "country": "MNG",
+        "chip_usd": 1.5408,
+        "multiplier": 0.4972
+      },
+      {
+        "country": "MUS",
+        "chip_usd": 1.5407,
+        "multiplier": 0.4972
+      },
+      {
+        "country": "MLT",
+        "chip_usd": 1.4464,
+        "multiplier": 0.4668
+      },
+      {
+        "country": "ESP",
+        "chip_usd": 1.4324,
+        "multiplier": 0.4622
+      },
+      {
+        "country": "IDN",
+        "chip_usd": 1.3533,
+        "multiplier": 0.4367
+      },
+      {
+        "country": "GRC",
+        "chip_usd": 1.3253,
+        "multiplier": 0.4277
+      },
+      {
+        "country": "PRT",
+        "chip_usd": 1.3013,
+        "multiplier": 0.4199
+      },
+      {
+        "country": "TUR",
+        "chip_usd": 1.27,
+        "multiplier": 0.4098
+      },
+      {
+        "country": "NOR",
+        "chip_usd": 1.244,
+        "multiplier": 0.4014
+      },
+      {
+        "country": "CRI",
+        "chip_usd": 1.1992,
+        "multiplier": 0.387
+      },
+      {
+        "country": "CHL",
+        "chip_usd": 1.1927,
+        "multiplier": 0.3849
+      },
+      {
+        "country": "JAM",
+        "chip_usd": 1.1635,
+        "multiplier": 0.3755
+      },
+      {
+        "country": "BGR",
+        "chip_usd": 1.0468,
+        "multiplier": 0.3378
+      },
+      {
+        "country": "MDA",
+        "chip_usd": 0.9532,
+        "multiplier": 0.3076
+      },
+      {
+        "country": "LKA",
+        "chip_usd": 0.9197,
+        "multiplier": 0.2968
+      },
+      {
+        "country": "PER",
+        "chip_usd": 0.915,
+        "multiplier": 0.2953
+      },
+      {
+        "country": "SLV",
+        "chip_usd": 0.9062,
+        "multiplier": 0.2924
+      },
+      {
+        "country": "ZAF",
+        "chip_usd": 0.8745,
+        "multiplier": 0.2822
+      },
+      {
+        "country": "PRY",
+        "chip_usd": 0.8738,
+        "multiplier": 0.282
+      },
+      {
+        "country": "COL",
+        "chip_usd": 0.7782,
+        "multiplier": 0.2511
+      },
+      {
+        "country": "EGY",
+        "chip_usd": 0.711,
+        "multiplier": 0.2295
+      },
+      {
+        "country": "HND",
+        "chip_usd": 0.6575,
+        "multiplier": 0.2122
+      },
+      {
+        "country": "PHL",
+        "chip_usd": 0.6486,
+        "multiplier": 0.2093
+      },
+      {
+        "country": "UGA",
+        "chip_usd": 0.1273,
+        "multiplier": 0.0411
+      },
+      {
+        "country": "TZA",
+        "chip_usd": 0.1237,
+        "multiplier": 0.0399
+      },
+      {
+        "country": "LBR",
+        "chip_usd": 0.0938,
+        "multiplier": 0.0303
+      },
+      {
+        "country": "PAK",
+        "chip_usd": 0.0895,
+        "multiplier": 0.0289
+      }
+    ],
+    "notes": "Backfill for data year 2010"
+  },
+  {
+    "effective_date": "2012-01-01",
+    "calculated_date": "2026-02-24",
+    "chip_usd": 2.822,
+    "chip_constant": 3.0848,
+    "base_year": 2011,
+    "pwt_base_year": 2017,
+    "pwt_version": "11.0",
+    "window_years": 5,
+    "n_countries": 29,
+    "cpi_reference_date": "2026-01-01",
+    "cpi_reference_value": 326.588,
+    "multipliers": [
+      {
+        "country": "CHE",
+        "chip_usd": 5.7453,
+        "multiplier": 1.8625
+      },
+      {
+        "country": "FRA",
+        "chip_usd": 5.5144,
+        "multiplier": 1.7876
+      },
+      {
+        "country": "ITA",
+        "chip_usd": 3.8161,
+        "multiplier": 1.2371
+      },
+      {
+        "country": "GBR",
+        "chip_usd": 3.472,
+        "multiplier": 1.1255
+      },
+      {
+        "country": "USA",
+        "chip_usd": 3.3993,
+        "multiplier": 1.102
+      },
+      {
+        "country": "KOR",
+        "chip_usd": 3.1026,
+        "multiplier": 1.0058
+      },
+      {
+        "country": "ARG",
+        "chip_usd": 2.6296,
+        "multiplier": 0.8524
+      },
+      {
+        "country": "MUS",
+        "chip_usd": 1.6276,
+        "multiplier": 0.5276
+      },
+      {
+        "country": "MYS",
+        "chip_usd": 1.4802,
+        "multiplier": 0.4798
+      },
+      {
+        "country": "CHL",
+        "chip_usd": 1.4055,
+        "multiplier": 0.4556
+      },
+      {
+        "country": "MNG",
+        "chip_usd": 1.3321,
+        "multiplier": 0.4318
+      },
+      {
+        "country": "PRT",
+        "chip_usd": 1.3287,
+        "multiplier": 0.4307
+      },
+      {
+        "country": "TUR",
+        "chip_usd": 1.2501,
+        "multiplier": 0.4053
+      },
+      {
+        "country": "PAN",
+        "chip_usd": 1.2331,
+        "multiplier": 0.3997
+      },
+      {
+        "country": "JAM",
+        "chip_usd": 1.1595,
+        "multiplier": 0.3759
+      },
+      {
+        "country": "PER",
+        "chip_usd": 1.1121,
+        "multiplier": 0.3605
+      },
+      {
+        "country": "LKA",
+        "chip_usd": 0.967,
+        "multiplier": 0.3135
+      },
+      {
+        "country": "NGA",
+        "chip_usd": 0.9456,
+        "multiplier": 0.3065
+      },
+      {
+        "country": "PRY",
+        "chip_usd": 0.9267,
+        "multiplier": 0.3004
+      },
+      {
+        "country": "MDA",
+        "chip_usd": 0.9067,
+        "multiplier": 0.2939
+      },
+      {
+        "country": "SLV",
+        "chip_usd": 0.9054,
+        "multiplier": 0.2935
+      },
+      {
+        "country": "COL",
+        "chip_usd": 0.8124,
+        "multiplier": 0.2633
+      },
+      {
+        "country": "ZAF",
+        "chip_usd": 0.7857,
+        "multiplier": 0.2547
+      },
+      {
+        "country": "EGY",
+        "chip_usd": 0.781,
+        "multiplier": 0.2532
+      },
+      {
+        "country": "PHL",
+        "chip_usd": 0.6696,
+        "multiplier": 0.2171
+      },
+      {
+        "country": "HND",
+        "chip_usd": 0.5976,
+        "multiplier": 0.1937
+      },
+      {
+        "country": "VNM",
+        "chip_usd": 0.5818,
+        "multiplier": 0.1886
+      },
+      {
+        "country": "UGA",
+        "chip_usd": 0.1288,
+        "multiplier": 0.0418
+      },
+      {
+        "country": "PAK",
+        "chip_usd": 0.0965,
+        "multiplier": 0.0313
+      }
+    ],
+    "notes": "Backfill for data year 2011"
+  },
+  {
+    "effective_date": "2013-01-01",
+    "calculated_date": "2026-02-24",
+    "chip_usd": 2.8356,
+    "chip_constant": 3.043,
+    "base_year": 2012,
+    "pwt_base_year": 2017,
+    "pwt_version": "11.0",
+    "window_years": 5,
+    "n_countries": 36,
+    "cpi_reference_date": "2026-01-01",
+    "cpi_reference_value": 326.588,
+    "multipliers": [
+      {
+        "country": "FRA",
+        "chip_usd": 5.6136,
+        "multiplier": 1.8448
+      },
+      {
+        "country": "CHE",
+        "chip_usd": 5.5348,
+        "multiplier": 1.8189
+      },
+      {
+        "country": "ITA",
+        "chip_usd": 3.9158,
+        "multiplier": 1.2868
+      },
+      {
+        "country": "USA",
+        "chip_usd": 3.3868,
+        "multiplier": 1.113
+      },
+      {
+        "country": "GBR",
+        "chip_usd": 3.3853,
+        "multiplier": 1.1125
+      },
+      {
+        "country": "CZE",
+        "chip_usd": 3.1003,
+        "multiplier": 1.0188
+      },
+      {
+        "country": "KOR",
+        "chip_usd": 2.9885,
+        "multiplier": 0.9821
+      },
+      {
+        "country": "ARG",
+        "chip_usd": 2.8948,
+        "multiplier": 0.9513
+      },
+      {
+        "country": "MUS",
+        "chip_usd": 1.6968,
+        "multiplier": 0.5576
+      },
+      {
+        "country": "ESP",
+        "chip_usd": 1.537,
+        "multiplier": 0.5051
+      },
+      {
+        "country": "MYS",
+        "chip_usd": 1.5116,
+        "multiplier": 0.4968
+      },
+      {
+        "country": "MNG",
+        "chip_usd": 1.3797,
+        "multiplier": 0.4534
+      },
+      {
+        "country": "PRT",
+        "chip_usd": 1.3764,
+        "multiplier": 0.4523
+      },
+      {
+        "country": "TUR",
+        "chip_usd": 1.3366,
+        "multiplier": 0.4392
+      },
+      {
+        "country": "IDN",
+        "chip_usd": 1.3097,
+        "multiplier": 0.4304
+      },
+      {
+        "country": "BRA",
+        "chip_usd": 1.2952,
+        "multiplier": 0.4256
+      },
+      {
+        "country": "PAN",
+        "chip_usd": 1.2818,
+        "multiplier": 0.4212
+      },
+      {
+        "country": "CHL",
+        "chip_usd": 1.2272,
+        "multiplier": 0.4033
+      },
+      {
+        "country": "PER",
+        "chip_usd": 1.1942,
+        "multiplier": 0.3924
+      },
+      {
+        "country": "JAM",
+        "chip_usd": 1.1548,
+        "multiplier": 0.3795
+      },
+      {
+        "country": "PRY",
+        "chip_usd": 0.9478,
+        "multiplier": 0.3115
+      },
+      {
+        "country": "SLV",
+        "chip_usd": 0.9389,
+        "multiplier": 0.3085
+      },
+      {
+        "country": "MDA",
+        "chip_usd": 0.8831,
+        "multiplier": 0.2902
+      },
+      {
+        "country": "ZAF",
+        "chip_usd": 0.8779,
+        "multiplier": 0.2885
+      },
+      {
+        "country": "COL",
+        "chip_usd": 0.8773,
+        "multiplier": 0.2883
+      },
+      {
+        "country": "EGY",
+        "chip_usd": 0.831,
+        "multiplier": 0.2731
+      },
+      {
+        "country": "NIC",
+        "chip_usd": 0.7126,
+        "multiplier": 0.2342
+      },
+      {
+        "country": "HND",
+        "chip_usd": 0.6801,
+        "multiplier": 0.2235
+      },
+      {
+        "country": "PHL",
+        "chip_usd": 0.6637,
+        "multiplier": 0.2181
+      },
+      {
+        "country": "VNM",
+        "chip_usd": 0.5956,
+        "multiplier": 0.1957
+      },
+      {
+        "country": "NAM",
+        "chip_usd": 0.5154,
+        "multiplier": 0.1694
+      },
+      {
+        "country": "UGA",
+        "chip_usd": 0.2883,
+        "multiplier": 0.0947
+      },
+      {
+        "country": "MDG",
+        "chip_usd": 0.2057,
+        "multiplier": 0.0676
+      },
+      {
+        "country": "GMB",
+        "chip_usd": 0.0999,
+        "multiplier": 0.0328
+      },
+      {
+        "country": "TZA",
+        "chip_usd": 0.0471,
+        "multiplier": 0.0155
+      },
+      {
+        "country": "COD",
+        "chip_usd": 0.0301,
+        "multiplier": 0.0099
+      }
+    ],
+    "notes": "Backfill for data year 2012"
+  },
+  {
+    "effective_date": "2014-01-01",
+    "calculated_date": "2026-02-24",
+    "chip_usd": 2.7977,
+    "chip_constant": 2.9521,
+    "base_year": 2013,
+    "pwt_base_year": 2017,
+    "pwt_version": "11.0",
+    "window_years": 5,
+    "n_countries": 41,
+    "cpi_reference_date": "2026-01-01",
+    "cpi_reference_value": 326.588,
+    "multipliers": [
+      {
+        "country": "FRA",
+        "chip_usd": 5.8175,
+        "multiplier": 1.9706
+      },
+      {
+        "country": "CHE",
+        "chip_usd": 5.6618,
+        "multiplier": 1.9179
+      },
+      {
+        "country": "ITA",
+        "chip_usd": 4.0302,
+        "multiplier": 1.3652
+      },
+      {
+        "country": "GBR",
+        "chip_usd": 3.4193,
+        "multiplier": 1.1583
+      },
+      {
+        "country": "USA",
+        "chip_usd": 3.4013,
+        "multiplier": 1.1522
+      },
+      {
+        "country": "FIN",
+        "chip_usd": 3.3359,
+        "multiplier": 1.13
+      },
+      {
+        "country": "KOR",
+        "chip_usd": 3.1754,
+        "multiplier": 1.0756
+      },
+      {
+        "country": "CZE",
+        "chip_usd": 3.1254,
+        "multiplier": 1.0587
+      },
+      {
+        "country": "ARG",
+        "chip_usd": 2.9953,
+        "multiplier": 1.0146
+      },
+      {
+        "country": "ECU",
+        "chip_usd": 1.7197,
+        "multiplier": 0.5825
+      },
+      {
+        "country": "MEX",
+        "chip_usd": 1.7018,
+        "multiplier": 0.5765
+      },
+      {
+        "country": "MUS",
+        "chip_usd": 1.6948,
+        "multiplier": 0.5741
+      },
+      {
+        "country": "ESP",
+        "chip_usd": 1.5666,
+        "multiplier": 0.5307
+      },
+      {
+        "country": "MYS",
+        "chip_usd": 1.5323,
+        "multiplier": 0.5191
+      },
+      {
+        "country": "TUR",
+        "chip_usd": 1.4495,
+        "multiplier": 0.491
+      },
+      {
+        "country": "CHL",
+        "chip_usd": 1.432,
+        "multiplier": 0.4851
+      },
+      {
+        "country": "IDN",
+        "chip_usd": 1.406,
+        "multiplier": 0.4763
+      },
+      {
+        "country": "MNG",
+        "chip_usd": 1.389,
+        "multiplier": 0.4705
+      },
+      {
+        "country": "BRA",
+        "chip_usd": 1.3726,
+        "multiplier": 0.465
+      },
+      {
+        "country": "PAN",
+        "chip_usd": 1.3674,
+        "multiplier": 0.4632
+      },
+      {
+        "country": "PRT",
+        "chip_usd": 1.3428,
+        "multiplier": 0.4549
+      },
+      {
+        "country": "PER",
+        "chip_usd": 1.2372,
+        "multiplier": 0.4191
+      },
+      {
+        "country": "LKA",
+        "chip_usd": 1.1506,
+        "multiplier": 0.3898
+      },
+      {
+        "country": "JAM",
+        "chip_usd": 1.0208,
+        "multiplier": 0.3458
+      },
+      {
+        "country": "SLV",
+        "chip_usd": 1.0069,
+        "multiplier": 0.3411
+      },
+      {
+        "country": "MDA",
+        "chip_usd": 0.9188,
+        "multiplier": 0.3112
+      },
+      {
+        "country": "PRY",
+        "chip_usd": 0.8981,
+        "multiplier": 0.3042
+      },
+      {
+        "country": "COL",
+        "chip_usd": 0.8847,
+        "multiplier": 0.2997
+      },
+      {
+        "country": "ZAF",
+        "chip_usd": 0.8139,
+        "multiplier": 0.2757
+      },
+      {
+        "country": "EGY",
+        "chip_usd": 0.8058,
+        "multiplier": 0.2729
+      },
+      {
+        "country": "PHL",
+        "chip_usd": 0.7039,
+        "multiplier": 0.2384
+      },
+      {
+        "country": "NGA",
+        "chip_usd": 0.6897,
+        "multiplier": 0.2336
+      },
+      {
+        "country": "HND",
+        "chip_usd": 0.6486,
+        "multiplier": 0.2197
+      },
+      {
+        "country": "VNM",
+        "chip_usd": 0.6255,
+        "multiplier": 0.2119
+      },
+      {
+        "country": "NAM",
+        "chip_usd": 0.563,
+        "multiplier": 0.1907
+      },
+      {
+        "country": "BGD",
+        "chip_usd": 0.5179,
+        "multiplier": 0.1754
+      },
+      {
+        "country": "MLI",
+        "chip_usd": 0.2821,
+        "multiplier": 0.0955
+      },
+      {
+        "country": "ETH",
+        "chip_usd": 0.1366,
+        "multiplier": 0.0463
+      },
+      {
+        "country": "PAK",
+        "chip_usd": 0.107,
+        "multiplier": 0.0363
+      },
+      {
+        "country": "GHA",
+        "chip_usd": 0.0987,
+        "multiplier": 0.0334
+      },
+      {
+        "country": "MWI",
+        "chip_usd": 0.0104,
+        "multiplier": 0.0035
+      }
+    ],
+    "notes": "Backfill for data year 2013"
+  },
+  {
+    "effective_date": "2015-01-01",
+    "calculated_date": "2026-02-24",
+    "chip_usd": 2.7933,
+    "chip_constant": 2.897,
+    "base_year": 2014,
+    "pwt_base_year": 2017,
+    "pwt_version": "11.0",
+    "window_years": 5,
+    "n_countries": 64,
+    "cpi_reference_date": "2026-01-01",
+    "cpi_reference_value": 326.588,
+    "multipliers": [
+      {
+        "country": "DNK",
+        "chip_usd": 6.1127,
+        "multiplier": 2.11
+      },
+      {
+        "country": "FRA",
+        "chip_usd": 5.9342,
+        "multiplier": 2.0484
+      },
+      {
+        "country": "CHE",
+        "chip_usd": 5.794,
+        "multiplier": 2.0
+      },
+      {
+        "country": "AUT",
+        "chip_usd": 5.7337,
+        "multiplier": 1.9792
+      },
+      {
+        "country": "NLD",
+        "chip_usd": 4.6782,
+        "multiplier": 1.6148
+      },
+      {
+        "country": "IRL",
+        "chip_usd": 4.3162,
+        "multiplier": 1.4899
+      },
+      {
+        "country": "ITA",
+        "chip_usd": 4.0414,
+        "multiplier": 1.395
+      },
+      {
+        "country": "DEU",
+        "chip_usd": 4.0219,
+        "multiplier": 1.3883
+      },
+      {
+        "country": "SWE",
+        "chip_usd": 3.7288,
+        "multiplier": 1.2871
+      },
+      {
+        "country": "LUX",
+        "chip_usd": 3.6155,
+        "multiplier": 1.248
+      },
+      {
+        "country": "GBR",
+        "chip_usd": 3.4107,
+        "multiplier": 1.1773
+      },
+      {
+        "country": "USA",
+        "chip_usd": 3.4007,
+        "multiplier": 1.1739
+      },
+      {
+        "country": "FIN",
+        "chip_usd": 3.3859,
+        "multiplier": 1.1688
+      },
+      {
+        "country": "SVN",
+        "chip_usd": 3.3257,
+        "multiplier": 1.148
+      },
+      {
+        "country": "BEL",
+        "chip_usd": 3.3217,
+        "multiplier": 1.1466
+      },
+      {
+        "country": "ARG",
+        "chip_usd": 3.1508,
+        "multiplier": 1.0876
+      },
+      {
+        "country": "CZE",
+        "chip_usd": 3.1301,
+        "multiplier": 1.0804
+      },
+      {
+        "country": "KOR",
+        "chip_usd": 3.1022,
+        "multiplier": 1.0708
+      },
+      {
+        "country": "LVA",
+        "chip_usd": 2.8055,
+        "multiplier": 0.9684
+      },
+      {
+        "country": "EST",
+        "chip_usd": 2.7405,
+        "multiplier": 0.946
+      },
+      {
+        "country": "CYP",
+        "chip_usd": 2.7087,
+        "multiplier": 0.935
+      },
+      {
+        "country": "SVK",
+        "chip_usd": 2.662,
+        "multiplier": 0.9189
+      },
+      {
+        "country": "HUN",
+        "chip_usd": 2.5222,
+        "multiplier": 0.8706
+      },
+      {
+        "country": "ROU",
+        "chip_usd": 2.3682,
+        "multiplier": 0.8174
+      },
+      {
+        "country": "LTU",
+        "chip_usd": 2.3511,
+        "multiplier": 0.8116
+      },
+      {
+        "country": "SRB",
+        "chip_usd": 2.2696,
+        "multiplier": 0.7834
+      },
+      {
+        "country": "ARM",
+        "chip_usd": 2.1004,
+        "multiplier": 0.725
+      },
+      {
+        "country": "POL",
+        "chip_usd": 1.9733,
+        "multiplier": 0.6811
+      },
+      {
+        "country": "ISR",
+        "chip_usd": 1.8037,
+        "multiplier": 0.6226
+      },
+      {
+        "country": "ECU",
+        "chip_usd": 1.7675,
+        "multiplier": 0.6101
+      },
+      {
+        "country": "MEX",
+        "chip_usd": 1.738,
+        "multiplier": 0.5999
+      },
+      {
+        "country": "MUS",
+        "chip_usd": 1.6993,
+        "multiplier": 0.5866
+      },
+      {
+        "country": "PAN",
+        "chip_usd": 1.6397,
+        "multiplier": 0.566
+      },
+      {
+        "country": "ISL",
+        "chip_usd": 1.5591,
+        "multiplier": 0.5382
+      },
+      {
+        "country": "ESP",
+        "chip_usd": 1.5328,
+        "multiplier": 0.5291
+      },
+      {
+        "country": "MYS",
+        "chip_usd": 1.506,
+        "multiplier": 0.5199
+      },
+      {
+        "country": "TUR",
+        "chip_usd": 1.5,
+        "multiplier": 0.5178
+      },
+      {
+        "country": "BRN",
+        "chip_usd": 1.4778,
+        "multiplier": 0.5101
+      },
+      {
+        "country": "MLT",
+        "chip_usd": 1.4719,
+        "multiplier": 0.5081
+      },
+      {
+        "country": "MNG",
+        "chip_usd": 1.4576,
+        "multiplier": 0.5031
+      },
+      {
+        "country": "IDN",
+        "chip_usd": 1.4343,
+        "multiplier": 0.4951
+      },
+      {
+        "country": "CHL",
+        "chip_usd": 1.4123,
+        "multiplier": 0.4875
+      },
+      {
+        "country": "BRA",
+        "chip_usd": 1.3823,
+        "multiplier": 0.4771
+      },
+      {
+        "country": "PRT",
+        "chip_usd": 1.3709,
+        "multiplier": 0.4732
+      },
+      {
+        "country": "PER",
+        "chip_usd": 1.2896,
+        "multiplier": 0.4451
+      },
+      {
+        "country": "GRC",
+        "chip_usd": 1.269,
+        "multiplier": 0.438
+      },
+      {
+        "country": "NOR",
+        "chip_usd": 1.2347,
+        "multiplier": 0.4262
+      },
+      {
+        "country": "LKA",
+        "chip_usd": 1.1837,
+        "multiplier": 0.4086
+      },
+      {
+        "country": "MDA",
+        "chip_usd": 1.1181,
+        "multiplier": 0.3859
+      },
+      {
+        "country": "SLV",
+        "chip_usd": 1.0735,
+        "multiplier": 0.3706
+      },
+      {
+        "country": "JAM",
+        "chip_usd": 1.0332,
+        "multiplier": 0.3566
+      },
+      {
+        "country": "BGR",
+        "chip_usd": 0.997,
+        "multiplier": 0.3442
+      },
+      {
+        "country": "PRY",
+        "chip_usd": 0.9781,
+        "multiplier": 0.3376
+      },
+      {
+        "country": "COL",
+        "chip_usd": 0.9282,
+        "multiplier": 0.3204
+      },
+      {
+        "country": "ZAF",
+        "chip_usd": 0.9234,
+        "multiplier": 0.3188
+      },
+      {
+        "country": "THA",
+        "chip_usd": 0.8431,
+        "multiplier": 0.291
+      },
+      {
+        "country": "PHL",
+        "chip_usd": 0.7588,
+        "multiplier": 0.2619
+      },
+      {
+        "country": "NAM",
+        "chip_usd": 0.692,
+        "multiplier": 0.2389
+      },
+      {
+        "country": "VNM",
+        "chip_usd": 0.641,
+        "multiplier": 0.2213
+      },
+      {
+        "country": "HND",
+        "chip_usd": 0.6291,
+        "multiplier": 0.2172
+      },
+      {
+        "country": "UGA",
+        "chip_usd": 0.1461,
+        "multiplier": 0.0504
+      },
+      {
+        "country": "PAK",
+        "chip_usd": 0.1104,
+        "multiplier": 0.0381
+      },
+      {
+        "country": "MLI",
+        "chip_usd": 0.0754,
+        "multiplier": 0.026
+      },
+      {
+        "country": "TZA",
+        "chip_usd": 0.0546,
+        "multiplier": 0.0189
+      }
+    ],
+    "notes": "Backfill for data year 2014"
+  },
+  {
+    "effective_date": "2016-01-01",
+    "calculated_date": "2026-02-24",
+    "chip_usd": 2.7518,
+    "chip_constant": 2.8277,
+    "base_year": 2015,
+    "pwt_base_year": 2017,
+    "pwt_version": "11.0",
+    "window_years": 5,
+    "n_countries": 44,
+    "cpi_reference_date": "2026-01-01",
+    "cpi_reference_value": 326.588,
+    "multipliers": [
+      {
+        "country": "FRA",
+        "chip_usd": 5.9415,
+        "multiplier": 2.1012
+      },
+      {
+        "country": "CHE",
+        "chip_usd": 5.6836,
+        "multiplier": 2.01
+      },
+      {
+        "country": "ITA",
+        "chip_usd": 4.0676,
+        "multiplier": 1.4385
+      },
+      {
+        "country": "SWE",
+        "chip_usd": 3.7643,
+        "multiplier": 1.3312
+      },
+      {
+        "country": "BEL",
+        "chip_usd": 3.4317,
+        "multiplier": 1.2136
+      },
+      {
+        "country": "GBR",
+        "chip_usd": 3.3857,
+        "multiplier": 1.1973
+      },
+      {
+        "country": "USA",
+        "chip_usd": 3.3671,
+        "multiplier": 1.1908
+      },
+      {
+        "country": "KOR",
+        "chip_usd": 3.213,
+        "multiplier": 1.1362
+      },
+      {
+        "country": "CZE",
+        "chip_usd": 3.1391,
+        "multiplier": 1.1101
+      },
+      {
+        "country": "SVK",
+        "chip_usd": 2.6324,
+        "multiplier": 0.9309
+      },
+      {
+        "country": "RUS",
+        "chip_usd": 2.5106,
+        "multiplier": 0.8879
+      },
+      {
+        "country": "ARM",
+        "chip_usd": 2.0112,
+        "multiplier": 0.7113
+      },
+      {
+        "country": "DOM",
+        "chip_usd": 1.9966,
+        "multiplier": 0.7061
+      },
+      {
+        "country": "ECU",
+        "chip_usd": 1.8604,
+        "multiplier": 0.6579
+      },
+      {
+        "country": "ISR",
+        "chip_usd": 1.8022,
+        "multiplier": 0.6373
+      },
+      {
+        "country": "MUS",
+        "chip_usd": 1.7742,
+        "multiplier": 0.6274
+      },
+      {
+        "country": "PAN",
+        "chip_usd": 1.7559,
+        "multiplier": 0.621
+      },
+      {
+        "country": "MEX",
+        "chip_usd": 1.7299,
+        "multiplier": 0.6117
+      },
+      {
+        "country": "TUR",
+        "chip_usd": 1.603,
+        "multiplier": 0.5669
+      },
+      {
+        "country": "GRC",
+        "chip_usd": 1.5824,
+        "multiplier": 0.5596
+      },
+      {
+        "country": "ISL",
+        "chip_usd": 1.5359,
+        "multiplier": 0.5431
+      },
+      {
+        "country": "ESP",
+        "chip_usd": 1.5212,
+        "multiplier": 0.5379
+      },
+      {
+        "country": "BRA",
+        "chip_usd": 1.4517,
+        "multiplier": 0.5134
+      },
+      {
+        "country": "MNG",
+        "chip_usd": 1.4247,
+        "multiplier": 0.5038
+      },
+      {
+        "country": "CHL",
+        "chip_usd": 1.4075,
+        "multiplier": 0.4978
+      },
+      {
+        "country": "PER",
+        "chip_usd": 1.3937,
+        "multiplier": 0.4929
+      },
+      {
+        "country": "IDN",
+        "chip_usd": 1.3773,
+        "multiplier": 0.4871
+      },
+      {
+        "country": "PRT",
+        "chip_usd": 1.369,
+        "multiplier": 0.4841
+      },
+      {
+        "country": "LKA",
+        "chip_usd": 1.108,
+        "multiplier": 0.3918
+      },
+      {
+        "country": "SLV",
+        "chip_usd": 1.1059,
+        "multiplier": 0.3911
+      },
+      {
+        "country": "MDA",
+        "chip_usd": 1.1045,
+        "multiplier": 0.3906
+      },
+      {
+        "country": "PRY",
+        "chip_usd": 0.9959,
+        "multiplier": 0.3522
+      },
+      {
+        "country": "COL",
+        "chip_usd": 0.9887,
+        "multiplier": 0.3497
+      },
+      {
+        "country": "THA",
+        "chip_usd": 0.8687,
+        "multiplier": 0.3072
+      },
+      {
+        "country": "EGY",
+        "chip_usd": 0.865,
+        "multiplier": 0.3059
+      },
+      {
+        "country": "ZAF",
+        "chip_usd": 0.8433,
+        "multiplier": 0.2982
+      },
+      {
+        "country": "PHL",
+        "chip_usd": 0.814,
+        "multiplier": 0.2879
+      },
+      {
+        "country": "VNM",
+        "chip_usd": 0.6618,
+        "multiplier": 0.2341
+      },
+      {
+        "country": "MMR",
+        "chip_usd": 0.656,
+        "multiplier": 0.232
+      },
+      {
+        "country": "HND",
+        "chip_usd": 0.6054,
+        "multiplier": 0.2141
+      },
+      {
+        "country": "MDG",
+        "chip_usd": 0.2021,
+        "multiplier": 0.0715
+      },
+      {
+        "country": "PAK",
+        "chip_usd": 0.1183,
+        "multiplier": 0.0418
+      },
+      {
+        "country": "MLI",
+        "chip_usd": 0.1167,
+        "multiplier": 0.0413
+      },
+      {
+        "country": "GHA",
+        "chip_usd": 0.1144,
+        "multiplier": 0.0405
+      }
+    ],
+    "notes": "Backfill for data year 2015"
+  },
+  {
+    "effective_date": "2017-01-01",
+    "calculated_date": "2026-02-24",
+    "chip_usd": 2.7468,
+    "chip_constant": 2.796,
+    "base_year": 2016,
+    "pwt_base_year": 2017,
+    "pwt_version": "11.0",
+    "window_years": 5,
+    "n_countries": 44,
+    "cpi_reference_date": "2026-01-01",
+    "cpi_reference_value": 326.588,
+    "multipliers": [
+      {
+        "country": "CHE",
+        "chip_usd": 6.1648,
+        "multiplier": 2.2049
+      },
+      {
+        "country": "FRA",
+        "chip_usd": 5.848,
+        "multiplier": 2.0916
+      },
+      {
+        "country": "ITA",
+        "chip_usd": 4.0524,
+        "multiplier": 1.4494
+      },
+      {
+        "country": "SWE",
+        "chip_usd": 3.7243,
+        "multiplier": 1.332
+      },
+      {
+        "country": "BEL",
+        "chip_usd": 3.4536,
+        "multiplier": 1.2352
+      },
+      {
+        "country": "GBR",
+        "chip_usd": 3.4353,
+        "multiplier": 1.2287
+      },
+      {
+        "country": "FIN",
+        "chip_usd": 3.4156,
+        "multiplier": 1.2216
+      },
+      {
+        "country": "USA",
+        "chip_usd": 3.3876,
+        "multiplier": 1.2116
+      },
+      {
+        "country": "KOR",
+        "chip_usd": 3.3113,
+        "multiplier": 1.1843
+      },
+      {
+        "country": "SVK",
+        "chip_usd": 3.3081,
+        "multiplier": 1.1832
+      },
+      {
+        "country": "CZE",
+        "chip_usd": 3.2184,
+        "multiplier": 1.1511
+      },
+      {
+        "country": "MDV",
+        "chip_usd": 2.4549,
+        "multiplier": 0.878
+      },
+      {
+        "country": "DOM",
+        "chip_usd": 2.1607,
+        "multiplier": 0.7728
+      },
+      {
+        "country": "ARM",
+        "chip_usd": 2.1475,
+        "multiplier": 0.7681
+      },
+      {
+        "country": "ECU",
+        "chip_usd": 1.9843,
+        "multiplier": 0.7097
+      },
+      {
+        "country": "ISR",
+        "chip_usd": 1.9432,
+        "multiplier": 0.695
+      },
+      {
+        "country": "MUS",
+        "chip_usd": 1.9178,
+        "multiplier": 0.6859
+      },
+      {
+        "country": "TUR",
+        "chip_usd": 1.8038,
+        "multiplier": 0.6452
+      },
+      {
+        "country": "MEX",
+        "chip_usd": 1.747,
+        "multiplier": 0.6248
+      },
+      {
+        "country": "PAN",
+        "chip_usd": 1.7026,
+        "multiplier": 0.609
+      },
+      {
+        "country": "ISL",
+        "chip_usd": 1.5576,
+        "multiplier": 0.5571
+      },
+      {
+        "country": "ESP",
+        "chip_usd": 1.5326,
+        "multiplier": 0.5481
+      },
+      {
+        "country": "GRC",
+        "chip_usd": 1.5006,
+        "multiplier": 0.5367
+      },
+      {
+        "country": "MNG",
+        "chip_usd": 1.471,
+        "multiplier": 0.5261
+      },
+      {
+        "country": "BRA",
+        "chip_usd": 1.4686,
+        "multiplier": 0.5253
+      },
+      {
+        "country": "CHL",
+        "chip_usd": 1.4416,
+        "multiplier": 0.5156
+      },
+      {
+        "country": "PRT",
+        "chip_usd": 1.406,
+        "multiplier": 0.5029
+      },
+      {
+        "country": "PER",
+        "chip_usd": 1.4007,
+        "multiplier": 0.501
+      },
+      {
+        "country": "LKA",
+        "chip_usd": 1.1873,
+        "multiplier": 0.4246
+      },
+      {
+        "country": "SLV",
+        "chip_usd": 1.1017,
+        "multiplier": 0.394
+      },
+      {
+        "country": "MDA",
+        "chip_usd": 1.0975,
+        "multiplier": 0.3925
+      },
+      {
+        "country": "EGY",
+        "chip_usd": 1.0713,
+        "multiplier": 0.3832
+      },
+      {
+        "country": "PRY",
+        "chip_usd": 1.0648,
+        "multiplier": 0.3809
+      },
+      {
+        "country": "COL",
+        "chip_usd": 1.0248,
+        "multiplier": 0.3665
+      },
+      {
+        "country": "UKR",
+        "chip_usd": 0.9609,
+        "multiplier": 0.3437
+      },
+      {
+        "country": "THA",
+        "chip_usd": 0.9295,
+        "multiplier": 0.3325
+      },
+      {
+        "country": "ZAF",
+        "chip_usd": 0.9021,
+        "multiplier": 0.3226
+      },
+      {
+        "country": "NAM",
+        "chip_usd": 0.7878,
+        "multiplier": 0.2818
+      },
+      {
+        "country": "VNM",
+        "chip_usd": 0.7137,
+        "multiplier": 0.2553
+      },
+      {
+        "country": "HND",
+        "chip_usd": 0.5651,
+        "multiplier": 0.2021
+      },
+      {
+        "country": "SWZ",
+        "chip_usd": 0.5079,
+        "multiplier": 0.1817
+      },
+      {
+        "country": "PAK",
+        "chip_usd": 0.1115,
+        "multiplier": 0.0399
+      },
+      {
+        "country": "MLI",
+        "chip_usd": 0.101,
+        "multiplier": 0.0361
+      },
+      {
+        "country": "COD",
+        "chip_usd": 0.0221,
+        "multiplier": 0.0079
+      }
+    ],
+    "notes": "Backfill for data year 2016"
+  },
+  {
+    "effective_date": "2018-01-01",
+    "calculated_date": "2026-02-24",
+    "chip_usd": 2.798,
+    "chip_constant": 2.798,
+    "base_year": 2017,
+    "pwt_base_year": 2017,
+    "pwt_version": "11.0",
+    "window_years": 5,
+    "n_countries": 51,
+    "cpi_reference_date": "2026-01-01",
+    "cpi_reference_value": 326.588,
+    "multipliers": [
+      {
+        "country": "CHE",
+        "chip_usd": 6.0972,
+        "multiplier": 2.1791
+      },
+      {
+        "country": "FRA",
+        "chip_usd": 5.9631,
+        "multiplier": 2.1312
+      },
+      {
+        "country": "SVK",
+        "chip_usd": 4.9027,
+        "multiplier": 1.7522
+      },
+      {
+        "country": "ARG",
+        "chip_usd": 4.1177,
+        "multiplier": 1.4716
+      },
+      {
+        "country": "ITA",
+        "chip_usd": 4.0986,
+        "multiplier": 1.4648
+      },
+      {
+        "country": "SWE",
+        "chip_usd": 3.7086,
+        "multiplier": 1.3254
+      },
+      {
+        "country": "KOR",
+        "chip_usd": 3.6101,
+        "multiplier": 1.2902
+      },
+      {
+        "country": "GBR",
+        "chip_usd": 3.5634,
+        "multiplier": 1.2735
+      },
+      {
+        "country": "FIN",
+        "chip_usd": 3.4785,
+        "multiplier": 1.2432
+      },
+      {
+        "country": "BEL",
+        "chip_usd": 3.468,
+        "multiplier": 1.2394
+      },
+      {
+        "country": "USA",
+        "chip_usd": 3.4419,
+        "multiplier": 1.2301
+      },
+      {
+        "country": "CZE",
+        "chip_usd": 3.2642,
+        "multiplier": 1.1666
+      },
+      {
+        "country": "RUS",
+        "chip_usd": 2.5983,
+        "multiplier": 0.9286
+      },
+      {
+        "country": "ARM",
+        "chip_usd": 2.2567,
+        "multiplier": 0.8065
+      },
+      {
+        "country": "JOR",
+        "chip_usd": 2.1658,
+        "multiplier": 0.774
+      },
+      {
+        "country": "DOM",
+        "chip_usd": 2.0504,
+        "multiplier": 0.7328
+      },
+      {
+        "country": "PAN",
+        "chip_usd": 2.039,
+        "multiplier": 0.7287
+      },
+      {
+        "country": "ECU",
+        "chip_usd": 1.9901,
+        "multiplier": 0.7112
+      },
+      {
+        "country": "BRN",
+        "chip_usd": 1.9049,
+        "multiplier": 0.6808
+      },
+      {
+        "country": "TUR",
+        "chip_usd": 1.8621,
+        "multiplier": 0.6655
+      },
+      {
+        "country": "MUS",
+        "chip_usd": 1.8327,
+        "multiplier": 0.655
+      },
+      {
+        "country": "MEX",
+        "chip_usd": 1.7823,
+        "multiplier": 0.637
+      },
+      {
+        "country": "CRI",
+        "chip_usd": 1.752,
+        "multiplier": 0.6262
+      },
+      {
+        "country": "IDN",
+        "chip_usd": 1.5454,
+        "multiplier": 0.5523
+      },
+      {
+        "country": "PER",
+        "chip_usd": 1.5295,
+        "multiplier": 0.5466
+      },
+      {
+        "country": "ESP",
+        "chip_usd": 1.5193,
+        "multiplier": 0.543
+      },
+      {
+        "country": "ISL",
+        "chip_usd": 1.5142,
+        "multiplier": 0.5412
+      },
+      {
+        "country": "BRA",
+        "chip_usd": 1.5073,
+        "multiplier": 0.5387
+      },
+      {
+        "country": "GRC",
+        "chip_usd": 1.4384,
+        "multiplier": 0.5141
+      },
+      {
+        "country": "MNG",
+        "chip_usd": 1.4306,
+        "multiplier": 0.5113
+      },
+      {
+        "country": "PRT",
+        "chip_usd": 1.4006,
+        "multiplier": 0.5006
+      },
+      {
+        "country": "SLV",
+        "chip_usd": 1.1624,
+        "multiplier": 0.4154
+      },
+      {
+        "country": "PRY",
+        "chip_usd": 1.1602,
+        "multiplier": 0.4147
+      },
+      {
+        "country": "LKA",
+        "chip_usd": 1.1382,
+        "multiplier": 0.4068
+      },
+      {
+        "country": "MDA",
+        "chip_usd": 1.1291,
+        "multiplier": 0.4035
+      },
+      {
+        "country": "COL",
+        "chip_usd": 1.0706,
+        "multiplier": 0.3826
+      },
+      {
+        "country": "THA",
+        "chip_usd": 0.978,
+        "multiplier": 0.3495
+      },
+      {
+        "country": "ZAF",
+        "chip_usd": 0.9746,
+        "multiplier": 0.3483
+      },
+      {
+        "country": "EGY",
+        "chip_usd": 0.9675,
+        "multiplier": 0.3458
+      },
+      {
+        "country": "PHL",
+        "chip_usd": 0.9582,
+        "multiplier": 0.3424
+      },
+      {
+        "country": "VNM",
+        "chip_usd": 0.8095,
+        "multiplier": 0.2893
+      },
+      {
+        "country": "ZMB",
+        "chip_usd": 0.7923,
+        "multiplier": 0.2832
+      },
+      {
+        "country": "MMR",
+        "chip_usd": 0.6501,
+        "multiplier": 0.2323
+      },
+      {
+        "country": "HND",
+        "chip_usd": 0.6016,
+        "multiplier": 0.215
+      },
+      {
+        "country": "BGD",
+        "chip_usd": 0.5729,
+        "multiplier": 0.2048
+      },
+      {
+        "country": "NPL",
+        "chip_usd": 0.5647,
+        "multiplier": 0.2018
+      },
+      {
+        "country": "LBR",
+        "chip_usd": 0.4999,
+        "multiplier": 0.1787
+      },
+      {
+        "country": "CIV",
+        "chip_usd": 0.4621,
+        "multiplier": 0.1652
+      },
+      {
+        "country": "UGA",
+        "chip_usd": 0.2959,
+        "multiplier": 0.1058
+      },
+      {
+        "country": "RWA",
+        "chip_usd": 0.1677,
+        "multiplier": 0.06
+      },
+      {
+        "country": "MLI",
+        "chip_usd": 0.1557,
+        "multiplier": 0.0556
+      }
+    ],
+    "notes": "Backfill for data year 2017"
+  },
+  {
+    "effective_date": "2019-01-01",
+    "calculated_date": "2026-02-24",
+    "chip_usd": 2.8771,
+    "chip_constant": 2.8126,
+    "base_year": 2018,
+    "pwt_base_year": 2017,
+    "pwt_version": "11.0",
+    "window_years": 5,
+    "n_countries": 64,
+    "cpi_reference_date": "2026-01-01",
+    "cpi_reference_value": 326.588,
+    "multipliers": [
+      {
+        "country": "FRA",
+        "chip_usd": 6.0149,
+        "multiplier": 2.1385
+      },
+      {
+        "country": "AUT",
+        "chip_usd": 5.9355,
+        "multiplier": 2.1103
+      },
+      {
+        "country": "CHE",
+        "chip_usd": 5.6268,
+        "multiplier": 2.0005
+      },
+      {
+        "country": "NLD",
+        "chip_usd": 4.6203,
+        "multiplier": 1.6427
+      },
+      {
+        "country": "IRL",
+        "chip_usd": 4.5884,
+        "multiplier": 1.6314
+      },
+      {
+        "country": "DEU",
+        "chip_usd": 4.2057,
+        "multiplier": 1.4953
+      },
+      {
+        "country": "FIN",
+        "chip_usd": 4.1636,
+        "multiplier": 1.4803
+      },
+      {
+        "country": "ITA",
+        "chip_usd": 4.0491,
+        "multiplier": 1.4396
+      },
+      {
+        "country": "KOR",
+        "chip_usd": 3.8661,
+        "multiplier": 1.3745
+      },
+      {
+        "country": "SWE",
+        "chip_usd": 3.6839,
+        "multiplier": 1.3098
+      },
+      {
+        "country": "LUX",
+        "chip_usd": 3.6413,
+        "multiplier": 1.2946
+      },
+      {
+        "country": "GBR",
+        "chip_usd": 3.5877,
+        "multiplier": 1.2756
+      },
+      {
+        "country": "USA",
+        "chip_usd": 3.4745,
+        "multiplier": 1.2353
+      },
+      {
+        "country": "BEL",
+        "chip_usd": 3.4531,
+        "multiplier": 1.2277
+      },
+      {
+        "country": "SVN",
+        "chip_usd": 3.3809,
+        "multiplier": 1.202
+      },
+      {
+        "country": "CZE",
+        "chip_usd": 3.2886,
+        "multiplier": 1.1692
+      },
+      {
+        "country": "ARG",
+        "chip_usd": 3.2818,
+        "multiplier": 1.1668
+      },
+      {
+        "country": "EST",
+        "chip_usd": 3.2747,
+        "multiplier": 1.1643
+      },
+      {
+        "country": "SVK",
+        "chip_usd": 3.197,
+        "multiplier": 1.1367
+      },
+      {
+        "country": "LVA",
+        "chip_usd": 3.0451,
+        "multiplier": 1.0827
+      },
+      {
+        "country": "ZAF",
+        "chip_usd": 2.8206,
+        "multiplier": 1.0028
+      },
+      {
+        "country": "LTU",
+        "chip_usd": 2.6689,
+        "multiplier": 0.9489
+      },
+      {
+        "country": "CYP",
+        "chip_usd": 2.4948,
+        "multiplier": 0.887
+      },
+      {
+        "country": "JOR",
+        "chip_usd": 2.4575,
+        "multiplier": 0.8737
+      },
+      {
+        "country": "HUN",
+        "chip_usd": 2.4213,
+        "multiplier": 0.8609
+      },
+      {
+        "country": "SRB",
+        "chip_usd": 2.247,
+        "multiplier": 0.7989
+      },
+      {
+        "country": "ALB",
+        "chip_usd": 2.2372,
+        "multiplier": 0.7954
+      },
+      {
+        "country": "DOM",
+        "chip_usd": 2.1218,
+        "multiplier": 0.7544
+      },
+      {
+        "country": "MUS",
+        "chip_usd": 2.0098,
+        "multiplier": 0.7146
+      },
+      {
+        "country": "TUR",
+        "chip_usd": 1.9727,
+        "multiplier": 0.7014
+      },
+      {
+        "country": "ISR",
+        "chip_usd": 1.9567,
+        "multiplier": 0.6957
+      },
+      {
+        "country": "ECU",
+        "chip_usd": 1.9205,
+        "multiplier": 0.6828
+      },
+      {
+        "country": "PAN",
+        "chip_usd": 1.8941,
+        "multiplier": 0.6734
+      },
+      {
+        "country": "MEX",
+        "chip_usd": 1.8006,
+        "multiplier": 0.6402
+      },
+      {
+        "country": "ISL",
+        "chip_usd": 1.6494,
+        "multiplier": 0.5864
+      },
+      {
+        "country": "CHL",
+        "chip_usd": 1.6098,
+        "multiplier": 0.5723
+      },
+      {
+        "country": "ESP",
+        "chip_usd": 1.5874,
+        "multiplier": 0.5644
+      },
+      {
+        "country": "CRI",
+        "chip_usd": 1.5504,
+        "multiplier": 0.5512
+      },
+      {
+        "country": "PER",
+        "chip_usd": 1.5308,
+        "multiplier": 0.5443
+      },
+      {
+        "country": "GRC",
+        "chip_usd": 1.5306,
+        "multiplier": 0.5442
+      },
+      {
+        "country": "BRA",
+        "chip_usd": 1.5152,
+        "multiplier": 0.5387
+      },
+      {
+        "country": "MNG",
+        "chip_usd": 1.477,
+        "multiplier": 0.5251
+      },
+      {
+        "country": "PRT",
+        "chip_usd": 1.4261,
+        "multiplier": 0.507
+      },
+      {
+        "country": "MLT",
+        "chip_usd": 1.3798,
+        "multiplier": 0.4906
+      },
+      {
+        "country": "NOR",
+        "chip_usd": 1.2945,
+        "multiplier": 0.4603
+      },
+      {
+        "country": "BGR",
+        "chip_usd": 1.2899,
+        "multiplier": 0.4586
+      },
+      {
+        "country": "LKA",
+        "chip_usd": 1.2847,
+        "multiplier": 0.4568
+      },
+      {
+        "country": "MDA",
+        "chip_usd": 1.218,
+        "multiplier": 0.433
+      },
+      {
+        "country": "PRY",
+        "chip_usd": 1.2032,
+        "multiplier": 0.4278
+      },
+      {
+        "country": "SLV",
+        "chip_usd": 1.1573,
+        "multiplier": 0.4115
+      },
+      {
+        "country": "COL",
+        "chip_usd": 1.1159,
+        "multiplier": 0.3967
+      },
+      {
+        "country": "THA",
+        "chip_usd": 1.0192,
+        "multiplier": 0.3624
+      },
+      {
+        "country": "EGY",
+        "chip_usd": 0.9847,
+        "multiplier": 0.3501
+      },
+      {
+        "country": "PHL",
+        "chip_usd": 0.9685,
+        "multiplier": 0.3443
+      },
+      {
+        "country": "VNM",
+        "chip_usd": 0.8693,
+        "multiplier": 0.3091
+      },
+      {
+        "country": "IND",
+        "chip_usd": 0.7858,
+        "multiplier": 0.2794
+      },
+      {
+        "country": "NAM",
+        "chip_usd": 0.77,
+        "multiplier": 0.2738
+      },
+      {
+        "country": "MMR",
+        "chip_usd": 0.676,
+        "multiplier": 0.2403
+      },
+      {
+        "country": "HND",
+        "chip_usd": 0.5488,
+        "multiplier": 0.1951
+      },
+      {
+        "country": "BLZ",
+        "chip_usd": 0.3932,
+        "multiplier": 0.1398
+      },
+      {
+        "country": "ZMB",
+        "chip_usd": 0.2716,
+        "multiplier": 0.0966
+      },
+      {
+        "country": "PAK",
+        "chip_usd": 0.1304,
+        "multiplier": 0.0464
+      },
+      {
+        "country": "MLI",
+        "chip_usd": 0.1284,
+        "multiplier": 0.0457
+      },
+      {
+        "country": "GMB",
+        "chip_usd": 0.1141,
+        "multiplier": 0.0406
+      }
+    ],
+    "notes": "Backfill for data year 2018"
+  },
+  {
+    "effective_date": "2020-01-01",
+    "calculated_date": "2026-02-24",
+    "chip_usd": 2.8471,
+    "chip_constant": 2.7374,
+    "base_year": 2019,
+    "pwt_base_year": 2017,
+    "pwt_version": "11.0",
+    "window_years": 5,
+    "n_countries": 54,
+    "cpi_reference_date": "2026-01-01",
+    "cpi_reference_value": 326.588,
+    "multipliers": [
+      {
+        "country": "FRA",
+        "chip_usd": 6.1607,
+        "multiplier": 2.2506
+      },
+      {
+        "country": "CHE",
+        "chip_usd": 5.8069,
+        "multiplier": 2.1214
+      },
+      {
+        "country": "ITA",
+        "chip_usd": 4.0858,
+        "multiplier": 1.4926
+      },
+      {
+        "country": "KOR",
+        "chip_usd": 3.9737,
+        "multiplier": 1.4516
+      },
+      {
+        "country": "SWE",
+        "chip_usd": 3.7427,
+        "multiplier": 1.3673
+      },
+      {
+        "country": "GBR",
+        "chip_usd": 3.6004,
+        "multiplier": 1.3153
+      },
+      {
+        "country": "USA",
+        "chip_usd": 3.3977,
+        "multiplier": 1.2412
+      },
+      {
+        "country": "ARG",
+        "chip_usd": 3.2509,
+        "multiplier": 1.1876
+      },
+      {
+        "country": "CZE",
+        "chip_usd": 3.198,
+        "multiplier": 1.1683
+      },
+      {
+        "country": "FIN",
+        "chip_usd": 2.9174,
+        "multiplier": 1.0658
+      },
+      {
+        "country": "SVK",
+        "chip_usd": 2.828,
+        "multiplier": 1.0331
+      },
+      {
+        "country": "RUS",
+        "chip_usd": 2.8145,
+        "multiplier": 1.0282
+      },
+      {
+        "country": "JOR",
+        "chip_usd": 2.3955,
+        "multiplier": 0.8751
+      },
+      {
+        "country": "MDV",
+        "chip_usd": 2.3218,
+        "multiplier": 0.8482
+      },
+      {
+        "country": "HUN",
+        "chip_usd": 2.2501,
+        "multiplier": 0.822
+      },
+      {
+        "country": "DOM",
+        "chip_usd": 2.2444,
+        "multiplier": 0.8199
+      },
+      {
+        "country": "MUS",
+        "chip_usd": 2.1567,
+        "multiplier": 0.7879
+      },
+      {
+        "country": "TUR",
+        "chip_usd": 2.0601,
+        "multiplier": 0.7526
+      },
+      {
+        "country": "PAN",
+        "chip_usd": 2.0411,
+        "multiplier": 0.7456
+      },
+      {
+        "country": "ECU",
+        "chip_usd": 2.0227,
+        "multiplier": 0.7389
+      },
+      {
+        "country": "MEX",
+        "chip_usd": 1.8572,
+        "multiplier": 0.6785
+      },
+      {
+        "country": "IDN",
+        "chip_usd": 1.7236,
+        "multiplier": 0.6296
+      },
+      {
+        "country": "ISL",
+        "chip_usd": 1.6558,
+        "multiplier": 0.6049
+      },
+      {
+        "country": "ESP",
+        "chip_usd": 1.5716,
+        "multiplier": 0.5741
+      },
+      {
+        "country": "GRC",
+        "chip_usd": 1.5417,
+        "multiplier": 0.5632
+      },
+      {
+        "country": "PER",
+        "chip_usd": 1.5202,
+        "multiplier": 0.5553
+      },
+      {
+        "country": "MNG",
+        "chip_usd": 1.5172,
+        "multiplier": 0.5543
+      },
+      {
+        "country": "CRI",
+        "chip_usd": 1.4855,
+        "multiplier": 0.5427
+      },
+      {
+        "country": "BRA",
+        "chip_usd": 1.4671,
+        "multiplier": 0.536
+      },
+      {
+        "country": "PRT",
+        "chip_usd": 1.4334,
+        "multiplier": 0.5236
+      },
+      {
+        "country": "PRY",
+        "chip_usd": 1.2469,
+        "multiplier": 0.4555
+      },
+      {
+        "country": "CHL",
+        "chip_usd": 1.2325,
+        "multiplier": 0.4503
+      },
+      {
+        "country": "TUN",
+        "chip_usd": 1.2175,
+        "multiplier": 0.4448
+      },
+      {
+        "country": "MDA",
+        "chip_usd": 1.2107,
+        "multiplier": 0.4423
+      },
+      {
+        "country": "SLV",
+        "chip_usd": 1.1323,
+        "multiplier": 0.4137
+      },
+      {
+        "country": "PHL",
+        "chip_usd": 1.1248,
+        "multiplier": 0.4109
+      },
+      {
+        "country": "COL",
+        "chip_usd": 1.1191,
+        "multiplier": 0.4088
+      },
+      {
+        "country": "LKA",
+        "chip_usd": 1.1019,
+        "multiplier": 0.4025
+      },
+      {
+        "country": "EGY",
+        "chip_usd": 1.0733,
+        "multiplier": 0.3921
+      },
+      {
+        "country": "THA",
+        "chip_usd": 1.0722,
+        "multiplier": 0.3917
+      },
+      {
+        "country": "ZAF",
+        "chip_usd": 0.9814,
+        "multiplier": 0.3585
+      },
+      {
+        "country": "VNM",
+        "chip_usd": 0.9546,
+        "multiplier": 0.3487
+      },
+      {
+        "country": "SEN",
+        "chip_usd": 0.8529,
+        "multiplier": 0.3116
+      },
+      {
+        "country": "IND",
+        "chip_usd": 0.7633,
+        "multiplier": 0.2788
+      },
+      {
+        "country": "MMR",
+        "chip_usd": 0.7544,
+        "multiplier": 0.2756
+      },
+      {
+        "country": "BWA",
+        "chip_usd": 0.7181,
+        "multiplier": 0.2623
+      },
+      {
+        "country": "HND",
+        "chip_usd": 0.5732,
+        "multiplier": 0.2094
+      },
+      {
+        "country": "AGO",
+        "chip_usd": 0.4339,
+        "multiplier": 0.1585
+      },
+      {
+        "country": "LSO",
+        "chip_usd": 0.3872,
+        "multiplier": 0.1414
+      },
+      {
+        "country": "BLZ",
+        "chip_usd": 0.3514,
+        "multiplier": 0.1284
+      },
+      {
+        "country": "ZMB",
+        "chip_usd": 0.2676,
+        "multiplier": 0.0978
+      },
+      {
+        "country": "KEN",
+        "chip_usd": 0.2557,
+        "multiplier": 0.0934
+      },
+      {
+        "country": "UGA",
+        "chip_usd": 0.2011,
+        "multiplier": 0.0734
+      },
+      {
+        "country": "PAK",
+        "chip_usd": 0.1334,
+        "multiplier": 0.0487
+      }
+    ],
+    "notes": "Backfill for data year 2019"
+  },
+  {
+    "effective_date": "2021-01-01",
+    "calculated_date": "2026-02-24",
+    "chip_usd": 2.9062,
+    "chip_constant": 2.7578,
+    "base_year": 2020,
+    "pwt_base_year": 2017,
+    "pwt_version": "11.0",
+    "window_years": 5,
+    "n_countries": 45,
+    "cpi_reference_date": "2026-01-01",
+    "cpi_reference_value": 326.588,
+    "multipliers": [
+      {
+        "country": "FRA",
+        "chip_usd": 6.1936,
+        "multiplier": 2.2458
+      },
+      {
+        "country": "AUT",
+        "chip_usd": 6.05,
+        "multiplier": 2.1938
+      },
+      {
+        "country": "CHE",
+        "chip_usd": 5.8526,
+        "multiplier": 2.1222
+      },
+      {
+        "country": "ARG",
+        "chip_usd": 4.3941,
+        "multiplier": 1.5933
+      },
+      {
+        "country": "ITA",
+        "chip_usd": 4.323,
+        "multiplier": 1.5675
+      },
+      {
+        "country": "KOR",
+        "chip_usd": 4.2635,
+        "multiplier": 1.546
+      },
+      {
+        "country": "SWE",
+        "chip_usd": 3.8019,
+        "multiplier": 1.3786
+      },
+      {
+        "country": "USA",
+        "chip_usd": 3.7856,
+        "multiplier": 1.3727
+      },
+      {
+        "country": "GBR",
+        "chip_usd": 3.7325,
+        "multiplier": 1.3534
+      },
+      {
+        "country": "FIN",
+        "chip_usd": 3.5195,
+        "multiplier": 1.2762
+      },
+      {
+        "country": "CZE",
+        "chip_usd": 3.3306,
+        "multiplier": 1.2077
+      },
+      {
+        "country": "PAN",
+        "chip_usd": 3.2014,
+        "multiplier": 1.1608
+      },
+      {
+        "country": "SVK",
+        "chip_usd": 2.9431,
+        "multiplier": 1.0672
+      },
+      {
+        "country": "DOM",
+        "chip_usd": 2.7139,
+        "multiplier": 0.9841
+      },
+      {
+        "country": "HUN",
+        "chip_usd": 2.2703,
+        "multiplier": 0.8232
+      },
+      {
+        "country": "TUR",
+        "chip_usd": 2.1786,
+        "multiplier": 0.79
+      },
+      {
+        "country": "JOR",
+        "chip_usd": 2.1093,
+        "multiplier": 0.7648
+      },
+      {
+        "country": "CRI",
+        "chip_usd": 2.0639,
+        "multiplier": 0.7484
+      },
+      {
+        "country": "URY",
+        "chip_usd": 1.8608,
+        "multiplier": 0.6747
+      },
+      {
+        "country": "ECU",
+        "chip_usd": 1.8561,
+        "multiplier": 0.673
+      },
+      {
+        "country": "MEX",
+        "chip_usd": 1.8502,
+        "multiplier": 0.6709
+      },
+      {
+        "country": "CHL",
+        "chip_usd": 1.7813,
+        "multiplier": 0.6459
+      },
+      {
+        "country": "IDN",
+        "chip_usd": 1.7802,
+        "multiplier": 0.6455
+      },
+      {
+        "country": "PER",
+        "chip_usd": 1.7663,
+        "multiplier": 0.6405
+      },
+      {
+        "country": "ISL",
+        "chip_usd": 1.6902,
+        "multiplier": 0.6129
+      },
+      {
+        "country": "BRA",
+        "chip_usd": 1.5689,
+        "multiplier": 0.5689
+      },
+      {
+        "country": "ESP",
+        "chip_usd": 1.5605,
+        "multiplier": 0.5658
+      },
+      {
+        "country": "GRC",
+        "chip_usd": 1.5282,
+        "multiplier": 0.5541
+      },
+      {
+        "country": "MNG",
+        "chip_usd": 1.4769,
+        "multiplier": 0.5355
+      },
+      {
+        "country": "PRT",
+        "chip_usd": 1.4388,
+        "multiplier": 0.5217
+      },
+      {
+        "country": "PHL",
+        "chip_usd": 1.3236,
+        "multiplier": 0.48
+      },
+      {
+        "country": "EGY",
+        "chip_usd": 1.2459,
+        "multiplier": 0.4518
+      },
+      {
+        "country": "MDA",
+        "chip_usd": 1.2159,
+        "multiplier": 0.4409
+      },
+      {
+        "country": "PRY",
+        "chip_usd": 1.2113,
+        "multiplier": 0.4392
+      },
+      {
+        "country": "LKA",
+        "chip_usd": 1.2077,
+        "multiplier": 0.4379
+      },
+      {
+        "country": "UKR",
+        "chip_usd": 1.0913,
+        "multiplier": 0.3957
+      },
+      {
+        "country": "THA",
+        "chip_usd": 1.0783,
+        "multiplier": 0.391
+      },
+      {
+        "country": "VNM",
+        "chip_usd": 1.0074,
+        "multiplier": 0.3653
+      },
+      {
+        "country": "IND",
+        "chip_usd": 0.7876,
+        "multiplier": 0.2856
+      },
+      {
+        "country": "BWA",
+        "chip_usd": 0.7487,
+        "multiplier": 0.2715
+      },
+      {
+        "country": "HND",
+        "chip_usd": 0.7177,
+        "multiplier": 0.2602
+      },
+      {
+        "country": "MMR",
+        "chip_usd": 0.6891,
+        "multiplier": 0.2499
+      },
+      {
+        "country": "ZMB",
+        "chip_usd": 0.2465,
+        "multiplier": 0.0894
+      },
+      {
+        "country": "TZA",
+        "chip_usd": 0.1535,
+        "multiplier": 0.0557
+      },
+      {
+        "country": "MLI",
+        "chip_usd": 0.1492,
+        "multiplier": 0.0541
+      }
+    ],
+    "notes": "Backfill for data year 2020"
+  },
+  {
+    "effective_date": "2022-01-01",
+    "calculated_date": "2026-02-24",
+    "chip_usd": 3.0864,
+    "chip_constant": 2.8004,
+    "base_year": 2021,
+    "pwt_base_year": 2017,
+    "pwt_version": "11.0",
+    "window_years": 5,
+    "n_countries": 49,
+    "cpi_reference_date": "2026-01-01",
+    "cpi_reference_value": 326.588,
+    "multipliers": [
+      {
+        "country": "AUT",
+        "chip_usd": 6.436,
+        "multiplier": 2.2982
+      },
+      {
+        "country": "CHE",
+        "chip_usd": 5.9256,
+        "multiplier": 2.116
+      },
+      {
+        "country": "DEU",
+        "chip_usd": 5.4974,
+        "multiplier": 1.9631
+      },
+      {
+        "country": "SVK",
+        "chip_usd": 4.5424,
+        "multiplier": 1.6221
+      },
+      {
+        "country": "KOR",
+        "chip_usd": 4.2674,
+        "multiplier": 1.5238
+      },
+      {
+        "country": "GBR",
+        "chip_usd": 3.8912,
+        "multiplier": 1.3895
+      },
+      {
+        "country": "USA",
+        "chip_usd": 3.8739,
+        "multiplier": 1.3833
+      },
+      {
+        "country": "FIN",
+        "chip_usd": 3.461,
+        "multiplier": 1.2359
+      },
+      {
+        "country": "CZE",
+        "chip_usd": 3.3214,
+        "multiplier": 1.186
+      },
+      {
+        "country": "ARG",
+        "chip_usd": 3.2239,
+        "multiplier": 1.1512
+      },
+      {
+        "country": "DOM",
+        "chip_usd": 2.7682,
+        "multiplier": 0.9885
+      },
+      {
+        "country": "RUS",
+        "chip_usd": 2.7328,
+        "multiplier": 0.9758
+      },
+      {
+        "country": "MUS",
+        "chip_usd": 2.5325,
+        "multiplier": 0.9043
+      },
+      {
+        "country": "JOR",
+        "chip_usd": 2.391,
+        "multiplier": 0.8538
+      },
+      {
+        "country": "TUR",
+        "chip_usd": 2.3847,
+        "multiplier": 0.8515
+      },
+      {
+        "country": "ISR",
+        "chip_usd": 2.3717,
+        "multiplier": 0.8469
+      },
+      {
+        "country": "HUN",
+        "chip_usd": 2.274,
+        "multiplier": 0.812
+      },
+      {
+        "country": "PAN",
+        "chip_usd": 2.2155,
+        "multiplier": 0.7911
+      },
+      {
+        "country": "ECU",
+        "chip_usd": 2.2111,
+        "multiplier": 0.7896
+      },
+      {
+        "country": "IRQ",
+        "chip_usd": 2.1378,
+        "multiplier": 0.7634
+      },
+      {
+        "country": "SWZ",
+        "chip_usd": 2.0177,
+        "multiplier": 0.7205
+      },
+      {
+        "country": "MEX",
+        "chip_usd": 1.851,
+        "multiplier": 0.661
+      },
+      {
+        "country": "CHL",
+        "chip_usd": 1.8053,
+        "multiplier": 0.6447
+      },
+      {
+        "country": "IDN",
+        "chip_usd": 1.7624,
+        "multiplier": 0.6293
+      },
+      {
+        "country": "PER",
+        "chip_usd": 1.7026,
+        "multiplier": 0.608
+      },
+      {
+        "country": "CRI",
+        "chip_usd": 1.641,
+        "multiplier": 0.586
+      },
+      {
+        "country": "BRA",
+        "chip_usd": 1.6224,
+        "multiplier": 0.5793
+      },
+      {
+        "country": "ISL",
+        "chip_usd": 1.6003,
+        "multiplier": 0.5715
+      },
+      {
+        "country": "MNG",
+        "chip_usd": 1.5701,
+        "multiplier": 0.5607
+      },
+      {
+        "country": "ESP",
+        "chip_usd": 1.5276,
+        "multiplier": 0.5455
+      },
+      {
+        "country": "PRT",
+        "chip_usd": 1.5197,
+        "multiplier": 0.5427
+      },
+      {
+        "country": "PHL",
+        "chip_usd": 1.4816,
+        "multiplier": 0.5291
+      },
+      {
+        "country": "PRY",
+        "chip_usd": 1.3182,
+        "multiplier": 0.4707
+      },
+      {
+        "country": "COL",
+        "chip_usd": 1.2301,
+        "multiplier": 0.4392
+      },
+      {
+        "country": "THA",
+        "chip_usd": 1.2161,
+        "multiplier": 0.4342
+      },
+      {
+        "country": "SLV",
+        "chip_usd": 1.1981,
+        "multiplier": 0.4278
+      },
+      {
+        "country": "MDA",
+        "chip_usd": 1.1939,
+        "multiplier": 0.4263
+      },
+      {
+        "country": "EGY",
+        "chip_usd": 1.1852,
+        "multiplier": 0.4232
+      },
+      {
+        "country": "LKA",
+        "chip_usd": 1.1249,
+        "multiplier": 0.4017
+      },
+      {
+        "country": "VNM",
+        "chip_usd": 1.0944,
+        "multiplier": 0.3908
+      },
+      {
+        "country": "HND",
+        "chip_usd": 1.0793,
+        "multiplier": 0.3854
+      },
+      {
+        "country": "BWA",
+        "chip_usd": 0.7198,
+        "multiplier": 0.257
+      },
+      {
+        "country": "AGO",
+        "chip_usd": 0.4767,
+        "multiplier": 0.1702
+      },
+      {
+        "country": "RWA",
+        "chip_usd": 0.3187,
+        "multiplier": 0.1138
+      },
+      {
+        "country": "ETH",
+        "chip_usd": 0.2923,
+        "multiplier": 0.1044
+      },
+      {
+        "country": "ZMB",
+        "chip_usd": 0.2647,
+        "multiplier": 0.0945
+      },
+      {
+        "country": "BOL",
+        "chip_usd": 0.1409,
+        "multiplier": 0.0503
+      },
+      {
+        "country": "UGA",
+        "chip_usd": 0.1367,
+        "multiplier": 0.0488
+      },
+      {
+        "country": "PAK",
+        "chip_usd": 0.1344,
+        "multiplier": 0.048
+      }
+    ],
+    "notes": "Backfill for data year 2021"
+  },
+  {
+    "effective_date": "2023-01-01",
+    "calculated_date": "2026-02-24",
+    "chip_usd": 3.2688,
+    "chip_constant": 2.7708,
+    "base_year": 2022,
+    "pwt_base_year": 2017,
+    "pwt_version": "11.0",
+    "window_years": 5,
+    "n_countries": 46,
+    "cpi_reference_date": "2026-01-01",
+    "cpi_reference_value": 326.588,
+    "multipliers": [
+      {
+        "country": "PAN",
+        "chip_usd": 6.0113,
+        "multiplier": 2.1695
+      },
+      {
+        "country": "CHE",
+        "chip_usd": 5.9634,
+        "multiplier": 2.1522
+      },
+      {
+        "country": "DEU",
+        "chip_usd": 5.4268,
+        "multiplier": 1.9586
+      },
+      {
+        "country": "KOR",
+        "chip_usd": 4.2696,
+        "multiplier": 1.5409
+      },
+      {
+        "country": "ARG",
+        "chip_usd": 4.0583,
+        "multiplier": 1.4646
+      },
+      {
+        "country": "SWE",
+        "chip_usd": 3.7578,
+        "multiplier": 1.3562
+      },
+      {
+        "country": "GBR",
+        "chip_usd": 3.7014,
+        "multiplier": 1.3358
+      },
+      {
+        "country": "USA",
+        "chip_usd": 3.5604,
+        "multiplier": 1.2849
+      },
+      {
+        "country": "FIN",
+        "chip_usd": 3.5251,
+        "multiplier": 1.2722
+      },
+      {
+        "country": "DOM",
+        "chip_usd": 3.1796,
+        "multiplier": 1.1475
+      },
+      {
+        "country": "SVK",
+        "chip_usd": 3.0269,
+        "multiplier": 1.0924
+      },
+      {
+        "country": "HUN",
+        "chip_usd": 2.3531,
+        "multiplier": 0.8492
+      },
+      {
+        "country": "TUR",
+        "chip_usd": 2.3248,
+        "multiplier": 0.839
+      },
+      {
+        "country": "MUS",
+        "chip_usd": 2.2763,
+        "multiplier": 0.8215
+      },
+      {
+        "country": "ECU",
+        "chip_usd": 2.2344,
+        "multiplier": 0.8064
+      },
+      {
+        "country": "JOR",
+        "chip_usd": 2.1458,
+        "multiplier": 0.7744
+      },
+      {
+        "country": "IDN",
+        "chip_usd": 1.9145,
+        "multiplier": 0.691
+      },
+      {
+        "country": "MEX",
+        "chip_usd": 1.8944,
+        "multiplier": 0.6837
+      },
+      {
+        "country": "CHL",
+        "chip_usd": 1.8684,
+        "multiplier": 0.6743
+      },
+      {
+        "country": "PER",
+        "chip_usd": 1.7909,
+        "multiplier": 0.6463
+      },
+      {
+        "country": "CRI",
+        "chip_usd": 1.6866,
+        "multiplier": 0.6087
+      },
+      {
+        "country": "MNG",
+        "chip_usd": 1.6619,
+        "multiplier": 0.5998
+      },
+      {
+        "country": "BRA",
+        "chip_usd": 1.6399,
+        "multiplier": 0.5919
+      },
+      {
+        "country": "ISL",
+        "chip_usd": 1.6179,
+        "multiplier": 0.5839
+      },
+      {
+        "country": "URY",
+        "chip_usd": 1.6031,
+        "multiplier": 0.5785
+      },
+      {
+        "country": "SEN",
+        "chip_usd": 1.5205,
+        "multiplier": 0.5488
+      },
+      {
+        "country": "PRT",
+        "chip_usd": 1.5082,
+        "multiplier": 0.5443
+      },
+      {
+        "country": "PHL",
+        "chip_usd": 1.485,
+        "multiplier": 0.5359
+      },
+      {
+        "country": "PRY",
+        "chip_usd": 1.3127,
+        "multiplier": 0.4737
+      },
+      {
+        "country": "SLV",
+        "chip_usd": 1.2852,
+        "multiplier": 0.4638
+      },
+      {
+        "country": "EGY",
+        "chip_usd": 1.2743,
+        "multiplier": 0.4599
+      },
+      {
+        "country": "MDA",
+        "chip_usd": 1.2588,
+        "multiplier": 0.4543
+      },
+      {
+        "country": "LKA",
+        "chip_usd": 1.1965,
+        "multiplier": 0.4318
+      },
+      {
+        "country": "THA",
+        "chip_usd": 1.1871,
+        "multiplier": 0.4284
+      },
+      {
+        "country": "VNM",
+        "chip_usd": 1.1663,
+        "multiplier": 0.4209
+      },
+      {
+        "country": "HND",
+        "chip_usd": 1.122,
+        "multiplier": 0.4049
+      },
+      {
+        "country": "COL",
+        "chip_usd": 1.0254,
+        "multiplier": 0.3701
+      },
+      {
+        "country": "IND",
+        "chip_usd": 0.8667,
+        "multiplier": 0.3128
+      },
+      {
+        "country": "BGD",
+        "chip_usd": 0.8492,
+        "multiplier": 0.3065
+      },
+      {
+        "country": "BWA",
+        "chip_usd": 0.8049,
+        "multiplier": 0.2905
+      },
+      {
+        "country": "RWA",
+        "chip_usd": 0.3122,
+        "multiplier": 0.1127
+      },
+      {
+        "country": "ZMB",
+        "chip_usd": 0.2918,
+        "multiplier": 0.1053
+      },
+      {
+        "country": "GHA",
+        "chip_usd": 0.1989,
+        "multiplier": 0.0718
+      },
+      {
+        "country": "SDN",
+        "chip_usd": 0.1876,
+        "multiplier": 0.0677
+      },
+      {
+        "country": "MLI",
+        "chip_usd": 0.1719,
+        "multiplier": 0.062
+      },
+      {
+        "country": "BOL",
+        "chip_usd": 0.1445,
+        "multiplier": 0.0521
+      }
+    ],
+    "notes": "Backfill for data year 2022"
+  }
+]

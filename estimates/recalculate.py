@@ -3,33 +3,29 @@
 CHIP Recalculation — Annual Full Pipeline
 
 Runs the complete CHIP estimation pipeline using locked-in methodology
-from the workbench studies.  Produces:
+from the workbench studies.  Appends results to chip_estimates.json —
+the authoritative record of annual CHIP values, tracked in git.
 
-  - Global GDP-weighted CHIP value (5-year trailing window, nominal)
-  - Per-country multipliers
-  - Base parameters for the monthly extrapolator
-  - Append to chip_history.json
-
-Intended to be run by a human operator when new source data is available
-(typically annually, or when a new PWT version releases).
+Each entry includes the global CHIP value, per-country multipliers, and
+the CPI reference point needed by the extrapolator.
 
 For backfilling historical data, use --target-year and --effective-date:
 
-    for year in $(seq 2005 2023); do
-        python recalculate.py --target-year $year \
-            --effective-date "$((year+1))-01-01" \
+    for year in $(seq 2000 2022); do
+        python recalculate.py --target-year $year \\
+            --effective-date "$((year+1))-01-01" \\
             --notes "Backfill for data year $year"
     done
 
 Usage:
-    python recalculate.py [--force-refresh] [--notes "..."]
+    python recalculate.py [--force-refresh] [--replace] [--notes "..."]
     python recalculate.py --target-year 2018 --effective-date 2019-01-01
 """
 
 import argparse
 import json
 import sys
-from datetime import datetime, date
+from datetime import date
 from pathlib import Path
 
 import numpy as np
@@ -49,10 +45,11 @@ from lib import fetcher, normalize, pipeline
 logger = get_logger(__name__)
 
 OUTPUT_DIR = ESTIMATES_DIR / "output"
+ESTIMATES_FILE = OUTPUT_DIR / "chip_estimates.json"
 
 
 # =============================================================================
-# CONFIGURATION (from config.yaml, with defaults from production study)
+# CONFIGURATION
 # =============================================================================
 
 def load_estimates_config():
@@ -71,29 +68,20 @@ def load_estimates_config():
 # =============================================================================
 
 def run_chip_pipeline(data, deflator_df, cfg):
-    """
-    Run the full CHIP estimation pipeline.
-
-    Returns per-country-year DataFrame with chip_value, rgdpna, etc.
-    """
+    """Run the full CHIP estimation pipeline."""
     pipe_cfg = cfg.get("pipeline", {})
-    year_start = pipe_cfg.get("year_start", 1992)
-    year_end = pipe_cfg.get("year_end", 2023)
-    enable_imputation = pipe_cfg.get("enable_imputation", True)
-    wage_averaging = pipe_cfg.get("wage_averaging", "simple")
-
     result = pipeline.prepare_labor_data(
         data=data,
-        year_start=year_start,
-        year_end=year_end,
+        year_start=pipe_cfg.get("year_start", 1992),
+        year_end=pipe_cfg.get("year_end", 2023),
         deflator_df=deflator_df,
         include_countries=None,
-        enable_imputation=enable_imputation,
-        wage_averaging_method=wage_averaging,
+        enable_imputation=pipe_cfg.get("enable_imputation", True),
+        wage_averaging_method=pipe_cfg.get("wage_averaging", "simple"),
     )
     _, _, est_data = pipeline.estimate_chip(
         result["est_data"],
-        enable_imputation=enable_imputation,
+        enable_imputation=pipe_cfg.get("enable_imputation", True),
     )
     return est_data
 
@@ -154,138 +142,136 @@ def trailing_window_chip(ts_constant, deflator, window_size, target_year):
 
 
 def compute_country_multipliers(est_data, global_chip, target_year):
-    """
-    Compute per-country CHIP multiplier for the target year.
-
-    multiplier = country_chip / global_chip
-    """
+    """Compute per-country CHIP multiplier for the target year."""
     year_data = est_data[est_data["year"] == target_year].copy()
     if len(year_data) == 0:
-        return pd.DataFrame()
+        return []
 
     df = year_data[["country", "chip_value"]].copy()
     df["multiplier"] = df["chip_value"] / global_chip
     df = df.sort_values("multiplier", ascending=False).reset_index(drop=True)
-    return df
+
+    return [
+        {
+            "country": row["country"],
+            "chip_usd": round(float(row["chip_value"]), 4),
+            "multiplier": round(float(row["multiplier"]), 4),
+        }
+        for _, row in df.iterrows()
+    ]
 
 
 # =============================================================================
-# OUTPUT HELPERS
+# ESTIMATES FILE I/O
 # =============================================================================
 
-def upsert_history(entry, output_dir, replace=False):
+def load_estimates():
+    """Load chip_estimates.json, returning an empty list if absent."""
+    if ESTIMATES_FILE.exists():
+        with open(ESTIMATES_FILE) as f:
+            return json.load(f)
+    return []
+
+
+def save_estimates(estimates):
+    """Write chip_estimates.json, sorted by effective_date."""
+    estimates.sort(key=lambda e: e.get("effective_date", ""))
+    with open(ESTIMATES_FILE, "w") as f:
+        json.dump(estimates, f, indent=2, default=str)
+    logger.info(f"Wrote {ESTIMATES_FILE} ({len(estimates)} entries)")
+
+
+def upsert_estimate(entry, replace=False):
     """
-    Insert an entry into chip_history.json if not already present.
+    Insert an estimate if not already present.
 
-    Dedup key: (effective_date, method).  If a matching entry exists:
-      - replace=False (default): skip, log a message, return False.
-      - replace=True: overwrite the existing entry, return True.
-
-    Entries are kept sorted by effective_date after any mutation.
+    Dedup key: effective_date.  Returns True if written, False if skipped.
     """
-    history_path = output_dir / "chip_history.json"
-    if history_path.exists():
-        with open(history_path) as f:
-            history = json.load(f)
-    else:
-        history = []
-
-    key = (entry.get("effective_date"), entry.get("method"))
+    estimates = load_estimates()
+    eff = entry.get("effective_date")
 
     existing_idx = None
-    for i, h in enumerate(history):
-        if (h.get("effective_date"), h.get("method")) == key:
+    for i, e in enumerate(estimates):
+        if e.get("effective_date") == eff:
             existing_idx = i
             break
 
     if existing_idx is not None:
         if not replace:
             logger.info(
-                f"Entry already exists for {key[1]} on {key[0]} — skipping. "
+                f"Estimate already exists for {eff} — skipping. "
                 f"Use --replace to overwrite."
             )
             return False
-        logger.info(f"Replacing existing entry for {key[1]} on {key[0]}")
-        history[existing_idx] = entry
+        logger.info(f"Replacing estimate for {eff}")
+        estimates[existing_idx] = entry
     else:
-        history.append(entry)
+        estimates.append(entry)
 
-    history.sort(key=lambda h: h.get("effective_date", ""))
-
-    with open(history_path, "w") as f:
-        json.dump(history, f, indent=2, default=str)
-
-    action = "Replaced" if existing_idx is not None else "Added"
-    logger.info(f"{action} entry in {history_path} (now {len(history)} entries)")
+    save_estimates(estimates)
     return True
 
 
-def write_base_params(params, output_dir):
-    """Write base_params.json for the extrapolator."""
-    path = output_dir / "base_params.json"
-    with open(path, "w") as f:
-        json.dump(params, f, indent=2, default=str)
-    logger.info(f"Wrote {path}")
+def get_previous_chip():
+    """Get the chip_usd from the latest estimate, or None."""
+    estimates = load_estimates()
+    if not estimates:
+        return None
+    return estimates[-1].get("chip_usd")
 
 
-def write_latest(entry, output_dir):
-    """Write latest.json with current CHIP value."""
-    path = output_dir / "latest.json"
-    with open(path, "w") as f:
-        json.dump(entry, f, indent=2, default=str)
-    logger.info(f"Wrote {path}")
+# =============================================================================
+# SUMMARY REPORT
+# =============================================================================
 
-
-def write_summary_report(chip_nominal, chip_constant, target_year,
-                         n_countries, multipliers_df, prev_chip,
-                         pwt_base_year, output_dir):
+def write_summary_report(entry, prev_chip, output_dir):
     """Write human-readable summary of the recalculation."""
     lines = [
         f"# CHIP Recalculation — {date.today().isoformat()}",
         "",
         "## Global CHIP Value",
         "",
-        f"| Metric | Value |",
-        f"|--------|-------|",
-        f"| Nominal CHIP ({target_year}) | **${chip_nominal:.2f}/hr** |",
-        f"| Constant CHIP ({pwt_base_year}$) | ${chip_constant:.2f}/hr |",
-        f"| Countries | {n_countries} |",
-        f"| Method | GDP-weighted, 5-year trailing window |",
+        "| Metric | Value |",
+        "|--------|-------|",
+        f"| Nominal CHIP ({entry['base_year']}) | **${entry['chip_usd']:.2f}/hr** |",
+        f"| Constant CHIP ({entry['pwt_base_year']}$) | ${entry['chip_constant']:.2f}/hr |",
+        f"| Countries | {entry['n_countries']} |",
+        "| Method | GDP-weighted, 5-year trailing window |",
         "",
     ]
 
     if prev_chip is not None:
-        pct = (chip_nominal - prev_chip) / prev_chip * 100
+        pct = (entry["chip_usd"] - prev_chip) / prev_chip * 100
         lines.extend([
             "## Comparison to Previous",
             "",
-            f"| | Previous | Current | Change |",
-            f"|--|----------|---------|--------|",
-            f"| Nominal CHIP | ${prev_chip:.2f} | ${chip_nominal:.2f} | {pct:+.1f}% |",
+            "| | Previous | Current | Change |",
+            "|--|----------|---------|--------|",
+            f"| Nominal CHIP | ${prev_chip:.2f} | ${entry['chip_usd']:.2f} | {pct:+.1f}% |",
             "",
             f"**Snap magnitude:** {abs(pct):.1f}%",
             "",
         ])
 
-    if len(multipliers_df) > 0:
+    mults = entry.get("multipliers", [])
+    if mults:
         lines.extend([
             "## Country Multipliers (Top 10 / Bottom 5)",
             "",
             "| Country | CHIP ($/hr) | Multiplier |",
             "|---------|------------|------------|",
         ])
-        top = multipliers_df.head(10)
-        bot = multipliers_df.tail(5)
-        for _, row in top.iterrows():
+        for m in mults[:10]:
             lines.append(
-                f"| {row['country']} | ${row['chip_value']:.2f} | "
-                f"{row['multiplier']:.2f}x |"
+                f"| {m['country']} | ${m['chip_usd']:.2f} | "
+                f"{m['multiplier']:.2f}x |"
             )
-        lines.append("| ... | ... | ... |")
-        for _, row in bot.iterrows():
+        if len(mults) > 15:
+            lines.append("| ... | ... | ... |")
+        for m in mults[-5:]:
             lines.append(
-                f"| {row['country']} | ${row['chip_value']:.2f} | "
-                f"{row['multiplier']:.2f}x |"
+                f"| {m['country']} | ${m['chip_usd']:.2f} | "
+                f"{m['multiplier']:.2f}x |"
             )
         lines.append("")
 
@@ -295,7 +281,7 @@ def write_summary_report(chip_nominal, chip_constant, target_year,
         "- [ ] CHIP value within expected range?",
         "- [ ] Country count stable?",
         "- [ ] No anomalous multipliers?",
-        "- [ ] Ready to publish?",
+        "- [ ] Ready to push?",
         "",
     ])
 
@@ -306,24 +292,60 @@ def write_summary_report(chip_nominal, chip_constant, target_year,
 
 
 # =============================================================================
+# CPI REFERENCE
+# =============================================================================
+
+def _fetch_cpi_reference():
+    """Fetch the latest CPI-U value from FRED."""
+    import requests
+    from io import StringIO
+
+    series_id = "CPIAUCSL"
+    api_key = _load_fred_api_key()
+
+    if api_key:
+        url = (
+            f"https://api.stlouisfed.org/fred/series/observations"
+            f"?series_id={series_id}&api_key={api_key}&file_type=json"
+            f"&sort_order=desc&limit=1"
+        )
+        resp = requests.get(url, timeout=30)
+        resp.raise_for_status()
+        obs = resp.json()["observations"][0]
+        return {"date": obs["date"], "value": float(obs["value"])}
+    else:
+        url = f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={series_id}"
+        resp = requests.get(url, timeout=30)
+        resp.raise_for_status()
+        df = pd.read_csv(StringIO(resp.text))
+        df.columns = ["date", "value"]
+        df["value"] = pd.to_numeric(df["value"], errors="coerce")
+        df = df.dropna(subset=["value"])
+        last = df.iloc[-1]
+        return {"date": str(last["date"]), "value": float(last["value"])}
+
+
+def _load_fred_api_key():
+    """Load FRED API key from secrets.toml."""
+    secrets_path = PROJECT_ROOT / "secrets.toml"
+    if not secrets_path.exists():
+        return None
+    try:
+        import tomli
+        with open(secrets_path, "rb") as f:
+            secrets = tomli.load(f)
+        return secrets.get("fred", {}).get("api_key")
+    except Exception:
+        return None
+
+
+# =============================================================================
 # MAIN
 # =============================================================================
 
 def recalculate(force_refresh=False, target_year=None, effective_date=None,
                 replace=False, notes=""):
-    """
-    Run the full CHIP recalculation.
-
-    Args:
-        force_refresh: Bypass data cache.
-        target_year: Override the trailing-window target year (for backfill).
-                     If None, uses the latest year with sufficient data.
-        effective_date: The date this estimate is "for" (YYYY-MM-DD string).
-                        If None, defaults to today.
-        replace: If True, overwrite an existing history entry with the same
-                 (effective_date, method) key.  If False, skip if duplicate.
-        notes: Free-text annotation for the history entry.
-    """
+    """Run the full CHIP recalculation."""
     cfg = load_estimates_config()
     pipe_cfg = cfg.get("pipeline", {})
     data_cfg = cfg.get("data", {})
@@ -331,7 +353,6 @@ def recalculate(force_refresh=False, target_year=None, effective_date=None,
     pwt_version = data_cfg.get("pwt_version", "11.0")
     pwt_base_year = data_cfg.get("pwt_base_year", 2017)
     window_years = pipe_cfg.get("window_years", 5)
-    year_end = pipe_cfg.get("year_end", 2023)
 
     eff_date = effective_date or date.today().isoformat()
     calc_date = date.today().isoformat()
@@ -377,7 +398,6 @@ def recalculate(force_refresh=False, target_year=None, effective_date=None,
 
     ts_constant = aggregate_by_year(est_data, weighting="gdp")
 
-    # Filter to years with enough countries
     min_countries = pipe_cfg.get("min_countries", 5)
     ts_constant = ts_constant[ts_constant["n_countries"] >= min_countries]
 
@@ -426,16 +446,13 @@ def recalculate(force_refresh=False, target_year=None, effective_date=None,
     logger.info("Step 5: Computing country multipliers")
     logger.info("=" * 60)
 
-    multipliers_df = compute_country_multipliers(
+    multipliers = compute_country_multipliers(
         est_data, chip_constant, target_year
     )
-    logger.info(f"Multipliers for {len(multipliers_df)} countries")
-    if len(multipliers_df) > 0:
-        logger.info(f"  Range: {multipliers_df['multiplier'].min():.2f}x "
-                     f"to {multipliers_df['multiplier'].max():.2f}x")
+    logger.info(f"Multipliers for {len(multipliers)} countries")
 
     # ------------------------------------------------------------------
-    # Step 6: Fetch CPI reference point for extrapolator
+    # Step 6: Fetch CPI reference point
     # ------------------------------------------------------------------
     logger.info("=" * 60)
     logger.info("Step 6: Fetching CPI reference for extrapolator")
@@ -446,22 +463,19 @@ def recalculate(force_refresh=False, target_year=None, effective_date=None,
                 f"as of {cpi_ref['date']}")
 
     # ------------------------------------------------------------------
-    # Step 7: Write outputs
+    # Step 7: Write estimate
     # ------------------------------------------------------------------
     logger.info("=" * 60)
-    logger.info("Step 7: Writing outputs")
+    logger.info("Step 7: Writing estimate")
     logger.info("=" * 60)
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-    # Check previous value for snap comparison
-    prev_chip = _get_previous_chip()
+    prev_chip = get_previous_chip()
 
-    # History entry
-    history_entry = {
+    entry = {
         "effective_date": eff_date,
         "calculated_date": calc_date,
-        "method": "recalculation",
         "chip_usd": round(chip_nominal, 4),
         "chip_constant": round(chip_constant, 4),
         "base_year": target_year,
@@ -469,60 +483,17 @@ def recalculate(force_refresh=False, target_year=None, effective_date=None,
         "pwt_version": pwt_version,
         "window_years": window_years,
         "n_countries": n_countries,
+        "cpi_reference_date": cpi_ref["date"],
+        "cpi_reference_value": round(cpi_ref["value"], 3),
+        "multipliers": multipliers,
         "notes": notes or f"Recalculation with PWT {pwt_version} "
                           f"data through {target_year}",
     }
 
-    if prev_chip is not None:
-        snap_pct = (chip_nominal - prev_chip) / prev_chip * 100
-        history_entry["snap_from"] = round(prev_chip, 4)
-        history_entry["snap_pct"] = round(snap_pct, 2)
+    inserted = upsert_estimate(entry, replace=replace)
 
-    inserted = upsert_history(history_entry, OUTPUT_DIR, replace=replace)
-
-    if not inserted:
-        logger.info("History entry skipped (duplicate). "
-                     "Other output files still updated.")
-
-    # Base params for extrapolator
-    base_params = {
-        "chip_constant": round(chip_constant, 4),
-        "chip_nominal": round(chip_nominal, 4),
-        "base_year": target_year,
-        "pwt_base_year": pwt_base_year,
-        "cpi_reference_date": cpi_ref["date"],
-        "cpi_reference_value": round(cpi_ref["value"], 3),
-        "pwt_version": pwt_version,
-        "window_years": window_years,
-        "n_countries": n_countries,
-        "effective_date": eff_date,
-        "calculated_date": calc_date,
-    }
-    write_base_params(base_params, OUTPUT_DIR)
-
-    # Latest value
-    latest = {
-        "chip_usd": round(chip_nominal, 4),
-        "effective_date": eff_date,
-        "calculated_date": calc_date,
-        "method": "recalculation",
-        "base_year": target_year,
-        "pwt_version": pwt_version,
-        "next_recalculation": "When new ILOSTAT/PWT data is available",
-    }
-    write_latest(latest, OUTPUT_DIR)
-
-    # Multipliers CSV
-    if len(multipliers_df) > 0:
-        mult_path = OUTPUT_DIR / "multipliers.csv"
-        multipliers_df.to_csv(mult_path, index=False)
-        logger.info(f"Wrote {mult_path}")
-
-    # Human-readable summary
-    write_summary_report(
-        chip_nominal, chip_constant, target_year, n_countries,
-        multipliers_df, prev_chip, pwt_base_year, OUTPUT_DIR
-    )
+    # Summary report (always written for review)
+    write_summary_report(entry, prev_chip, OUTPUT_DIR)
 
     # ------------------------------------------------------------------
     # Done
@@ -530,8 +501,9 @@ def recalculate(force_refresh=False, target_year=None, effective_date=None,
     logger.info("=" * 60)
     logger.info("RECALCULATION COMPLETE")
     logger.info(f"  Global CHIP: ${chip_nominal:.2f}/hr ({target_year} nominal)")
-    logger.info(f"  Countries: {n_countries}")
-    logger.info(f"  Base params written for extrapolator")
+    logger.info(f"  Countries: {n_countries}, Multipliers: {len(multipliers)}")
+    if not inserted:
+        logger.info("  (estimate already existed — skipped)")
     logger.info("=" * 60)
 
     return {
@@ -539,73 +511,8 @@ def recalculate(force_refresh=False, target_year=None, effective_date=None,
         "chip_constant": chip_constant,
         "target_year": target_year,
         "n_countries": n_countries,
-        "multipliers": multipliers_df,
+        "n_multipliers": len(multipliers),
     }
-
-
-# =============================================================================
-# CPI REFERENCE
-# =============================================================================
-
-def _fetch_cpi_reference():
-    """
-    Fetch the latest CPI-U value from FRED for the extrapolator.
-
-    Returns dict with 'date' and 'value'.
-    """
-    import requests
-    from io import StringIO
-
-    series_id = "CPIAUCSL"
-    api_key = _load_fred_api_key()
-
-    if api_key:
-        url = (
-            f"https://api.stlouisfed.org/fred/series/observations"
-            f"?series_id={series_id}&api_key={api_key}&file_type=json"
-            f"&sort_order=desc&limit=1"
-        )
-        resp = requests.get(url, timeout=30)
-        resp.raise_for_status()
-        obs = resp.json()["observations"][0]
-        return {"date": obs["date"], "value": float(obs["value"])}
-    else:
-        url = f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={series_id}"
-        resp = requests.get(url, timeout=30)
-        resp.raise_for_status()
-        df = pd.read_csv(StringIO(resp.text))
-        df.columns = ["date", "value"]
-        df["value"] = pd.to_numeric(df["value"], errors="coerce")
-        df = df.dropna(subset=["value"])
-        last = df.iloc[-1]
-        return {"date": str(last["date"]), "value": float(last["value"])}
-
-
-def _load_fred_api_key():
-    """Load FRED API key from secrets.toml."""
-    secrets_path = PROJECT_ROOT / "secrets.toml"
-    if not secrets_path.exists():
-        return None
-    try:
-        import tomli
-        with open(secrets_path, "rb") as f:
-            secrets = tomli.load(f)
-        return secrets.get("fred", {}).get("api_key")
-    except Exception:
-        return None
-
-
-def _get_previous_chip():
-    """Read the previous CHIP value from latest.json if it exists."""
-    path = OUTPUT_DIR / "latest.json"
-    if not path.exists():
-        return None
-    try:
-        with open(path) as f:
-            data = json.load(f)
-        return data.get("chip_usd")
-    except Exception:
-        return None
 
 
 # =============================================================================
@@ -617,7 +524,7 @@ def main():
         description="CHIP Annual Recalculation",
         epilog=(
             "Backfill example:\n"
-            "  for year in $(seq 2005 2023); do\n"
+            "  for year in $(seq 2000 2022); do\n"
             '    python recalculate.py --target-year $year '
             '--effective-date "$((year+1))-01-01"\n'
             "  done"
@@ -630,24 +537,19 @@ def main():
     )
     parser.add_argument(
         "--target-year", type=int, default=None,
-        help="Override trailing-window target year (for backfill). "
-             "If omitted, uses latest year with sufficient data."
+        help="Override trailing-window target year (for backfill)"
     )
     parser.add_argument(
         "--effective-date", type=str, default=None,
-        help="Effective date for this estimate (YYYY-MM-DD). "
-             "Defaults to today. For backfill, set to when this "
-             "estimate would have been published."
+        help="Effective date for this estimate (YYYY-MM-DD)"
     )
     parser.add_argument(
         "--replace", action="store_true",
-        help="Overwrite an existing history entry with the same "
-             "effective date and method. Without this flag, "
-             "duplicates are skipped."
+        help="Overwrite an existing estimate for the same effective date"
     )
     parser.add_argument(
         "--notes", type=str, default="",
-        help="Notes to include in the history entry"
+        help="Notes to include in the estimate entry"
     )
     args = parser.parse_args()
 

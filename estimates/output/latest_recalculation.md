@@ -1,4 +1,4 @@
-# CHIP Recalculation — 2026-02-17
+# CHIP Recalculation — 2026-02-24
 
 ## Global CHIP Value
 
@@ -43,4 +43,4 @@
 - [ ] CHIP value within expected range?
 - [ ] Country count stable?
 - [ ] No anomalous multipliers?
-- [ ] Ready to publish?
+- [ ] Ready to push?

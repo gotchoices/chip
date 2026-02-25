@@ -551,13 +551,13 @@ Sixth, **CHIP does not claim absolute stability**. If real economic changes (suc
 
 ### 9.2 The Path Forward
 
-The workbench studies have validated the core methodology. The remaining work is:
+The workbench studies have validated the core methodology. The production pipeline is now operational:
 
-1. **Package the production methodology** into the `estimates/` pipeline for official CHIP calculation
-2. **Complete the stability study** — compare PWT 10.0 vs 11.0 vintage differences and establish confidence bounds for update continuity
-3. **Complete the weighting study** — assess sensitivity to GDP vs labor vs unweighted aggregation
-4. **Update chipcentral.net** with the revised CHIP value from PWT 11.0 ($3.17 nominal for 2022, estimated ~$3.50 for 2026)
-5. **Establish an annual update process** for MyCHIPs, with CPI extrapolation between full recalculations
+1. ~~Package the production methodology~~ — done: `estimates/` pipeline with annual recalculation and CPI extrapolation, backfilled 2000–2022
+2. ~~Complete the stability study~~ — done: PWT 10.0 vs 11.0 vintage comparison, mean |revision| 3.8% for 2002–2019
+3. ~~Complete the weighting study~~ — done: five schemes compared, GDP-weighted recommended ($2.68 constant), 85 country multipliers
+4. **Update chipcentral.net** with the revised CHIP value ($3.27 nominal for 2022)
+5. **Establish the annual update process** — pipeline ready, cron setup pending
 
 ### 9.3 The CHIP Value Proposition
 

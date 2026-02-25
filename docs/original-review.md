@@ -722,8 +722,8 @@ been comprehensively addressed. The production study tested and recommends:
 3. **Annual recalculation** when new PWT data arrives, with the correction
    magnitude reported for transparency
 
-This methodology is ready to be packaged into an `estimates/` pipeline
-for production use by MyCHIPs.
+This methodology has been packaged into the `estimates/` pipeline
+for production use by MyCHIPs (see `estimates/README.md`).
 
 ### 11.6 Remaining Open Questions
 

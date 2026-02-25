@@ -2,7 +2,7 @@
 
 Detailed tracking of completed and pending work items.
 
-**Last updated:** 2026-02-17
+**Last updated:** 2026-02-24
 
 ---
 
@@ -157,31 +157,31 @@ Detailed tracking of completed and pending work items.
 - [x] `estimates/README.md` — operational runbook
 - [x] `estimates/config.yaml` — locked methodology parameters
 - [x] `estimates/recalculate.py` — annual full pipeline with `--target-year`
-      and `--effective-date` for backfill, idempotent history via `--replace`
-- [x] `estimates/extrapolate.py` — weekly CPI-U extrapolation, no-op when
-      CPI hasn't updated
+      and `--effective-date` for backfill, idempotent via `--replace`
+- [x] `estimates/extrapolate.py` — CPI-U extrapolation, no-op when
+      CPI and base estimate are unchanged
 - [x] Backfill: 23 annual estimates (2000–2022), $1.94–$3.27 nominal
-- [x] First extrapolation: $3.27 (CPI ratio 1.0 from 2022 base)
 - [ ] Set up weekly cron on production server
 - [ ] Validate against official inflation benchmarks
 
-### 3.2 Automated Publishing (Two-Tier Model) — Scaffolded
-- [x] **Weekly extrapolation script** (`estimates/extrapolate.py`) — applies
-      latest CPI-U to the base value; no-op when CPI unchanged
-- [x] **Annual recalculation** (`estimates/recalculate.py`) — full pipeline
-      re-estimation; updates base parameters and records snap magnitude
-- [x] **Snap-back mechanism** — recalculation detects previous value, logs
-      snap percentage in history entry
-- [x] **Output files served directly** — `latest.json`, `chip_history.json`,
-      `multipliers.csv` served from git checkout (no separate publish step)
-- [ ] Set up weekly cron job for `extrapolate.py`
-- [ ] Point chipcentral.net at `estimates/output/latest.json`
+### 3.2 Publishing Workflow ✅
+- [x] **Two-tier model**: annual recalculations in git, extrapolations
+      server-local
+- [x] `chip_estimates.json` — git-tracked, self-contained entries with
+      embedded multipliers and CPI reference point
+- [x] `extrapolation.json` — server-local cache, overwritten each run,
+      not tracked in git
+- [x] Snap-back mechanism — recalculation detects previous value, logs snap
+- [x] Idempotent — safe to re-run without duplicates
+- [ ] Set up weekly cron job for `extrapolate.py` on server
+- [ ] Point chipcentral.net at `extrapolation.json` (fallback: last entry
+      of `chip_estimates.json`)
 
-### 3.3 Country-Specific Outputs — Scaffolded
-- [x] Per-country multiplier table (`estimates/output/multipliers.csv`)
-- [ ] Historical multiplier series per country — embed per-year multipliers
-      in each recalculation entry in `chip_history.json` so trends are
-      visible (e.g., how Switzerland's multiplier changed from 2010 to 2022)
+### 3.3 Country-Specific Outputs ✅
+- [x] Per-country multipliers embedded in each `chip_estimates.json` entry
+      (46 countries for 2022, back to 5 for 2000)
+- [x] Historical multiplier series — each entry contains multipliers for
+      that year, enabling trend analysis across entries
 - [ ] Documentation: how to interpret and use country multipliers
 
 ### 3.4 Documentation Updates
@@ -214,9 +214,10 @@ Detailed tracking of completed and pending work items.
 ## Immediate Next Steps
 
 1. ~~Create `estimates/` pipeline~~ — done, backfilled 2000–2022
-2. **Set up weekly cron** on production server for `extrapolate.py`
-3. **Point chipcentral.net** at `estimates/output/latest.json` ($3.27 nominal 2022)
-4. ~~Write labor-value-future.md full paper~~ — done
+2. ~~Refactor to two-file workflow~~ — `chip_estimates.json` (git) + `extrapolation.json` (server-local)
+3. **Set up weekly cron** on production server for `extrapolate.py`
+4. **Point chipcentral.net** at `extrapolation.json` ($3.27 nominal 2022)
+5. ~~Write labor-value-future.md full paper~~ — done
 
 ---
 
