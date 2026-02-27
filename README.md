@@ -251,8 +251,9 @@ The papers in `docs/` build on each other. For readers new to this project:
 2. **[Data Sources](docs/data-sources.md)** -- The three external data sources (ILOSTAT, PWT, FRED): what they provide, their coverage and limitations, versioning policy, and alternatives.
 3. **[Weighting Analysis](docs/weighting-analysis.md)** -- How country-level values are aggregated into a global CHIP. Compares five weighting schemes (GDP, labor, unweighted, freedom, HDI); recommends GDP-weighted ($2.68/hr) with full range disclosure.
 4. **[Inflation Tracking](docs/inflation-tracking.md)** -- The central methodological question: should CHIP track inflation? Argues yes, proposes alternatives, formulates testable hypotheses (H1-H4).
-5. **[Future Labor Value](docs/labor-value-future.md)** -- Will AI raise or lower the value of labor? Argues that open AI access at competitive prices raises labor value; regulatory concentration lowers it. Includes CHIP's evolution from index to market price.
-6. **[Alternative Models](docs/alternative-models.md)** -- (Outline) Other economic models that could replace or supplement Cobb-Douglas.
+5. **[Production Methodology](docs/production-methodology.md)** -- The locked methodology for the official CHIP value: pipeline steps, key parameters, design rationale, known limitations, and validation results.
+6. **[Future Labor Value](docs/labor-value-future.md)** -- Will AI raise or lower the value of labor? Argues that open AI access at competitive prices raises labor value; regulatory concentration lowers it. Includes CHIP's evolution from index to market price.
+7. **[Alternative Models](docs/alternative-models.md)** -- (Outline) Other economic models that could replace or supplement Cobb-Douglas.
 
 ---
 
@@ -296,7 +297,7 @@ Research milestones:
 - Production study complete — **$3.17/hr nominal (2022), ~$3.50 est. 2026** (PWT 11.0, 5-year trailing window)
 - Stability study complete — PWT vintage revisions quantified (mean 3.8% for mature years)
 - Weighting study complete — five schemes compared, GDP-weighted ($2.68) recommended, 85 country multipliers
-- All five documentation papers written (original-review, weighting-analysis, inflation-tracking, labor-value-future, data-sources)
+- All six documentation papers written (original-review, weighting-analysis, inflation-tracking, labor-value-future, data-sources, production-methodology)
 - Estimates pipeline built — 23 annual estimates (2000-2022), **$3.27/hr nominal (2022)**; server extrapolation ready
 
 Next: Deploy cron job and point chipcentral.net at `extrapolation.json`.

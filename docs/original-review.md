@@ -60,7 +60,8 @@
     - 11.3 Real CHIP Is Approximately Stable
     - 11.4 PWT 11.0 and Current Estimates
     - 11.5 Production Methodology Established
-    - 11.6 Remaining Open Questions
+    - 11.6 Weighting Sensitivity Resolved
+    - 11.7 Remaining Open Questions
 12. [References](#12-references)
 
 ---
@@ -450,7 +451,7 @@ The CHIP definition implies a single global value—what labor would be worth if
 
 **Analysis:** The CHIP definition doesn't specify a weighting scheme. GDP weighting is defensible (productive economies may better represent "balanced" markets), but labor-force weighting has philosophical appeal ("one worker's hour is one worker's hour").
 
-This choice materially affects the result and deserves explicit sensitivity analysis.
+This choice materially affects the result. The weighting study (Section 11.6) confirmed that the spread across five schemes is substantial (CV = 21%), and recommended retaining GDP-weighting on the basis of economic reasoning, population-proportionate influence, and methodological continuity.
 
 ### 7.5 Summary Assessment
 
@@ -566,7 +567,7 @@ The headline $2.53 result uses GDP weighting. Alternative weighting schemes woul
 | Labor-force weighted | More workers = more weight | Lower estimate |
 | Unweighted | Each country equal | Variable |
 
-The choice of weighting scheme is not dictated by the CHIP definition and represents a methodological judgment with material impact on results. Sensitivity analysis across schemes would strengthen confidence.
+The choice of weighting scheme is not dictated by the CHIP definition and represents a methodological judgment with material impact on results. This concern has been empirically validated — see Section 11.6 for the five-scheme comparison, which found a 21% coefficient of variation across weighting approaches.
 
 ### 9.6 Temporal Stability of Estimates
 
@@ -624,7 +625,7 @@ A reasonable confidence interval might span $1.50–$4.00/hour, with $2.53 as a 
 
 ### 10.3 Suggested Areas for Future Investigation
 
-1. **Sensitivity analysis:** Systematically vary weighting schemes, outlier treatment, and model specifications to characterize uncertainty. *(Weighting study scaffolded; see `workbench/studies/weighting/`.)*
+1. **Sensitivity analysis:** Systematically vary weighting schemes, outlier treatment, and model specifications to characterize uncertainty. *(Addressed — see `workbench/studies/weighting/FINDINGS.md` and `docs/weighting-analysis.md`.)*
 
 2. **Informal economy adjustments:** Incorporate ILO informal employment data where available to correct for formal sector bias. *(Not yet addressed.)*
 
@@ -725,13 +726,29 @@ been comprehensively addressed. The production study tested and recommends:
 This methodology has been packaged into the `estimates/` pipeline
 for production use by MyCHIPs (see `estimates/README.md`).
 
-### 11.6 Remaining Open Questions
+### 11.6 Weighting Sensitivity Resolved
+
+The weighting study (see `workbench/studies/weighting/FINDINGS.md` and
+`docs/weighting-analysis.md`) tested five aggregation schemes:
+
+| Scheme | Constant CHIP | vs GDP-weighted |
+|--------|--------------|----------------|
+| GDP-weighted | $2.68 | baseline |
+| HDI-weighted | $2.59 | −3.4% |
+| Unweighted | $2.50 | −6.7% |
+| Freedom-weighted | $2.85 | +6.3% |
+| Labor-force weighted | $1.67 | −37.7% |
+
+Weighting is a first-order choice (CV = 21% across schemes). After
+evaluation, GDP-weighting was retained as the primary specification for
+continuity and because it reflects the weight of productive, well-functioning
+economies. The full range is published for transparency. See
+`docs/weighting-analysis.md` for the detailed rationale.
+
+### 11.7 Remaining Open Questions
 
 Several concerns from this review remain unaddressed:
 
-- **Weighting scheme sensitivity** (Section 9.5) — The weighting study is
-  scaffolded but not yet implemented. GDP weighting continues to be the
-  default.
 - **Informal economy** (Section 9.2) — No adjustments have been made for
   informal sector underrepresentation. This remains a potential source of
   upward bias in the estimate.

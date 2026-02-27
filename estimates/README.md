@@ -260,6 +260,69 @@ The website needs two things:
    (annual granularity, suitable for a chart or table)
 
 
+## Understanding Country Multipliers
+
+Each entry in `chip_estimates.json` includes a `multipliers` array — one
+object per country with `country` (ISO 3166-1 alpha-3), `chip_usd`
+(that country's constant-dollar CHIP), and `multiplier` (the ratio to the
+global constant-dollar CHIP).
+
+### What the multiplier means
+
+A multiplier of **1.28x** for the USA means that unskilled labor in the US
+is valued at 1.28 times the global average.  A multiplier of **0.52x** for
+India means Indian unskilled labor is valued at roughly half the global
+average.
+
+The multiplier reflects the combined effect of:
+- **Capital intensity**: Countries with more capital per worker have higher
+  marginal products of labor.
+- **Distortion factor**: The adjustment for market frictions (regulation,
+  bargaining power, etc.) pushes observed wages toward their theoretical
+  equilibrium.
+- **Economic structure**: Countries with different sectoral mixes produce
+  different capital shares (α), affecting the split between capital and
+  labor income.
+
+### How to use multipliers
+
+**For a MyCHIPs user in country X:**
+
+```
+My country's CHIP ≈ Global CHIP × multiplier
+```
+
+For example, if the global CHIP is $3.27/hr and Switzerland's multiplier
+is 2.15x, then the Swiss CHIP equivalent is approximately $7.03/hr.  This
+means that, in Switzerland, the "going rate" for unskilled labor is about
+2.15 times the global average.
+
+**Important caveats:**
+
+- Multipliers are based on *national averages* — within any country, there
+  is significant regional and sectoral variation.
+- They reflect the formal economy; informal sector wages (common in
+  developing countries) are underrepresented.
+- Multipliers change over time as economies evolve.  Use `history.py
+  --country CHE` to see how a country's multiplier has trended.
+- A multiplier above 1.0 does not mean workers are "overpaid" — it means
+  their productivity context (capital, institutions, infrastructure) supports
+  a higher equilibrium wage.
+
+### Viewing multipliers
+
+```bash
+# Latest multiplier table
+python history.py --country all
+
+# A specific country over time
+python history.py --country USA
+
+# Machine-readable
+python history.py --country all --csv
+```
+
+
 ## Future Enhancements
 
 - **Historical multipliers per entry**: Already embedded — each entry in

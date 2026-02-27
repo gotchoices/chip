@@ -21,9 +21,10 @@ Detailed tracking of completed and pending work items.
 - [x] Set up secrets management (`secrets.toml`, `secrets.example.toml`)
 - [x] Platform decision: Python (documented in README)
 
-### 1.3 Documentation — Critical Review
+### 1.3 Documentation — Critical Review ✅
 - [x] Create and write `docs/original-review.md` (Sections 1-11)
-- [ ] Review and refine draft
+- [x] Review and refine draft — updated stale references (weighting study
+      now complete, Section 11.6 added, forward references corrected)
 
 ### 1.4 Documentation — Weighting Analysis ✅
 - [x] Create outline for `docs/weighting-analysis.md`
@@ -182,12 +183,13 @@ Detailed tracking of completed and pending work items.
       (46 countries for 2022, back to 5 for 2000)
 - [x] Historical multiplier series — each entry contains multipliers for
       that year, enabling trend analysis across entries
-- [ ] Documentation: how to interpret and use country multipliers
+- [x] Documentation: how to interpret and use country multipliers
+      (added to `estimates/README.md`)
 
 ### 3.4 Documentation Updates
 - [x] Complete `docs/weighting-analysis.md` — Section 4 empirical comparison, revised Section 5 recommendations
 - [x] Update `docs/inflation-tracking.md` — empirical evidence (Sec 8), market dynamics (Sec 7.4), two-tier model (Sec 7.3)
-- [ ] Write production methodology paper
+- [x] Write production methodology paper (`docs/production-methodology.md`)
 
 ---
 
